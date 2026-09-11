@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SIP Calculator - LoanMitraCalc</title>
+
+<meta name="description" content="Free SIP Calculator to calculate investment, estimated returns and future value using years, months and days.">
+
+<meta name="keywords" content="SIP calculator, SIP investment calculator, SIP return calculator, investment calculator">
+
+<meta name="robots" content="index, follow">
+
+<meta name="author" content="LoanMitraCalc">
+
+<link rel="canonical" href="https://loanmitracalc.github.io/loanmitracalc/sip-calculator.html">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    margin: 0;
+    padding: 20px;
+    color: #1e293b;
+}
+
+.container {
+    max-width: 600px;
+    margin: 30px auto;
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.10);
+}
+
+h1 {
+    text-align: center;
+    color: #111827;
+}
+
+h2 {
+    color: #111827;
+    margin-top: 30px;
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    box-sizing: border-box;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+button {
+    width: 100%;
+    padding: 13px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 8px;
+    background: #2563eb;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #1d4ed8;
+}
+
+#pdfButton {
+    background: #198754;
+}
+
+#pdfButton:hover:not(:disabled) {
+    background: #146c43;
+}
+
+#pdfButton:disabled {
+    background: #94a3b8;
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
+.result {
+    margin-top: 20px;
+    padding: 18px;
+    background: #f1f5f9;
+    border-radius: 10px;
+}
+
+.result p {
+    font-size: 17px;
+    margin: 12px 0;
+}
+
+.seo-content {
+    margin-top: 30px;
+    line-height: 1.7;
+}
+
+.related {
+    margin-top: 30px;
+    padding: 20px;
+    background: #f8fafc;
+    border-radius: 10px;
+}
+
+.related a {
+    display: block;
+    margin: 10px 0;
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.related a:hover {
+    text-decoration: underline;
+}
+
+.back-home {
+    display: inline-block;
+    margin-top: 20px;
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.note {
+    margin-top: 20px;
+    padding: 15px;
+    background: #fff7ed;
+    border-left: 4px solid #f97316;
+    border-radius: 6px;
+    line-height: 1.6;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>📊 SIP Calculator</h1>
+
+
+<label>Monthly Investment (₹)</label>
+
+<input
+    type="number"
+    id="investment"
+    placeholder="Example: 5000"
+    min="1"
+    step="any"
+>
+
+
+<label>Expected Return (% per Year)</label>
+
+<input
+    type="number"
+    id="rate"
+    placeholder="Example: 12"
+    min="0"
+    step="any"
+>
+
+
+<label>Investment Period</label>
+
+<select id="periodType" onchange="updatePeriodInput()">
+
+    <option value="years">Years</option>
+    <option value="months">Months</option>
+    <option value="days">Days</option>
+
+</select>
+
+
+<input
+    type="number"
+    id="period"
+    placeholder="Example: 10"
+    min="1"
+    step="any"
+>
+
+
+<button type="button" onclick="calculateSIP()">
+    Calculate SIP
+</button>
+
+
+<div class="result">
+
+<p>
+<strong>Total Investment:</strong>
+₹ <span id="totalInvestment">0</span>
+</p>
+
+<p>
+<strong>Estimated Returns:</strong>
+₹ <span id="returns">0</span>
+</p>
+
+<p>
+<strong>Future Value:</strong>
+₹ <span id="futureValue">0</span>
+</p>
+
+<p>
+<strong>Return per Year:</strong>
+₹ <span id="yearReturn">0</span>
+</p>
+
+<p>
+<strong>Return per Month:</strong>
+₹ <span id="monthReturn">0</span>
+</p>
+
+<p>
+<strong>Return per Day:</strong>
+₹ <span id="dayReturn">0</span>
+</p>
+
+</div>
+
+
+<button
+    type="button"
+    id="pdfButton"
+    onclick="downloadPDF()"
+    disabled
+>
+    📄 Download Calculation
+</button>
+
+
+<a class="back-home" href="index.html">
+    ← Back to Home
+</a>
+
+
+<section class="seo-content">
+
+<h2>SIP Calculator</h2>
+
+<p>
+LoanMitraCalc SIP Calculator helps you estimate the potential future value
+of regular monthly investments. You can enter the investment period in
+years, months or days and estimate your total investment and potential
+returns.
+</p>
+
+
+<h2>How Does a SIP Calculator Work?</h2>
+
+<p>
+A SIP calculator uses the monthly investment amount, assumed annual return
+and investment duration to estimate the future value of the investment.
+The result is an estimate and actual market returns may be different.
+</p>
+
+
+<h2>SIP Investment Period</h2>
+
+<p>
+You can select the investment period in years, months or days. The
+calculator converts the selected period into an approximate number of
+monthly investment periods for calculation.
+</p>
+
+
+<h2>Important Note</h2>
+
+<p>
+SIP calculator results are estimates for informational purposes only.
+Mutual fund investments are subject to market risks and actual returns
+may vary.
+</p>
+
+</section>
+
+
+<section class="related">
+
+<h2>Related Calculators</h2>
+
+<a href="personal-loan.html">
+    Personal Loan EMI Calculator
+</a>
+
+<a href="home-loan.html">
+    Home Loan EMI Calculator
+</a>
+
+<a href="car-loan.html">
+    Car Loan EMI Calculator
+</a>
+
+<a href="gst-calculator.html">
+    GST Calculator
+</a>
+
+<a href="percentage-calculator.html">
+    Percentage Calculator
+</a>
+
+<a href="age-calculator.html">
+    Age Calculator
+</a>
+
+</section>
+
+
+<div class="note">
+
+<strong>Important:</strong>
+The results are estimates based on the assumed return rate.
+Actual investment returns may be higher or lower.
+
+</div>
+
+
+</div>
+
+
+<script>
+
+let sipData = {
+    investment: 0,
+    rate: 0,
+    period: 0,
+    periodType: "",
+    years: 0,
+    months: 0,
+    days: 0,
+    totalMonths: 0,
+    totalInvestment: 0,
+    estimatedReturns: 0,
+    futureValue: 0
+};
+
+
+function updatePeriodInput() {
+
+    let type =
+        document.getElementById("periodType").value;
+
+    let input =
+        document.getElementById("period");
+
+
+    if (type === "years") {
+
+        input.placeholder = "Example: 10";
+
+    }
+
+    else if (type === "months") {
+
+        input.placeholder = "Example: 120";
+
+    }
+
+    else {
+
+        input.placeholder = "Example: 365";
+
+    }
+
+}
+
+
+function formatNumber(value) {
+
+    return value.toLocaleString("en-IN", {
+        maximumFractionDigits: 2
+    });
+
+}
+
+
+function calculateSIP() {
+
+    let investment =
+        parseFloat(
+            document.getElementById("investment").value
+        );
+
+    let rate =
+        parseFloat(
+            document.getElementById("rate").value
+        );
+
+    let period =
+        parseFloat(
+            document.getElementById("period").value
+        );
+
+    let periodType =
+        document.getElementById("periodType").value;
+
+
+    if (
+        isNaN(investment) ||
+        isNaN(rate) ||
+        isNaN(period) ||
+        investment <= 0 ||
+        rate < 0 ||
+        period <= 0
+    ) {
+
+        alert("Please enter valid values.");
+
+        return;
+    }
+
+
+    /*
+       Convert selected period into months.
+
+       Years:
+       1 year = 12 months
+
+       Months:
+       Direct months
+
+       Days:
+       30 days = approximately 1 month
+    */
+
+
+    let totalMonths;
+
+
+    if (periodType === "years") {
+
+        totalMonths = period * 12;
+
+    }
+
+    else if (periodType === "months") {
+
+        totalMonths = period;
+
+    }
+
+    else {
+
+        totalMonths = period / 30;
+
+    }
+
+
+    /*
+       SIP calculation works with monthly investment.
+       Therefore days are converted approximately into months.
+    */
+
+
+    let monthlyRate =
+        rate / 12 / 100;
+
+
+    let futureValue;
+
+
+    if (monthlyRate === 0) {
+
+        futureValue =
+            investment * totalMonths;
+
+    }
+
+    else {
+
+        futureValue =
+            investment *
+            (
+                (Math.pow(
+                    1 + monthlyRate,
+                    totalMonths
+                ) - 1)
+                / monthlyRate
+            )
+            *
+            (1 + monthlyRate);
+
+    }
+
+
+    let totalInvestment =
+        investment * totalMonths;
+
+
+    let estimatedReturns =
+        futureValue - totalInvestment;
+
+
+    /*
+       Return breakdown
+    */
+
+    let yearReturn =
+        estimatedReturns /
+        (totalMonths / 12);
+
+
+    let monthReturn =
+        estimatedReturns /
+        totalMonths;
+
+
+    let dayReturn =
+        estimatedReturns /
+        (totalMonths * 30);
+
+
+    /*
+       Save data
+    */
+
+    sipData.investment = investment;
+    sipData.rate = rate;
+    sipData.period = period;
+    sipData.periodType = periodType;
+    sipData.totalMonths = totalMonths;
+    sipData.totalInvestment = totalInvestment;
+    sipData.estimatedReturns = estimatedReturns;
+    sipData.futureValue = futureValue;
+    sipData.yearReturn = yearReturn;
+    sipData.monthReturn = monthReturn;
+    sipData.dayReturn = dayReturn;
+
+
+    /*
+       Display results
+    */
+
+    document.getElementById("totalInvestment").innerText =
+        formatNumber(totalInvestment);
+
+    document.getElementById("returns").innerText =
+        formatNumber(estimatedReturns);
+
+    document.getElementById("futureValue").innerText =
+        formatNumber(futureValue);
+
+    document.getElementById("yearReturn").innerText =
+        formatNumber(yearReturn);
+
+    document.getElementById("monthReturn").innerText =
+        formatNumber(monthReturn);
+
+    document.getElementById("dayReturn").innerText =
+        formatNumber(dayReturn);
+
+
+    /*
+       Enable PDF
+    */
+
+    document.getElementById("pdfButton").disabled = false;
+
+}
+
+
+function downloadPDF() {
+
+    if (sipData.totalInvestment === 0) {
+
+        alert("Please calculate SIP first.");
+
+        return;
+    }
+
+
+    const { jsPDF } = window.jspdf;
+
+    const doc = new jsPDF();
+
+
+    /*
+       Header
+    */
+
+    doc.setFontSize(20);
+
+    doc.setFont("helvetica", "bold");
+
+    doc.text(
+        "LoanMitraCalc",
+        20,
+        20
+    );
+
+
+    doc.setFontSize(15);
+
+    doc.text(
+        "SIP Calculation Report",
+        20,
+        30
+    );
+
+
+    let reportDate =
+        new Date().toLocaleDateString("en-IN");
+
+
+    doc.setFontSize(10);
+
+    doc.setFont("helvetica", "normal");
+
+    doc.text(
+        "Report Date: " + reportDate,
+        20,
+        40
+    );
+
+
+    /*
+       Investment Details
+    */
+
+    doc.setFontSize(13);
+
+    doc.setFont("helvetica", "bold");
+
+    doc.text(
+        "Investment Details",
+        20,
+        55
+    );
+
+
+    doc.setFontSize(11);
+
+    doc.setFont("helvetica", "normal");
+
+    doc.text(
+        "Monthly Investment: Rs. " +
+        formatNumber(sipData.investment),
+        20,
+        65
+    );
+
+
+    doc.text(
+        "Expected Annual Return: " +
+        sipData.rate.toFixed(2) +
+        "%",
+        20,
+        73
+    );
+
+
+    let periodText;
+
+
+    if (sipData.periodType === "years") {
+
+        periodText =
+            sipData.period + " Years";
+
+    }
+
+    else if (sipData.periodType === "months") {
+
+        periodText =
+            sipData.period + " Months";
+
+    }
+
+    else {
+
+        periodText =
+            sipData.period + " Days";
+
+    }
+
+
+    doc.text(
+        "Investment Period: " +
+        periodText,
+        20,
+        81
+    );
+
+
+    doc.text(
+        "Approx. Monthly Periods: " +
+        sipData.totalMonths.toFixed(2),
+        20,
+        89
+    );
+
+
+    /*
+       Summary
+    */
+
+    doc.setFontSize(13);
+
+    doc.setFont("helvetica", "bold");
+
+    doc.text(
+        "Investment Summary",
+        20,
+        105
+    );
+
+
+    doc.setFontSize(11);
+
+    doc.setFont("helvetica", "normal");
+
+    doc.text(
+        "Total Investment: Rs. " +
+        formatNumber(
+            sipData.totalInvestment
+        ),
+        20,
+        115
+    );
+
+
+    doc.text(
+        "Estimated Returns: Rs. " +
+        formatNumber(
+            sipData.estimatedReturns
+        ),
+        20,
+        123
+    );
+
+
+    doc.text(
+        "Future Value: Rs. " +
+        formatNumber(
+            sipData.futureValue
+        ),
+        20,
+        131
+    );
+
+
+    doc.text(
+        "Estimated Return per Year: Rs. " +
+        formatNumber(
+            sipData.yearReturn
+        ),
+        20,
+        139
+    );
+
+
+    doc.text(
+        "Estimated Return per Month: Rs. " +
+        formatNumber(
+            sipData.monthReturn
+        ),
+        20,
+        147
+    );
+
+
+    doc.text(
+        "Estimated Return per Day: Rs. " +
+        formatNumber(
+            sipData.dayReturn
+        ),
+        20,
+        155
+    );
+
+
+    /*
+       Important Note
+    */
+
+    doc.setFontSize(13);
+
+    doc.setFont("helvetica", "bold");
+
+    doc.text(
+        "Important Note",
+        20,
+        175
+    );
+
+
+    doc.setFontSize(10);
+
+    doc.setFont("helvetica", "normal");
+
+    let note =
+        "SIP results are estimates based on the assumed annual " +
+        "return entered by the user. Actual mutual fund returns " +
+        "may vary depending on market performance. This report " +
+        "is for informational purposes only and is not financial advice.";
+
+
+    let splitNote =
+        doc.splitTextToSize(
+            note,
+            170
+        );
+
+
+    doc.text(
+        splitNote,
+        20,
+        185
+    );
+
+
+    /*
+       Footer
+    */
+
+    doc.setFontSize(9);
+
+    doc.text(
+        "LoanMitraCalc - Free Online Financial Calculators",
+        20,
+        285
+    );
+
+
+    /*
+       Save PDF
+    */
+
+    doc.save(
+        "LoanMitraCalc-SIP-Report.pdf"
+    );
+
+}
+
+</script>
+
+</body>
+</html>

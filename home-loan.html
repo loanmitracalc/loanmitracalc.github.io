@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Home Loan EMI Calculator - LoanMitraCalc</title>
+
+<meta name="description" content="Calculate Home Loan EMI, total interest, total payment and interest breakdown with LoanMitraCalc's free Home Loan EMI Calculator.">
+
+<meta name="keywords" content="home loan calculator, home loan EMI calculator, housing loan calculator, EMI calculator, home loan interest calculator">
+
+<meta name="robots" content="index, follow">
+
+<link rel="canonical" href="https://loanmitracalc.github.io/loanmitracalc/home-loan.html">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    color: #1f2937;
+}
+
+header {
+    background: #0f172a;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.logo {
+    font-size: 26px;
+    font-weight: bold;
+}
+
+.container {
+    max-width: 650px;
+    margin: 30px auto;
+    padding: 25px;
+}
+
+.calculator {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+h1 {
+    text-align: center;
+    color: #0f172a;
+}
+
+.subtitle {
+    text-align: center;
+    color: #64748b;
+    margin-bottom: 25px;
+}
+
+.input-box {
+    margin-top: 18px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 7px;
+}
+
+input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.calculate-btn {
+    width: 100%;
+    padding: 14px;
+    margin-top: 25px;
+    border: none;
+    border-radius: 8px;
+    background: #2563eb;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.calculate-btn:hover {
+    background: #1d4ed8;
+}
+
+.results {
+    margin-top: 25px;
+}
+
+.result {
+    background: #f1f5f9;
+    padding: 17px;
+    margin-top: 10px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.result span:last-child {
+    font-weight: bold;
+}
+
+.interest-details {
+    margin-top: 15px;
+    background: #eef2ff;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.interest-details div {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+}
+
+.interest-details span:last-child {
+    font-weight: bold;
+}
+
+.pdf-btn {
+    width: 100%;
+    padding: 14px;
+    margin-top: 25px;
+    border: none;
+    border-radius: 8px;
+    background: #16a34a;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.pdf-btn:hover {
+    background: #15803d;
+}
+
+.pdf-btn:disabled {
+    background: #94a3b8;
+    cursor: not-allowed;
+}
+
+.back {
+    display: block;
+    margin-top: 25px;
+    text-align: center;
+    text-decoration: none;
+    color: #2563eb;
+    font-weight: bold;
+}
+
+.seo-content {
+    margin-top: 40px;
+    line-height: 1.7;
+}
+
+.seo-content h2 {
+    margin-top: 28px;
+    color: #0f172a;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    color: #64748b;
+    font-size: 14px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">LoanMitraCalc</div>
+</header>
+
+<div class="container">
+
+<div class="calculator">
+
+<h1>🏠 Home Loan EMI Calculator</h1>
+
+<p class="subtitle">
+Calculate your Home Loan EMI, total interest and total payment
+</p>
+
+
+<div class="input-box">
+
+<label>Home Loan Amount (₹)</label>
+
+<input
+    type="number"
+    id="loanAmount"
+    placeholder="Example: 3000000"
+    min="1"
+>
+
+</div>
+
+
+<div class="input-box">
+
+<label>Interest Rate (% per year)</label>
+
+<input
+    type="number"
+    id="interestRate"
+    placeholder="Example: 8.5"
+    step="0.01"
+    min="0"
+>
+
+</div>
+
+
+<div class="input-box">
+
+<label>Loan Tenure (Years)</label>
+
+<input
+    type="number"
+    id="loanTenure"
+    placeholder="Example: 20"
+    min="1"
+>
+
+</div>
+
+
+<button
+    type="button"
+    class="calculate-btn"
+    onclick="calculateEMI()">
+
+Calculate EMI
+
+</button>
+
+
+<div class="results">
+
+<div class="result">
+
+<span>Monthly EMI</span>
+
+<span id="emi">₹0.00</span>
+
+</div>
+
+
+<div class="result">
+
+<span>Total Interest</span>
+
+<span id="interest">₹0.00</span>
+
+</div>
+
+
+<div class="interest-details">
+
+<div>
+
+<span>Interest per Year</span>
+
+<span id="interestYear">₹0.00</span>
+
+</div>
+
+
+<div>
+
+<span>Interest per Month</span>
+
+<span id="interestMonth">₹0.00</span>
+
+</div>
+
+
+<div>
+
+<span>Interest per Day</span>
+
+<span id="interestDay">₹0.00</span>
+
+</div>
+
+</div>
+
+
+<div class="result">
+
+<span>Total Payment</span>
+
+<span id="payment">₹0.00</span>
+
+</div>
+
+</div>
+
+
+<!-- DOWNLOAD BUTTON ALWAYS VISIBLE -->
+
+<button
+    type="button"
+    class="pdf-btn"
+    id="pdfButton"
+    onclick="downloadPDF()"
+    disabled>
+
+📄 Download Calculation
+
+</button>
+
+
+<a
+    class="back"
+    href="index.html">
+
+← Back to Home
+
+</a>
+
+
+<section class="seo-content">
+
+<h2>Home Loan EMI Calculator</h2>
+
+<p>
+LoanMitraCalc Home Loan EMI Calculator helps you calculate your estimated
+monthly EMI, total interest and total repayment amount. Enter your home loan
+amount, interest rate and loan tenure to get the calculation instantly.
+</p>
+
+<h2>How Does a Home Loan EMI Calculator Work?</h2>
+
+<p>
+Home loan EMI depends mainly on the loan amount, annual interest rate and
+loan tenure. A longer tenure can reduce the monthly EMI but may increase
+the total interest payable over the loan period.
+</p>
+
+<h2>Home Loan EMI Formula</h2>
+
+<p>
+EMI = P × R × (1 + R)<sup>N</sup> ÷ ((1 + R)<sup>N</sup> − 1)
+</p>
+
+<p>
+Here, P is the principal loan amount, R is the monthly interest rate and
+N is the total number of monthly instalments.
+</p>
+
+<h2>Example</h2>
+
+<p>
+If you borrow ₹30,00,000 at an annual interest rate of 8.5% for 20 years,
+this calculator can estimate your monthly EMI, total interest and total
+repayment amount.
+</p>
+
+<h2>Important Note</h2>
+
+<p>
+The calculations are estimates for informational purposes only. Actual EMI,
+interest rates, processing fees and other charges may vary depending on the
+lender and loan terms.
+</p>
+
+</section>
+
+</div>
+
+</div>
+
+
+<footer>
+
+© 2026 LoanMitraCalc. All Rights Reserved.
+
+</footer>
+
+
+<script>
+
+let loanCalculation = null;
+
+
+/* FORMAT MONEY */
+
+function formatMoney(amount) {
+
+    return "₹" + amount.toLocaleString("en-IN", {
+
+        minimumFractionDigits: 2,
+
+        maximumFractionDigits: 2
+
+    });
+
+}
+
+
+/* CALCULATE EMI */
+
+function calculateEMI() {
+
+    const principal =
+        parseFloat(
+            document.getElementById("loanAmount").value
+        );
+
+    const annualRate =
+        parseFloat(
+            document.getElementById("interestRate").value
+        );
+
+    const years =
+        parseFloat(
+            document.getElementById("loanTenure").value
+        );
+
+
+    if (
+        isNaN(principal) ||
+        isNaN(annualRate) ||
+        isNaN(years) ||
+        principal <= 0 ||
+        annualRate < 0 ||
+        years <= 0
+    ) {
+
+        alert("Please enter valid loan details.");
+
+        return;
+
+    }
+
+
+    const months = years * 12;
+
+    const monthlyRate =
+        annualRate / 12 / 100;
+
+    let emi;
+
+
+    if (monthlyRate === 0) {
+
+        emi = principal / months;
+
+    } else {
+
+        emi =
+            principal *
+            monthlyRate *
+            Math.pow(
+                1 + monthlyRate,
+                months
+            )
+            /
+            (
+                Math.pow(
+                    1 + monthlyRate,
+                    months
+                ) - 1
+            );
+
+    }
+
+
+    const totalPayment =
+        emi * months;
+
+    const totalInterest =
+        totalPayment - principal;
+
+
+    const interestPerMonth =
+        totalInterest / months;
+
+    const interestPerYear =
+        totalInterest / years;
+
+    const interestPerDay =
+        totalInterest / (years * 365);
+
+
+    loanCalculation = {
+
+        principal: principal,
+        annualRate: annualRate,
+        years: years,
+        months: months,
+        emi: emi,
+        totalInterest: totalInterest,
+        interestPerYear: interestPerYear,
+        interestPerMonth: interestPerMonth,
+        interestPerDay: interestPerDay,
+        totalPayment: totalPayment
+
+    };
+
+
+    document.getElementById("emi").innerText =
+        formatMoney(emi);
+
+    document.getElementById("interest").innerText =
+        formatMoney(totalInterest);
+
+    document.getElementById("interestYear").innerText =
+        formatMoney(interestPerYear);
+
+    document.getElementById("interestMonth").innerText =
+        formatMoney(interestPerMonth);
+
+    document.getElementById("interestDay").innerText =
+        formatMoney(interestPerDay);
+
+    document.getElementById("payment").innerText =
+        formatMoney(totalPayment);
+
+
+    /* ENABLE PDF BUTTON */
+
+    document.getElementById("pdfButton").disabled = false;
+
+}
+
+
+/* DOWNLOAD PDF */
+
+function downloadPDF() {
+
+    if (!loanCalculation) {
+
+        alert("Please calculate your Home Loan first.");
+
+        return;
+
+    }
+
+
+    const { jsPDF } = window.jspdf;
+
+    const doc = new jsPDF();
+
+    const data = loanCalculation;
+
+    const pageWidth =
+        doc.internal.pageSize.getWidth();
+
+
+    /* HEADER */
+
+    doc.setFillColor(15, 23, 42);
+
+    doc.rect(
+        0,
+        0,
+        pageWidth,
+        42,
+        "F"
+    );
+
+
+    doc.setTextColor(
+        255,
+        255,
+        255
+    );
+
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.setFontSize(22);
+
+    doc.text(
+        "LoanMitraCalc",
+        20,
+        18
+    );
+
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.setFontSize(13);
+
+    doc.text(
+        "Home Loan Calculation Report",
+        20,
+        29
+    );
+
+
+    const today = new Date();
+
+    const dateText =
+        today.toLocaleDateString("en-IN");
+
+
+    doc.setFontSize(9);
+
+    doc.text(
+        "Report Date: " + dateText,
+        20,
+        37
+    );
+
+
+    /* RESET TEXT */
+
+    doc.setTextColor(
+        31,
+        41,
+        55
+    );
+
+
+    /* LOAN DETAILS */
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.setFontSize(14);
+
+    doc.text(
+        "Loan Details",
+        20,
+        58
+    );
+
+
+    doc.setDrawColor(
+        203,
+        213,
+        225
+    );
+
+    doc.line(
+        20,
+        62,
+        190,
+        62
+    );
+
+
+    let y = 75;
+
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.setFontSize(11);
+
+    doc.text(
+        "Loan Amount",
+        25,
+        y
+    );
+
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.text(
+        "Rs. " +
+        data.principal.toLocaleString("en-IN"),
+        135,
+        y
+    );
+
+
+    y += 12;
+
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.text(
+        "Interest Rate",
+        25,
+        y
+    );
+
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.text(
+        data.annualRate.toFixed(2) +
+        "% per Year",
+        135,
+        y
+    );
+
+
+    y += 12;
+
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.text(
+        "Loan Tenure",
+        25,
+        y
+    );
+
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.text(
+        data.years +
+        " Years",
+        135,
+        y
+    );
+
+
+    /* REPAYMENT SUMMARY */
+
+    y += 28;
+
+
+    doc.setFillColor(
+        241,
+        245,
+        249
+    );
+
+    doc.roundedRect(
+        20,
+        y - 8,
+        170,
+        65,
+        4,
+        4,
+        "F"
+    );
+
+
+    doc.setTextColor(
+        15,
+        23,
+        42
+    );
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.setFontSize(15);
+
+    doc.text(
+        "Repayment Summary",
+        27,
+        y + 4
+    );
+
+
+    y += 18;
+
+
+    doc.setFontSize(11);
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.text(
+        "Monthly EMI",
+        28,
+        y
+    );
+
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.text(
+        "Rs. " +
+        data.emi.toLocaleString("en-IN", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }),
+        135,
+        y
+    );
+
+
+    y += 12;
+
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.text(
+        "Total Interest",
+        28,
+        y
+    );
+
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.text(
+        "Rs. " +
+        data.totalInterest.toLocaleString("en-IN", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }),
+        135,
+        y
+    );
+
+
+    y += 12;
+
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.text(
+        "Total Payment",
+        28,
+        y
+    );
+
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.text(
+        "Rs. " +
+        data.totalPayment.toLocaleString("en-IN", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }),
+        135,
+        y
+    );
+
+
+    /* INTEREST BREAKDOWN */
+
+    y += 30;
+
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.setFontSize(14);
+
+    doc.text(
+        "Interest Breakdown",
+        20,
+        y
+    );
+
+
+    y += 12;
+
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.setFontSize(11);
+
+    doc.text(
+        "Interest per Year",
+        25,
+        y
+    );
+
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.text(
+        "Rs. " +
+        data.interestPerYear.toLocaleString("en-IN", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }),
+        135,
+        y
+    );
+
+
+    y += 11;
+
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.text(
+        "Interest per Month",
+        25,
+        y
+    );
+
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.text(
+        "Rs. " +
+        data.interestPerMonth.toLocaleString("en-IN", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }),
+        135,
+        y
+    );
+
+
+    y += 11;
+
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.text(
+        "Interest per Day",
+        25,
+        y
+    );
+
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.text(
+        "Rs. " +
+        data.interestPerDay.toLocaleString("en-IN", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }),
+        135,
+        y
+    );
+
+
+    /* IMPORTANT NOTE */
+
+    y += 25;
+
+
+    doc.setDrawColor(
+        203,
+        213,
+        225
+    );
+
+    doc.line(
+        20,
+        y,
+        190,
+        y
+    );
+
+
+    y += 12;
+
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.setFontSize(10);
+
+    doc.text(
+        "Important Note",
+        20,
+        y
+    );
+
+
+    y += 8;
+
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.setFontSize(9);
+
+    doc.text(
+        "This report provides estimated calculations for informational purposes only.",
+        20,
+        y
+    );
+
+
+    y += 6;
+
+
+    doc.text(
+        "Actual EMI, interest, fees and charges may vary by lender.",
+        20,
+        y
+    );
+
+
+    /* FOOTER */
+
+    doc.setFillColor(
+        15,
+        23,
+        42
+    );
+
+    doc.rect(
+        0,
+        280,
+        pageWidth,
+        17,
+        "F"
+    );
+
+
+    doc.setTextColor(
+        255,
+        255,
+        255
+    );
+
+    doc.setFontSize(9);
+
+    doc.text(
+        "LoanMitraCalc | Home Loan Calculator",
+        20,
+        290
+    );
+
+
+    doc.save(
+        "LoanMitraCalc-Home-Loan-Report.pdf"
+    );
+
+}
+
+</script>
+
+</body>
+</html>

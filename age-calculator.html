@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Age Calculator - LoanMitraCalc</title>
+
+<meta name="description" content="Use LoanMitraCalc's free Age Calculator to calculate your exact age in years, months and days quickly and easily.">
+
+<meta name="keywords" content="age calculator, calculate age, exact age calculator, date of birth calculator, age in years months days">
+
+<meta name="robots" content="index, follow">
+
+<link rel="canonical" href="https://loanmitracalc.github.io/loanmitracalc/age-calculator.html">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        header {
+            background: #0d47a1;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .calculator {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #0d47a1;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            border: none;
+            border-radius: 7px;
+            background: #0d47a1;
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #08306b;
+        }
+
+        .results {
+            margin-top: 25px;
+            display: grid;
+            gap: 12px;
+        }
+
+        .result-box {
+            background: #eef4ff;
+            padding: 18px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .result-box h3 {
+            margin: 0 0 8px;
+            color: #0d47a1;
+        }
+
+        .result-box p {
+            margin: 0;
+            font-size: 21px;
+            font-weight: bold;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 25px;
+            color: #0d47a1;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>LoanMitraCalc</h1>
+</header>
+
+<div class="container">
+
+    <div class="calculator">
+
+        <h2>Age Calculator</h2>
+
+        <label>Date of Birth</label>
+        <input type="date" id="dob">
+
+        <button onclick="calculateAge()">
+            Calculate Age
+        </button>
+
+        <div class="results">
+
+            <div class="result-box">
+                <h3>Your Age</h3>
+                <p id="age">0 Years, 0 Months, 0 Days</p>
+            </div>
+
+            <div class="result-box">
+                <h3>Total Days</h3>
+                <p id="totalDays">0 Days</p>
+            </div>
+
+        </div>
+
+        <a class="back" href="index.html">← Back to Home</a>
+<section class="seo-content">
+
+<h2>Age Calculator</h2>
+
+<p>
+Our Age Calculator helps you calculate your exact age in years, months and
+days. Enter your date of birth to find your current age quickly and easily.
+</p>
+
+<h2>How Does an Age Calculator Work?</h2>
+
+<p>
+An age calculator calculates the difference between your date of birth and
+the selected current date. It can show your age in complete years, months
+and days.
+</p>
+
+<h2>How to Calculate Your Age?</h2>
+
+<p>
+To calculate your age, enter your date of birth and use the current date.
+The calculator determines the difference between these two dates and
+provides your estimated age.
+</p>
+
+<h2>Example</h2>
+
+<p>
+For example, if your date of birth is 15 September 1996, the calculator can
+calculate your age in years, months and days based on the current date.
+</p>
+
+<h2>Age Calculator Uses</h2>
+
+<p>
+An age calculator can be useful for checking your current age, calculating
+age for forms and applications, and understanding the exact time between
+two dates.
+</p>
+
+<h2>Important Note</h2>
+
+<p>
+The results provided by this calculator are for informational purposes only.
+Please verify your date of birth and dates entered to get an accurate result.
+</p>
+
+</section>
+
+    </div>
+
+</div>
+
+<footer>
+    © 2026 LoanMitraCalc. All Rights Reserved.
+</footer>
+
+<script>
+
+function calculateAge() {
+
+    let dobValue = document.getElementById("dob").value;
+
+    if (!dobValue) {
+        alert("Please select your date of birth.");
+        return;
+    }
+
+    let dob = new Date(dobValue + "T00:00:00");
+    let today = new Date();
+
+    if (dob > today) {
+        alert("Date of birth cannot be in the future.");
+        return;
+    }
+
+    let years = today.getFullYear() - dob.getFullYear();
+    let months = today.getMonth() - dob.getMonth();
+    let days = today.getDate() - dob.getDate();
+
+    if (days < 0) {
+
+        months--;
+
+        let previousMonth = new Date(
+            today.getFullYear(),
+            today.getMonth(),
+            0
+        );
+
+        days += previousMonth.getDate();
+    }
+
+    if (months < 0) {
+        years--;
+        months += 12;
+    }
+
+    let difference = today.getTime() - dob.getTime();
+
+    let totalDays = Math.floor(
+        difference / (1000 * 60 * 60 * 24)
+    );
+
+    document.getElementById("age").innerText =
+        years + " Years, " +
+        months + " Months, " +
+        days + " Days";
+
+    document.getElementById("totalDays").innerText =
+        totalDays.toLocaleString("en-IN") + " Days";
+}
+
+</script>
+
+</body>
+</html>

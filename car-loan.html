@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Car Loan EMI Calculator - LoanMitraCalc</title>
+
+<meta name="description" content="Calculate Car Loan EMI, total interest, interest per year, month and day, and total repayment amount with LoanMitraCalc's free Car Loan EMI Calculator.">
+
+<meta name="keywords" content="car loan calculator, car loan EMI calculator, auto loan calculator, EMI calculator, car loan interest calculator">
+
+<meta name="robots" content="index, follow">
+
+<link rel="canonical" href="https://loanmitracalc.github.io/loanmitracalc/car-loan.html">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    color: #222;
+}
+
+header {
+    background: #0d47a1;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 28px;
+}
+
+.container {
+    max-width: 700px;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+.calculator {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+h2 {
+    text-align: center;
+    color: #0d47a1;
+    margin-bottom: 25px;
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 7px;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    font-size: 16px;
+}
+
+button {
+    width: 100%;
+    margin-top: 25px;
+    padding: 14px;
+    border: none;
+    border-radius: 7px;
+    background: #0d47a1;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #08306b;
+}
+
+.results {
+    margin-top: 25px;
+    display: grid;
+    gap: 12px;
+}
+
+.result-box {
+    background: #eef4ff;
+    padding: 18px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.result-box h3 {
+    margin: 0 0 8px;
+    color: #0d47a1;
+}
+
+.result-box p {
+    margin: 0;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+/* PDF BUTTON */
+
+#pdfButton {
+    background: #198754;
+}
+
+#pdfButton:hover:not(:disabled) {
+    background: #146c43;
+}
+
+#pdfButton:disabled {
+    background: #94a3b8;
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
+.back {
+    display: block;
+    text-align: center;
+    margin-top: 25px;
+    color: #0d47a1;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.seo-content {
+    margin-top: 35px;
+}
+
+.seo-content h2 {
+    text-align: left;
+    margin-top: 30px;
+}
+
+.seo-content p {
+    line-height: 1.7;
+}
+
+.related {
+    margin-top: 35px;
+    padding: 20px;
+    background: #f8fafc;
+    border-radius: 12px;
+}
+
+.related h2 {
+    text-align: left;
+    margin-top: 0;
+}
+
+.related a {
+    display: block;
+    margin: 12px 0;
+    color: #0d47a1;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.related a:hover {
+    text-decoration: underline;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+    font-size: 14px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>LoanMitraCalc</h1>
+</header>
+
+<div class="container">
+
+<div class="calculator">
+
+<h2>🚗 Car Loan EMI Calculator</h2>
+
+
+<!-- LOAN AMOUNT -->
+
+<label>Car Loan Amount (₹)</label>
+
+<input
+    type="number"
+    id="loanAmount"
+    placeholder="Example: 800000"
+    min="1"
+    step="0.01"
+>
+
+
+<!-- INTEREST RATE -->
+
+<label>Interest Rate (% per year)</label>
+
+<input
+    type="number"
+    id="interestRate"
+    placeholder="Example: 9"
+    min="0"
+    step="0.01"
+>
+
+
+<!-- TENURE -->
+
+<label>Loan Tenure (Years)</label>
+
+<input
+    type="number"
+    id="loanTenure"
+    placeholder="Example: 5"
+    min="0.1"
+    step="0.1"
+>
+
+
+<!-- CALCULATE -->
+
+<button
+    type="button"
+    onclick="calculateEMI()">
+    Calculate EMI
+</button>
+
+
+<!-- RESULTS -->
+
+<div class="results">
+
+<div class="result-box">
+
+<h3>Monthly EMI</h3>
+
+<p id="emi">₹0.00</p>
+
+</div>
+
+
+<div class="result-box">
+
+<h3>Total Interest</h3>
+
+<p id="totalInterest">₹0.00</p>
+
+</div>
+
+
+<div class="result-box">
+
+<h3>Interest per Year</h3>
+
+<p id="interestYear">₹0.00</p>
+
+</div>
+
+
+<div class="result-box">
+
+<h3>Interest per Month</h3>
+
+<p id="interestMonth">₹0.00</p>
+
+</div>
+
+
+<div class="result-box">
+
+<h3>Interest per Day</h3>
+
+<p id="interestDay">₹0.00</p>
+
+</div>
+
+
+<div class="result-box">
+
+<h3>Total Payment</h3>
+
+<p id="totalPayment">₹0.00</p>
+
+</div>
+
+</div>
+
+
+<!-- PDF BUTTON ALWAYS VISIBLE -->
+
+<button
+    type="button"
+    id="pdfButton"
+    onclick="downloadPDF()"
+    disabled>
+
+📄 Download Calculation
+
+</button>
+
+
+<!-- SEO CONTENT -->
+
+<section class="seo-content">
+
+<h2>Car Loan EMI Calculator</h2>
+
+<p>
+Our Car Loan EMI Calculator helps you estimate your monthly car loan EMI,
+total interest, interest breakdown and total repayment amount. Enter the
+loan amount, interest rate and loan tenure to calculate your estimated EMI
+quickly.
+</p>
+
+
+<h2>How Does a Car Loan EMI Calculator Work?</h2>
+
+<p>
+Car loan EMI depends on the loan amount, annual interest rate and loan
+tenure. A longer repayment period may reduce the monthly EMI, but it can
+increase the total interest payable.
+</p>
+
+
+<h2>Car Loan EMI Formula</h2>
+
+<p>
+EMI = P × R × (1 + R)<sup>N</sup> ÷
+((1 + R)<sup>N</sup> − 1)
+</p>
+
+<p>
+Here, P is the principal loan amount, R is the monthly interest rate and
+N is the total number of monthly instalments.
+</p>
+
+
+<h2>Example</h2>
+
+<p>
+For example, if you take a car loan of ₹8,00,000 at an annual interest rate
+of 9% for 5 years, this calculator estimates your monthly EMI, total
+interest and total repayment amount.
+</p>
+
+
+<h2>Important Note</h2>
+
+<p>
+The results provided by this calculator are estimates for informational
+purposes only. Actual EMI, interest rate, processing fees and other charges
+may vary depending on the lender and loan terms.
+</p>
+
+</section>
+
+
+<!-- RELATED CALCULATORS -->
+
+<section class="related">
+
+<h2>Related Calculators</h2>
+
+<a href="personal-loan.html">
+💰 Personal Loan EMI Calculator
+</a>
+
+<a href="home-loan.html">
+🏠 Home Loan EMI Calculator
+</a>
+
+<a href="sip-calculator.html">
+📈 SIP Calculator
+</a>
+
+<a href="gst-calculator.html">
+🧾 GST Calculator
+</a>
+
+<a href="percentage-calculator.html">
+% Percentage Calculator
+</a>
+
+<a href="age-calculator.html">
+🎂 Age Calculator
+</a>
+
+</section>
+
+
+<a
+    class="back"
+    href="index.html">
+
+← Back to Home
+
+</a>
+
+</div>
+
+</div>
+
+
+<footer>
+© 2026 LoanMitraCalc. All Rights Reserved.
+</footer>
+
+
+<script>
+
+let calculationData = null;
+
+
+/* MONEY FORMAT */
+
+function formatINR(amount) {
+
+    return "₹" + amount.toLocaleString("en-IN", {
+
+        minimumFractionDigits: 2,
+
+        maximumFractionDigits: 2
+
+    });
+
+}
+
+
+/* CALCULATE EMI */
+
+function calculateEMI() {
+
+    const principal =
+        parseFloat(
+            document.getElementById("loanAmount").value
+        );
+
+    const annualRate =
+        parseFloat(
+            document.getElementById("interestRate").value
+        );
+
+    const years =
+        parseFloat(
+            document.getElementById("loanTenure").value
+        );
+
+
+    /* VALIDATION */
+
+    if (
+
+        isNaN(principal) ||
+
+        isNaN(annualRate) ||
+
+        isNaN(years) ||
+
+        principal <= 0 ||
+
+        annualRate < 0 ||
+
+        years <= 0
+
+    ) {
+
+        alert("Please enter valid loan details.");
+
+        return;
+
+    }
+
+
+    /* MONTHS */
+
+    const months =
+        years * 12;
+
+
+    /* MONTHLY RATE */
+
+    const monthlyRate =
+        annualRate / 12 / 100;
+
+
+    let emi;
+
+
+    /* ZERO INTEREST */
+
+    if (monthlyRate === 0) {
+
+        emi =
+            principal / months;
+
+    }
+
+    else {
+
+        emi =
+            principal *
+            monthlyRate *
+            Math.pow(
+                1 + monthlyRate,
+                months
+            ) /
+            (
+                Math.pow(
+                    1 + monthlyRate,
+                    months
+                ) - 1
+            );
+
+    }
+
+
+    /* TOTAL PAYMENT */
+
+    const totalPayment =
+        emi * months;
+
+
+    /* TOTAL INTEREST */
+
+    const totalInterest =
+        totalPayment - principal;
+
+
+    /* INTEREST BREAKDOWN */
+
+    const interestYear =
+        totalInterest / years;
+
+    const interestMonth =
+        totalInterest / months;
+
+    const interestDay =
+        totalInterest / (years * 365);
+
+
+    /* SAVE DATA */
+
+    calculationData = {
+
+        principal: principal,
+
+        annualRate: annualRate,
+
+        years: years,
+
+        months: months,
+
+        emi: emi,
+
+        totalInterest: totalInterest,
+
+        interestYear: interestYear,
+
+        interestMonth: interestMonth,
+
+        interestDay: interestDay,
+
+        totalPayment: totalPayment
+
+    };
+
+
+    /* DISPLAY */
+
+    document.getElementById("emi").innerText =
+        formatINR(emi);
+
+    document.getElementById("totalInterest").innerText =
+        formatINR(totalInterest);
+
+    document.getElementById("interestYear").innerText =
+        formatINR(interestYear);
+
+    document.getElementById("interestMonth").innerText =
+        formatINR(interestMonth);
+
+    document.getElementById("interestDay").innerText =
+        formatINR(interestDay);
+
+    document.getElementById("totalPayment").innerText =
+        formatINR(totalPayment);
+
+
+    /* ENABLE PDF BUTTON */
+
+    document.getElementById("pdfButton").disabled =
+        false;
+
+}
+
+
+/* PDF */
+
+function downloadPDF() {
+
+    if (!calculationData) {
+
+        alert("Please calculate your loan first.");
+
+        return;
+
+    }
+
+
+    const { jsPDF } =
+        window.jspdf;
+
+
+    const doc =
+        new jsPDF();
+
+
+    const data =
+        calculationData;
+
+
+    const pageWidth =
+        doc.internal.pageSize.getWidth();
+
+
+    /* HEADER */
+
+    doc.setFillColor(
+        13,
+        71,
+        161
+    );
+
+    doc.rect(
+        0,
+        0,
+        pageWidth,
+        42,
+        "F"
+    );
+
+
+    doc.setTextColor(
+        255,
+        255,
+        255
+    );
+
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.setFontSize(22);
+
+    doc.text(
+        "LoanMitraCalc",
+        20,
+        18
+    );
+
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.setFontSize(13);
+
+    doc.text(
+        "Car Loan Calculation Report",
+        20,
+        29
+    );
+
+
+    /* DATE */
+
+    const today =
+        new Date();
+
+    const reportDate =
+        today.toLocaleDateString("en-IN");
+
+
+    doc.setFontSize(9);
+
+    doc.text(
+        "Report Date: " + reportDate,
+        20,
+        37
+    );
+
+
+    /* TEXT RESET */
+
+    doc.setTextColor(
+        31,
+        41,
+        55
+    );
+
+
+    /* LOAN DETAILS */
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.setFontSize(14);
+
+    doc.text(
+        "Loan Details",
+        20,
+        58
+    );
+
+
+    doc.setDrawColor(
+        203,
+        213,
+        225
+    );
+
+    doc.line(
+        20,
+        62,
+        190,
+        62
+    );
+
+
+    let y = 75;
+
+
+    doc.setFontSize(11);
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.text(
+        "Car Loan Amount",
+        25,
+        y
+    );
+
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.text(
+        "Rs. " +
+        data.principal.toLocaleString(
+            "en-IN",
+            {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }
+        ),
+        135,
+        y
+    );
+
+
+    y += 12;
+
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.text(
+        "Interest Rate",
+        25,
+        y
+    );
+
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.text(
+        data.annualRate.toFixed(2) +
+        "% per year",
+        135,
+        y
+    );
+
+
+    y += 12;
+
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.text(
+        "Loan Tenure",
+        25,
+        y
+    );
+
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.text(
+        data.years +
+        " Years",
+        135,
+        y
+    );
+
+
+    /* REPAYMENT SUMMARY */
+
+    y += 28;
+
+
+    doc.setFillColor(
+        238,
+        244,
+        255
+    );
+
+    doc.roundedRect(
+        20,
+        y - 8,
+        170,
+        65,
+        4,
+        4,
+        "F"
+    );
+
+
+    doc.setTextColor(
+        13,
+        71,
+        161
+    );
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.setFontSize(15);
+
+    doc.text(
+        "Repayment Summary",
+        27,
+        y + 4
+    );
+
+
+    y += 18;
+
+
+    doc.setTextColor(
+        31,
+        41,
+        55
+    );
+
+    doc.setFontSize(11);
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.text(
+        "Monthly EMI",
+        28,
+        y
+    );
+
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.text(
+        "Rs. " +
+        data.emi.toLocaleString(
+            "en-IN",
+            {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }
+        ),
+        135,
+        y
+    );
+
+
+    y += 12;
+
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.text(
+        "Total Interest",
+        28,
+        y
+    );
+
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.text(
+        "Rs. " +
+        data.totalInterest.toLocaleString(
+            "en-IN",
+            {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }
+        ),
+        135,
+        y
+    );
+
+
+    y += 12;
+
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.text(
+        "Total Payment",
+        28,
+        y
+    );
+
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.text(
+        "Rs. " +
+        data.totalPayment.toLocaleString(
+            "en-IN",
+            {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }
+        ),
+        135,
+        y
+    );
+
+
+    /* INTEREST BREAKDOWN */
+
+    y += 30;
+
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.setFontSize(14);
+
+    doc.text(
+        "Interest Breakdown",
+        20,
+        y
+    );
+
+
+    y += 12;
+
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.setFontSize(11);
+
+    doc.text(
+        "Interest per Year",
+        25,
+        y
+    );
+
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.text(
+        "Rs. " +
+        data.interestYear.toLocaleString(
+            "en-IN",
+            {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }
+        ),
+        135,
+        y
+    );
+
+
+    y += 11;
+
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.text(
+        "Interest per Month",
+        25,
+        y
+    );
+
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.text(
+        "Rs. " +
+        data.interestMonth.toLocaleString(
+            "en-IN",
+            {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }
+        ),
+        135,
+        y
+    );
+
+
+    y += 11;
+
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.text(
+        "Interest per Day",
+        25,
+        y
+    );
+
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.text(
+        "Rs. " +
+        data.interestDay.toLocaleString(
+            "en-IN",
+            {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }
+        ),
+        135,
+        y
+    );
+
+
+    /* IMPORTANT NOTE */
+
+    y += 25;
+
+
+    doc.setDrawColor(
+        203,
+        213,
+        225
+    );
+
+    doc.line(
+        20,
+        y,
+        190,
+        y
+    );
+
+
+    y += 12;
+
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.setFontSize(10);
+
+    doc.text(
+        "Important Note",
+        20,
+        y
+    );
+
+
+    y += 8;
+
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.setFontSize(9);
+
+    doc.text(
+        "This report is an estimate for informational purposes only.",
+        20,
+        y
+    );
+
+
+    y += 6;
+
+
+    doc.text(
+        "Actual loan terms, fees and interest may vary by lender.",
+        20,
+        y
+    );
+
+
+    y += 6;
+
+
+    doc.text(
+        "Please check the lender's final repayment schedule before taking a loan.",
+        20,
+        y
+    );
+
+
+    /* FOOTER */
+
+    doc.setFillColor(
+        13,
+        71,
+        161
+    );
+
+    doc.rect(
+        0,
+        280,
+        pageWidth,
+        17,
+        "F"
+    );
+
+
+    doc.setTextColor(
+        255,
+        255,
+        255
+    );
+
+    doc.setFontSize(9);
+
+    doc.text(
+        "LoanMitraCalc | Car Loan Calculator",
+        20,
+        290
+    );
+
+
+    /* SAVE */
+
+    doc.save(
+        "LoanMitraCalc-Car-Loan-Report.pdf"
+    );
+
+}
+
+</script>
+
+</body>
+</html>

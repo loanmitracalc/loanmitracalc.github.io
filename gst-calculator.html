@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GST Calculator - LoanMitraCalc</title>
+
+<meta name="description" content="Use LoanMitraCalc's free GST Calculator to calculate GST amount, tax-inclusive price and tax-exclusive price quickly and easily.">
+
+<meta name="keywords" content="GST calculator, GST calculation, GST tax calculator, GST inclusive calculator, GST exclusive calculator">
+
+<meta name="robots" content="index, follow">
+
+<link rel="canonical" href="https://loanmitracalc.github.io/loanmitracalc/gst-calculator.html">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        header {
+            background: #0d47a1;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .calculator {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #0d47a1;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            border: none;
+            border-radius: 7px;
+            background: #0d47a1;
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #08306b;
+        }
+
+        .results {
+            margin-top: 25px;
+            display: grid;
+            gap: 12px;
+        }
+
+        .result-box {
+            background: #eef4ff;
+            padding: 18px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .result-box h3 {
+            margin: 0 0 8px;
+            color: #0d47a1;
+        }
+
+        .result-box p {
+            margin: 0;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 25px;
+            color: #0d47a1;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>LoanMitraCalc</h1>
+</header>
+
+<div class="container">
+
+    <div class="calculator">
+
+        <h2>GST Calculator</h2>
+
+        <label>Amount (₹)</label>
+        <input type="number" id="amount" placeholder="Example: 10000">
+
+        <label>GST Rate (%)</label>
+        <select id="gstRate">
+            <option value="5">5%</option>
+            <option value="12">12%</option>
+            <option value="18" selected>18%</option>
+            <option value="28">28%</option>
+        </select>
+
+        <label>Calculation Type</label>
+        <select id="calculationType">
+            <option value="add">Add GST to Amount</option>
+            <option value="remove">Remove GST from Amount</option>
+        </select>
+
+        <button onclick="calculateGST()">Calculate GST</button>
+
+        <div class="results">
+
+            <div class="result-box">
+                <h3>Original Amount</h3>
+                <p id="originalAmount">₹0.00</p>
+            </div>
+
+            <div class="result-box">
+                <h3>GST Amount</h3>
+                <p id="gstAmount">₹0.00</p>
+            </div>
+
+            <div class="result-box">
+                <h3>Final Amount</h3>
+                <p id="finalAmount">₹0.00</p>
+            </div>
+
+        </div>
+
+        <a class="back" href="index.html">← Back to Home</a>
+<section class="seo-content">
+
+<h2>GST Calculator</h2>
+
+<p>
+Our GST Calculator helps you quickly calculate GST amount, GST-inclusive
+price and GST-exclusive price. Enter the amount and GST rate to get an
+estimated result instantly.
+</p>
+
+<h2>How Does a GST Calculator Work?</h2>
+
+<p>
+A GST calculator calculates the Goods and Services Tax based on the
+amount and applicable GST rate. It can help you understand the GST
+amount and the final price of a product or service.
+</p>
+
+<h2>GST Calculation Formula</h2>
+
+<p>
+GST Amount = Original Amount × GST Rate ÷ 100
+</p>
+
+<p>
+For a GST-inclusive amount, the GST component can be calculated from the
+total price and applicable GST rate.
+</p>
+
+<h2>Example</h2>
+
+<p>
+For example, if the original price is ₹10,000 and the GST rate is 18%,
+the GST amount would be ₹1,800 and the total price including GST would
+be ₹11,800.
+</p>
+
+<h2>Important Note</h2>
+
+<p>
+GST calculator results are provided for informational purposes only.
+The actual tax applicable may depend on the product, service, applicable
+GST rate and current tax rules.
+</p>
+
+</section>
+    </div>
+
+</div>
+
+<footer>
+    © 2026 LoanMitraCalc. All Rights Reserved.
+</footer>
+
+<script>
+
+function formatRupee(number) {
+    return "₹" + number.toLocaleString("en-IN", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
+}
+
+function calculateGST() {
+
+    let amount = parseFloat(document.getElementById("amount").value);
+    let gstRate = parseFloat(document.getElementById("gstRate").value);
+    let type = document.getElementById("calculationType").value;
+
+    if (isNaN(amount) || amount <= 0) {
+        alert("Please enter a valid amount.");
+        return;
+    }
+
+    let originalAmount;
+    let gstAmount;
+    let finalAmount;
+
+    if (type === "add") {
+
+        originalAmount = amount;
+        gstAmount = amount * gstRate / 100;
+        finalAmount = amount + gstAmount;
+
+    } else {
+
+        finalAmount = amount;
+        originalAmount = amount / (1 + gstRate / 100);
+        gstAmount = amount - originalAmount;
+
+    }
+
+    document.getElementById("originalAmount").innerText =
+        formatRupee(originalAmount);
+
+    document.getElementById("gstAmount").innerText =
+        formatRupee(gstAmount);
+
+    document.getElementById("finalAmount").innerText =
+        formatRupee(finalAmount);
+}
+
+</script>
+
+</body>
+</html>

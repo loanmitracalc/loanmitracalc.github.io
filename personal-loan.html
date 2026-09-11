@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Personal Loan EMI Calculator - LoanMitraCalc</title>
+
+<meta name="description" content="Calculate Personal Loan EMI, total interest and total repayment amount easily with LoanMitraCalc's free Personal Loan EMI Calculator.">
+
+<meta name="keywords" content="personal loan calculator, personal loan EMI calculator, EMI calculator, personal loan interest calculator">
+
+<meta name="robots" content="index, follow">
+
+<link rel="canonical" href="https://loanmitracalc.github.io/loanmitracalc/personal-loan.html">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    color: #1f2937;
+}
+
+header {
+    background: #0f172a;
+    color: white;
+    padding: 18px 6%;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.container {
+    max-width: 600px;
+    margin: 35px auto;
+    padding: 25px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+h1 {
+    text-align: center;
+}
+
+.subtitle {
+    text-align: center;
+    color: #64748b;
+}
+
+.input-box {
+    margin-top: 18px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 7px;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 16px;
+    background: white;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 22px;
+    border: none;
+    border-radius: 8px;
+    background: #2563eb;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #1d4ed8;
+}
+
+/* PDF BUTTON */
+
+#pdfButton {
+    background: #16a34a;
+    cursor: pointer;
+}
+
+#pdfButton:hover:not(:disabled) {
+    background: #15803d;
+}
+
+#pdfButton:disabled {
+    background: #94a3b8;
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
+.results {
+    margin-top: 25px;
+}
+
+.result {
+    background: #f1f5f9;
+    padding: 18px;
+    margin-top: 10px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.result span:last-child {
+    font-weight: bold;
+    text-align: right;
+}
+
+.interest-details {
+    margin-top: 15px;
+    background: #eef2ff;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.interest-details div {
+    display: flex;
+    justify-content: space-between;
+    padding: 7px 0;
+}
+
+.interest-details span:last-child {
+    font-weight: bold;
+}
+
+.back {
+    display: block;
+    margin-top: 25px;
+    text-align: center;
+    text-decoration: none;
+    color: #2563eb;
+}
+
+.seo-content {
+    margin-top: 35px;
+    line-height: 1.7;
+}
+
+.seo-content h2 {
+    margin-top: 25px;
+}
+
+.related {
+    margin-top: 35px;
+    padding: 20px;
+    background: #f8fafc;
+    border-radius: 12px;
+}
+
+.related a {
+    display: block;
+    margin: 10px 0;
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.related a:hover {
+    text-decoration: underline;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">LoanMitraCalc</div>
+</header>
+
+<div class="container">
+
+<h1>💰 Personal Loan EMI Calculator</h1>
+
+<p class="subtitle">
+Calculate your Personal Loan EMI easily
+</p>
+
+
+<!-- LOAN AMOUNT -->
+
+<div class="input-box">
+
+<label>Loan Amount (₹)</label>
+
+<input
+    type="number"
+    id="loanAmount"
+    placeholder="Example: 500000"
+    min="1"
+>
+
+</div>
+
+
+<!-- INTEREST RATE -->
+
+<div class="input-box">
+
+<label>Interest Rate</label>
+
+<select id="interestType">
+
+    <option value="year">% per Year</option>
+
+    <option value="month">% per Month</option>
+
+    <option value="day">% per Day</option>
+
+</select>
+
+<input
+    type="number"
+    id="interestRate"
+    placeholder="Example: 12"
+    step="0.01"
+    min="0"
+>
+
+</div>
+
+
+<!-- TENURE -->
+
+<div class="input-box">
+
+<label>Loan Tenure</label>
+
+<select id="tenureType">
+
+    <option value="years">Years</option>
+
+    <option value="months">Months</option>
+
+    <option value="days">Days</option>
+
+</select>
+
+<input
+    type="number"
+    id="loanTenure"
+    placeholder="Example: 5"
+    min="1"
+    step="0.01"
+>
+
+</div>
+
+
+<!-- CALCULATE -->
+
+<button
+    type="button"
+    onclick="calculateEMI()">
+    Calculate EMI
+</button>
+
+
+<!-- RESULTS -->
+
+<div class="results">
+
+    <div class="result">
+
+        <span id="emiLabel">
+            Monthly EMI
+        </span>
+
+        <span id="emi">
+            ₹0
+        </span>
+
+    </div>
+
+
+    <div class="result">
+
+        <span>
+            Total Interest
+        </span>
+
+        <span id="interest">
+            ₹0
+        </span>
+
+    </div>
+
+
+    <div class="interest-details">
+
+        <div>
+
+            <span>
+                Interest per Year
+            </span>
+
+            <span id="interestYear">
+                ₹0
+            </span>
+
+        </div>
+
+
+        <div>
+
+            <span>
+                Interest per Month
+            </span>
+
+            <span id="interestMonth">
+                ₹0
+            </span>
+
+        </div>
+
+
+        <div>
+
+            <span>
+                Interest per Day
+            </span>
+
+            <span id="interestDay">
+                ₹0
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="result">
+
+        <span>
+            Total Payment
+        </span>
+
+        <span id="payment">
+            ₹0
+        </span>
+
+    </div>
+
+</div>
+
+
+<!-- PDF BUTTON ALWAYS VISIBLE -->
+
+<button
+    type="button"
+    id="pdfButton"
+    onclick="downloadPDF()"
+    disabled>
+    📄 Download Calculation
+</button>
+
+
+<a
+    class="back"
+    href="index.html">
+    ← Back to Home
+</a>
+
+
+<!-- SEO CONTENT -->
+
+<section class="seo-content">
+
+<h2>Personal Loan EMI Calculator</h2>
+
+<p>
+Our Personal Loan EMI Calculator helps you estimate your loan repayment,
+interest and EMI based on the loan amount, interest rate and loan tenure.
+You can select interest rate per year, month or day and choose loan tenure
+in years, months or days.
+</p>
+
+
+<h2>Personal Loan Interest Calculation</h2>
+
+<p>
+The calculator provides an estimated interest amount for the selected
+loan period. It also displays the estimated interest per year, month and
+day for easier understanding.
+</p>
+
+
+<h2>Loan Tenure Options</h2>
+
+<p>
+You can select loan tenure in years, months or days. For years or months,
+the calculator displays an estimated Monthly EMI. When days are selected,
+it displays an estimated Daily EMI.
+</p>
+
+
+<h2>How to Use Personal Loan Calculator</h2>
+
+<p>
+Enter the loan amount, select the interest rate type, enter the interest
+rate and choose the loan tenure. Then click the Calculate EMI button to
+view the estimated repayment details.
+</p>
+
+
+<h2>Important Note</h2>
+
+<p>
+The results shown by this calculator are estimates for informational
+purposes only. Actual loan interest, EMI, processing fees, charges and
+repayment terms may vary depending on the lender and loan agreement.
+Year, month and day conversions use standard approximate periods.
+</p>
+
+</section>
+
+
+<!-- RELATED CALCULATORS -->
+
+<section class="related">
+
+<h2>Related Calculators</h2>
+
+<a href="home-loan.html">
+🏠 Home Loan EMI Calculator
+</a>
+
+<a href="car-loan.html">
+🚗 Car Loan EMI Calculator
+</a>
+
+<a href="sip-calculator.html">
+📈 SIP Calculator
+</a>
+
+<a href="gst-calculator.html">
+🧾 GST Calculator
+</a>
+
+<a href="percentage-calculator.html">
+% Percentage Calculator
+</a>
+
+<a href="age-calculator.html">
+🎂 Age Calculator
+</a>
+
+</section>
+
+</div>
+
+
+<script>
+
+let loanCalculation = null;
+
+
+/* MONEY FORMAT */
+
+function formatMoney(amount) {
+
+    return "Rs. " + amount.toLocaleString("en-IN", {
+
+        minimumFractionDigits: 2,
+
+        maximumFractionDigits: 2
+
+    });
+
+}
+
+
+/* CALCULATE EMI */
+
+function calculateEMI() {
+
+    const principal =
+        parseFloat(
+            document.getElementById("loanAmount").value
+        );
+
+    const interestRate =
+        parseFloat(
+            document.getElementById("interestRate").value
+        );
+
+    const tenureValue =
+        parseFloat(
+            document.getElementById("loanTenure").value
+        );
+
+    const interestType =
+        document.getElementById("interestType").value;
+
+    const tenureType =
+        document.getElementById("tenureType").value;
+
+
+    /* VALIDATION */
+
+    if (
+
+        isNaN(principal) ||
+
+        isNaN(interestRate) ||
+
+        isNaN(tenureValue) ||
+
+        principal <= 0 ||
+
+        interestRate < 0 ||
+
+        tenureValue <= 0
+
+    ) {
+
+        alert("Please enter valid values.");
+
+        return;
+
+    }
+
+
+    /* TENURE TO DAYS */
+
+    let totalDays;
+
+
+    if (tenureType === "years") {
+
+        totalDays =
+            tenureValue * 365;
+
+    }
+
+    else if (tenureType === "months") {
+
+        totalDays =
+            tenureValue * 30;
+
+    }
+
+    else {
+
+        totalDays =
+            tenureValue;
+
+    }
+
+
+    /* DAILY INTEREST RATE */
+
+    let dailyRate;
+
+
+    if (interestType === "year") {
+
+        dailyRate =
+            interestRate / 365 / 100;
+
+    }
+
+    else if (interestType === "month") {
+
+        dailyRate =
+            interestRate / 30 / 100;
+
+    }
+
+    else {
+
+        dailyRate =
+            interestRate / 100;
+
+    }
+
+
+    /* TOTAL INTEREST */
+
+    const totalInterest =
+        principal *
+        dailyRate *
+        totalDays;
+
+
+    /* TOTAL PAYMENT */
+
+    const totalPayment =
+        principal +
+        totalInterest;
+
+
+    /* EMI */
+
+    let emi;
+
+    let emiLabel;
+
+
+    if (tenureType === "days") {
+
+        emi =
+            totalPayment /
+            totalDays;
+
+        emiLabel =
+            "Daily EMI";
+
+    }
+
+    else {
+
+        const totalMonths =
+            totalDays / 30;
+
+        emi =
+            totalPayment /
+            totalMonths;
+
+        emiLabel =
+            "Monthly EMI";
+
+    }
+
+
+    /* INTEREST BREAKDOWN */
+
+    const interestPerDay =
+        totalInterest /
+        totalDays;
+
+    const interestPerMonth =
+        interestPerDay *
+        30;
+
+    const interestPerYear =
+        interestPerDay *
+        365;
+
+
+    /* SAVE CALCULATION */
+
+    loanCalculation = {
+
+        principal,
+
+        interestRate,
+
+        interestType,
+
+        tenureValue,
+
+        tenureType,
+
+        emi,
+
+        emiLabel,
+
+        totalInterest,
+
+        interestPerYear,
+
+        interestPerMonth,
+
+        interestPerDay,
+
+        totalPayment
+
+    };
+
+
+    /* DISPLAY RESULTS */
+
+    document.getElementById("emiLabel").innerText =
+        emiLabel;
+
+    document.getElementById("emi").innerText =
+        formatMoney(emi);
+
+    document.getElementById("interest").innerText =
+        formatMoney(totalInterest);
+
+    document.getElementById("interestYear").innerText =
+        formatMoney(interestPerYear);
+
+    document.getElementById("interestMonth").innerText =
+        formatMoney(interestPerMonth);
+
+    document.getElementById("interestDay").innerText =
+        formatMoney(interestPerDay);
+
+    document.getElementById("payment").innerText =
+        formatMoney(totalPayment);
+
+
+    /* ENABLE PDF BUTTON */
+
+    const pdfButton =
+        document.getElementById("pdfButton");
+
+    pdfButton.disabled = false;
+
+}
+
+
+/* INTEREST TYPE TEXT */
+
+function getInterestTypeText(type) {
+
+    if (type === "year") {
+
+        return "% per Year";
+
+    }
+
+    if (type === "month") {
+
+        return "% per Month";
+
+    }
+
+    return "% per Day";
+
+}
+
+
+/* TENURE TYPE TEXT */
+
+function getTenureTypeText(type) {
+
+    if (type === "years") {
+
+        return "Years";
+
+    }
+
+    if (type === "months") {
+
+        return "Months";
+
+    }
+
+    return "Days";
+
+}
+
+
+/* DOWNLOAD PDF */
+
+function downloadPDF() {
+
+    if (!loanCalculation) {
+
+        alert("Please calculate the loan first.");
+
+        return;
+
+    }
+
+
+    const { jsPDF } =
+        window.jspdf;
+
+
+    const doc =
+        new jsPDF();
+
+
+    const data =
+        loanCalculation;
+
+
+    const pageWidth =
+        doc.internal.pageSize.getWidth();
+
+
+    /* HEADER */
+
+    doc.setFillColor(
+        15,
+        23,
+        42
+    );
+
+    doc.rect(
+        0,
+        0,
+        pageWidth,
+        42,
+        "F"
+    );
+
+
+    doc.setTextColor(
+        255,
+        255,
+        255
+    );
+
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.setFontSize(22);
+
+    doc.text(
+        "LoanMitraCalc",
+        20,
+        18
+    );
+
+
+    doc.setFontSize(13);
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.text(
+        "Personal Loan Calculation Report",
+        20,
+        29
+    );
+
+
+    /* DATE */
+
+    const today =
+        new Date();
+
+    const dateText =
+        today.toLocaleDateString(
+            "en-IN"
+        );
+
+
+    doc.setFontSize(9);
+
+    doc.text(
+        "Report Date: " + dateText,
+        20,
+        37
+    );
+
+
+    /* RESET TEXT */
+
+    doc.setTextColor(
+        31,
+        41,
+        55
+    );
+
+
+    /* LOAN DETAILS */
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.setFontSize(14);
+
+    doc.text(
+        "Loan Details",
+        20,
+        58
+    );
+
+
+    doc.setDrawColor(
+        203,
+        213,
+        225
+    );
+
+    doc.line(
+        20,
+        62,
+        190,
+        62
+    );
+
+
+    let y = 75;
+
+
+    doc.setFontSize(11);
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.text(
+        "Loan Amount",
+        25,
+        y
+    );
+
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.text(
+        formatMoney(data.principal),
+        135,
+        y
+    );
+
+
+    y += 12;
+
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.text(
+        "Interest Rate",
+        25,
+        y
+    );
+
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.text(
+        data.interestRate +
+        " " +
+        getInterestTypeText(data.interestType),
+        135,
+        y
+    );
+
+
+    y += 12;
+
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.text(
+        "Loan Tenure",
+        25,
+        y
+    );
+
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.text(
+        data.tenureValue +
+        " " +
+        getTenureTypeText(data.tenureType),
+        135,
+        y
+    );
+
+
+    /* REPAYMENT SUMMARY */
+
+    y += 28;
+
+
+    doc.setFillColor(
+        241,
+        245,
+        249
+    );
+
+
+    doc.roundedRect(
+        20,
+        y - 8,
+        170,
+        65,
+        4,
+        4,
+        "F"
+    );
+
+
+    doc.setTextColor(
+        15,
+        23,
+        42
+    );
+
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.setFontSize(15);
+
+    doc.text(
+        "Repayment Summary",
+        27,
+        y + 4
+    );
+
+
+    y += 18;
+
+
+    doc.setFontSize(11);
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.text(
+        data.emiLabel,
+        28,
+        y
+    );
+
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.text(
+        formatMoney(data.emi),
+        135,
+        y
+    );
+
+
+    y += 12;
+
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.text(
+        "Total Interest",
+        28,
+        y
+    );
+
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.text(
+        formatMoney(data.totalInterest),
+        135,
+        y
+    );
+
+
+    y += 12;
+
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.text(
+        "Total Payment",
+        28,
+        y
+    );
+
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.text(
+        formatMoney(data.totalPayment),
+        135,
+        y
+    );
+
+
+    /* INTEREST BREAKDOWN */
+
+    y += 30;
+
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.setFontSize(14);
+
+    doc.text(
+        "Interest Breakdown",
+        20,
+        y
+    );
+
+
+    y += 12;
+
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.setFontSize(11);
+
+    doc.text(
+        "Interest per Year",
+        25,
+        y
+    );
+
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.text(
+        formatMoney(data.interestPerYear),
+        135,
+        y
+    );
+
+
+    y += 11;
+
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.text(
+        "Interest per Month",
+        25,
+        y
+    );
+
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.text(
+        formatMoney(data.interestPerMonth),
+        135,
+        y
+    );
+
+
+    y += 11;
+
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.text(
+        "Interest per Day",
+        25,
+        y
+    );
+
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.text(
+        formatMoney(data.interestPerDay),
+        135,
+        y
+    );
+
+
+    /* IMPORTANT NOTE */
+
+    y += 25;
+
+
+    doc.setDrawColor(
+        203,
+        213,
+        225
+    );
+
+    doc.line(
+        20,
+        y,
+        190,
+        y
+    );
+
+
+    y += 12;
+
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.setFontSize(10);
+
+    doc.text(
+        "Important Note",
+        20,
+        y
+    );
+
+
+    y += 8;
+
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.setFontSize(9);
+
+    doc.text(
+        "This report provides estimated calculations for informational purposes only.",
+        20,
+        y
+    );
+
+
+    y += 6;
+
+
+    doc.text(
+        "Actual loan terms, interest, fees and charges may vary by lender.",
+        20,
+        y
+    );
+
+
+    y += 6;
+
+
+    doc.text(
+        "Year, month and day conversions use standard approximate periods.",
+        20,
+        y
+    );
+
+
+    /* FOOTER */
+
+    doc.setFillColor(
+        15,
+        23,
+        42
+    );
+
+    doc.rect(
+        0,
+        280,
+        pageWidth,
+        17,
+        "F"
+    );
+
+
+    doc.setTextColor(
+        255,
+        255,
+        255
+    );
+
+    doc.setFontSize(9);
+
+    doc.text(
+        "LoanMitraCalc | Personal Loan Calculator",
+        20,
+        290
+    );
+
+
+    /* SAVE PDF */
+
+    doc.save(
+        "LoanMitraCalc-Personal-Loan-Report.pdf"
+    );
+
+}
+
+</script>
+
+</body>
+</html>

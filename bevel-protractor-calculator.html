@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Bevel Protractor Calculator - 5 Minute</title>
+
+<meta
+name="description"
+content="Universal Bevel Protractor Calculator with 5 minute least count. Calculate minimum and maximum angle readings easily."
+>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7fb;
+    color:#222;
+}
+
+
+/* HEADER */
+
+header{
+    background:#111827;
+    color:white;
+    padding:18px;
+}
+
+.header{
+    max-width:900px;
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+}
+
+.logo{
+    font-size:24px;
+    font-weight:bold;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin:0 8px;
+}
+
+
+/* CONTAINER */
+
+.container{
+    max-width:700px;
+    margin:30px auto;
+    padding:15px;
+}
+
+h1{
+    text-align:center;
+}
+
+.subtitle{
+    text-align:center;
+    color:#555;
+}
+
+
+/* BEVEL PROTRACTOR IMAGE */
+
+.instrument-image{
+    background:white;
+    padding:8px;
+    border-radius:14px;
+    box-shadow:0 4px 15px rgba(0,0,0,.08);
+    margin-top:25px;
+    text-align:center;
+    overflow:hidden;
+}
+
+.instrument-image img{
+    width:100%;
+    max-width:300px;
+    height:180px;
+    object-fit:cover;
+    object-position:center;
+    border-radius:8px;
+    display:block;
+    margin:auto;
+}
+
+.image-caption{
+    margin-top:10px;
+    color:#555;
+    font-size:14px;
+}
+
+
+/* CALCULATOR */
+
+.calculator{
+    background:white;
+    padding:25px;
+    border-radius:14px;
+    box-shadow:0 4px 15px rgba(0,0,0,.08);
+    margin-top:25px;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin-top:15px;
+    margin-bottom:7px;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:17px;
+}
+
+
+/* BUTTON */
+
+button{
+    width:100%;
+    margin-top:22px;
+    padding:14px;
+    border:0;
+    border-radius:8px;
+    background:#111827;
+    color:white;
+    font-size:17px;
+    cursor:pointer;
+}
+
+button:hover{
+    opacity:.9;
+}
+
+
+/* DOWNLOAD BUTTON */
+
+.download-btn{
+    background:#166534;
+    display:none;
+}
+
+
+/* RESULT */
+
+.result{
+    display:none;
+    margin-top:25px;
+    padding:20px;
+    background:#f0fdf4;
+    border-radius:10px;
+    border:1px solid #bbf7d0;
+}
+
+.answer{
+    font-size:22px;
+    font-weight:bold;
+    padding:12px 0;
+}
+
+
+/* EXAMPLE */
+
+.example{
+    margin-top:25px;
+    padding:18px;
+    background:#eff6ff;
+    border:1px solid #bfdbfe;
+    border-radius:10px;
+}
+
+.example h3{
+    margin-top:0;
+}
+
+.example p{
+    line-height:1.6;
+}
+
+
+/* NOTE */
+
+.note{
+    margin-top:20px;
+    background:#f3f4f6;
+    padding:15px;
+    border-radius:8px;
+    line-height:1.6;
+}
+
+
+/* FOOTER */
+
+footer{
+    margin-top:40px;
+    padding:25px;
+    text-align:center;
+    background:#111827;
+    color:white;
+}
+
+footer a{
+    color:white;
+    margin:5px;
+}
+
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+    .container{
+        margin-top:15px;
+    }
+
+    .calculator{
+        padding:18px;
+    }
+
+    .instrument-image{
+        padding:8px;
+    }
+
+    .instrument-image img{
+        max-width:300px;
+        height:180px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- HEADER -->
+
+<header>
+
+<div class="header">
+
+<div class="logo">
+LoanMitraCalc
+</div>
+
+<nav>
+
+<a href="index.html">
+Home
+</a>
+
+<a href="index.html#calculators">
+Calculators
+</a>
+
+</nav>
+
+</div>
+
+</header>
+
+
+
+<div class="container">
+
+
+<h1>
+Bevel Protractor Calculator
+</h1>
+
+
+<p class="subtitle">
+Universal Bevel Protractor - 5′ Least Count
+</p>
+
+
+
+<!-- BEVEL PROTRACTOR IMAGE -->
+
+<div class="instrument-image">
+
+<img
+src="https://commons.wikimedia.org/wiki/Special:FilePath/Universal_bevel_protractor.jpg?width=900"
+alt="Universal Bevel Protractor"
+loading="lazy"
+>
+
+<div class="image-caption">
+
+<strong>
+Universal Bevel Protractor
+</strong>
+
+<br>
+
+0–360° angle measurement instrument
+
+</div>
+
+</div>
+
+
+
+<!-- CALCULATOR -->
+
+<div class="calculator">
+
+
+<h2>
+Enter Angle Reading
+</h2>
+
+
+
+<!-- MAIN SCALE -->
+
+<label for="degree">
+
+Main Scale Reading (Degree °)
+
+</label>
+
+
+<input
+type="number"
+id="degree"
+min="0"
+max="359"
+step="1"
+value="1"
+>
+
+
+
+<!-- MINUTE SCALE -->
+
+<label for="minute">
+
+Main Minute Scale Reading (′)
+
+</label>
+
+
+<input
+type="number"
+id="minute"
+min="0"
+max="55"
+step="5"
+value="5"
+>
+
+
+
+<!-- TOLERANCE -->
+
+<label for="tolerance">
+
+± Tolerance (Minute ′)
+
+</label>
+
+
+<input
+type="number"
+id="tolerance"
+min="0"
+step="5"
+value="5"
+>
+
+
+
+<!-- CALCULATE -->
+
+<button onclick="calculate()">
+
+Calculate
+
+</button>
+
+
+
+<!-- RESULT -->
+
+<div
+class="result"
+id="result"
+>
+
+<div
+class="answer"
+id="minimum"
+></div>
+
+
+<div
+class="answer"
+id="maximum"
+></div>
+
+</div>
+
+
+
+<!-- DOWNLOAD -->
+
+<button
+class="download-btn"
+id="downloadButton"
+onclick="downloadResult()"
+>
+
+Download Result
+
+</button>
+
+
+
+<!-- EXAMPLE -->
+
+<div class="example">
+
+
+<h3>
+Example / How to Understand
+</h3>
+
+
+<p>
+Suppose the Bevel Protractor reading is:
+</p>
+
+
+<p>
+
+<strong>
+Main Scale Reading = 1°
+</strong>
+
+<br>
+
+<strong>
+Main Minute Scale Reading = 5′
+</strong>
+
+<br>
+
+<strong>
+Base Reading = 1° 5′
+</strong>
+
+<br>
+
+<strong>
+Least Count = 5′
+</strong>
+
+</p>
+
+
+
+<p>
+
+<strong>
+5′ Least Count
+</strong>
+
+means the instrument reading
+is taken in 5-minute steps:
+
+</p>
+
+
+<p>
+
+<strong>
+
+0′, 5′, 10′, 15′, 20′, 25′,
+30′, 35′, 40′, 45′, 50′, 55′
+
+</strong>
+
+</p>
+
+
+
+<p>
+
+<strong>
+Important:
+</strong>
+
+1° = 60′.
+
+When the minute reading reaches
+60′, it becomes the next degree.
+
+</p>
+
+
+</div>
+
+
+
+<!-- NOTE -->
+
+<div class="note">
+
+
+<strong>
+5′ Least Count:
+</strong>
+
+
+<br>
+
+
+Valid minute readings are:
+
+0′, 5′, 10′, 15′, 20′, 25′,
+30′, 35′, 40′, 45′, 50′ and 55′.
+
+
+<br>
+<br>
+
+
+<strong>
+Example:
+</strong>
+
+
+<br>
+
+
+11° 55′ + 5′ = 12° 0′
+
+
+<br>
+<br>
+
+
+11° 0′ − 5′ = 10° 55′
+
+
+</div>
+
+
+</div>
+
+</div>
+
+
+
+<!-- FOOTER -->
+
+<footer>
+
+
+<p>
+
+© 2026 LoanMitraCalc. All Rights Reserved.
+
+</p>
+
+
+<p>
+
+<a href="privacy-policy.html">
+Privacy Policy
+</a>
+
+|
+
+<a href="disclaimer.html">
+Disclaimer
+</a>
+
+|
+
+<a href="terms-conditions.html">
+Terms & Conditions
+</a>
+
+</p>
+
+
+</footer>
+
+
+
+<script>
+
+
+/* FORMAT ANGLE */
+
+function formatAngle(totalMinutes){
+
+    let degree =
+        Math.floor(totalMinutes / 60);
+
+    let minute =
+        totalMinutes % 60;
+
+    return degree + "° " + minute + "′";
+
+}
+
+
+
+/* CALCULATION */
+
+function calculate(){
+
+    let degree =
+        parseInt(
+            document.getElementById("degree").value
+        );
+
+
+    let minute =
+        parseInt(
+            document.getElementById("minute").value
+        );
+
+
+    let tolerance =
+        parseInt(
+            document.getElementById("tolerance").value
+        );
+
+
+
+    /* CHECK EMPTY VALUES */
+
+    if(
+        isNaN(degree) ||
+        isNaN(minute) ||
+        isNaN(tolerance)
+    ){
+
+        alert(
+            "Please enter all values."
+        );
+
+        return;
+
+    }
+
+
+
+    /* DEGREE CHECK */
+
+    if(
+        degree < 0 ||
+        degree > 359
+    ){
+
+        alert(
+            "Degree must be between 0 and 359."
+        );
+
+        return;
+
+    }
+
+
+
+    /* MINUTE CHECK */
+
+    if(
+        minute < 0 ||
+        minute > 55 ||
+        minute % 5 !== 0
+    ){
+
+        alert(
+            "Minute must be in 5′ steps: 0, 5, 10, 15 ... 55."
+        );
+
+        return;
+
+    }
+
+
+
+    /* TOLERANCE CHECK */
+
+    if(
+        tolerance < 0 ||
+        tolerance % 5 !== 0
+    ){
+
+        alert(
+            "Tolerance must be in 5′ steps."
+        );
+
+        return;
+
+    }
+
+
+
+    /*
+       1 degree = 60 minutes
+    */
+
+    let totalMinutes =
+        (degree * 60) + minute;
+
+
+
+    /*
+       MINIMUM
+    */
+
+    let minimum =
+        totalMinutes - tolerance;
+
+
+
+    /*
+       MAXIMUM
+    */
+
+    let maximum =
+        totalMinutes + tolerance;
+
+
+
+    /* MINIMUM LIMIT */
+
+    if(
+        minimum < 0
+    ){
+
+        minimum = 0;
+
+    }
+
+
+
+    /* MAXIMUM LIMIT */
+
+    if(
+        maximum >
+        359 * 60 + 55
+    ){
+
+        maximum =
+            359 * 60 + 55;
+
+    }
+
+
+
+    /* SHOW MINIMUM */
+
+    document.getElementById(
+        "minimum"
+    ).textContent =
+
+        "Minimum = " +
+        formatAngle(minimum);
+
+
+
+    /* SHOW MAXIMUM */
+
+    document.getElementById(
+        "maximum"
+    ).textContent =
+
+        "Maximum = " +
+        formatAngle(maximum);
+
+
+
+    /* SHOW RESULT */
+
+    document.getElementById(
+        "result"
+    ).style.display =
+        "block";
+
+
+
+    /* SHOW DOWNLOAD BUTTON */
+
+    document.getElementById(
+        "downloadButton"
+    ).style.display =
+        "block";
+
+}
+
+
+
+/* DOWNLOAD RESULT */
+
+function downloadResult(){
+
+    let degree =
+        document.getElementById(
+            "degree"
+        ).value;
+
+
+
+    let minute =
+        document.getElementById(
+            "minute"
+        ).value;
+
+
+
+    let tolerance =
+        document.getElementById(
+            "tolerance"
+        ).value;
+
+
+
+    let minimum =
+        document.getElementById(
+            "minimum"
+        ).textContent;
+
+
+
+    let maximum =
+        document.getElementById(
+            "maximum"
+        ).textContent;
+
+
+
+    let text =
+
+`Bevel Protractor Calculation
+============================
+
+Main Scale Reading: ${degree}°
+
+Main Minute Scale Reading: ${minute}′
+
+Base Reading: ${degree}° ${minute}′
+
+Tolerance: ±${tolerance}′
+
+${minimum}
+
+${maximum}
+
+Least Count: 5′
+
+1° = 60′
+`;
+
+
+
+    let blob =
+        new Blob(
+            [text],
+            {
+                type:"text/plain"
+            }
+        );
+
+
+
+    let url =
+        URL.createObjectURL(blob);
+
+
+
+    let link =
+        document.createElement("a");
+
+
+
+    link.href =
+        url;
+
+
+
+    link.download =
+        "bevel-protractor-result.txt";
+
+
+
+    document.body.appendChild(
+        link
+    );
+
+
+
+    link.click();
+
+
+
+    document.body.removeChild(
+        link
+    );
+
+
+
+    URL.revokeObjectURL(
+        url
+    );
+
+}
+
+
+
+/* DEFAULT CALCULATION */
+
+calculate();
+
+</script>
+
+
+</body>
+
+</html>
