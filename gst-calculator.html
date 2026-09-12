@@ -6,13 +6,15 @@
 
     <title>GST Calculator - LoanMitraCalc</title>
 
-<meta name="description" content="Use LoanMitraCalc's free GST Calculator to calculate GST amount, tax-inclusive price and tax-exclusive price quickly and easily.">
+    <meta name="description" content="Use LoanMitraCalc's free GST Calculator to calculate GST amount, CGST, SGST, tax-inclusive price and tax-exclusive price quickly and easily.">
 
-<meta name="keywords" content="GST calculator, GST calculation, GST tax calculator, GST inclusive calculator, GST exclusive calculator">
+    <meta name="keywords" content="GST calculator, GST calculation, GST tax calculator, GST inclusive calculator, GST exclusive calculator, CGST calculator, SGST calculator">
 
-<meta name="robots" content="index, follow">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="LoanMitraCalc">
 
-<link rel="canonical" href="https://loanmitracalc.github.io/loanmitracalc/gst-calculator.html">
+    <link rel="canonical" href="https://loanmitracalc.github.io/loanmitracalc/gst-calculator.html">
+
     <style>
         * {
             box-sizing: border-box;
@@ -20,97 +22,191 @@
 
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f7fb;
-            color: #222;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f3f7fc;
+            color: #1f2937;
         }
 
         header {
-            background: #0d47a1;
+            background: linear-gradient(135deg, #0d47a1, #1565c0);
             color: white;
-            padding: 20px;
+            padding: 24px 15px;
             text-align: center;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.12);
         }
 
         header h1 {
             margin: 0;
-            font-size: 28px;
+            font-size: 30px;
+            font-weight: 700;
+        }
+
+        header p {
+            margin: 8px 0 0;
+            font-size: 14px;
+            opacity: 0.95;
         }
 
         .container {
-            max-width: 700px;
+            max-width: 900px;
             margin: 30px auto;
-            padding: 20px;
+            padding: 0 15px;
         }
 
         .calculator {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            background: #ffffff;
+            padding: 28px;
+            border-radius: 16px;
+            box-shadow: 0 6px 25px rgba(15, 23, 42, 0.10);
         }
 
-        h2 {
+        .calculator-title {
             text-align: center;
             color: #0d47a1;
-            margin-bottom: 25px;
+            margin: 0 0 8px;
+            font-size: 27px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #64748b;
+            margin: 0 0 25px;
+            font-size: 14px;
+        }
+
+        .input-group {
+            margin-bottom: 18px;
         }
 
         label {
             display: block;
-            margin-top: 15px;
-            margin-bottom: 7px;
-            font-weight: bold;
+            margin-bottom: 8px;
+            font-weight: 700;
+            color: #334155;
         }
 
         input,
         select {
             width: 100%;
-            padding: 13px;
-            border: 1px solid #ccc;
-            border-radius: 7px;
+            padding: 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 9px;
             font-size: 16px;
+            background: #fff;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #1565c0;
+            box-shadow: 0 0 0 3px rgba(21,101,192,0.10);
+        }
+
+        .button-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 22px;
         }
 
         button {
             width: 100%;
-            margin-top: 25px;
             padding: 14px;
             border: none;
-            border-radius: 7px;
-            background: #0d47a1;
-            color: white;
-            font-size: 17px;
-            font-weight: bold;
+            border-radius: 9px;
+            font-size: 16px;
+            font-weight: 700;
             cursor: pointer;
+            transition: 0.2s;
         }
 
-        button:hover {
+        .calculate-btn {
+            background: #0d47a1;
+            color: white;
+        }
+
+        .calculate-btn:hover {
             background: #08306b;
         }
 
+        .reset-btn {
+            background: #e2e8f0;
+            color: #334155;
+        }
+
+        .reset-btn:hover {
+            background: #cbd5e1;
+        }
+
         .results {
-            margin-top: 25px;
+            display: none;
+            margin-top: 30px;
+        }
+
+        .results.show {
+            display: block;
+        }
+
+        .results-title {
+            text-align: center;
+            color: #0d47a1;
+            margin-bottom: 18px;
+            font-size: 23px;
+        }
+
+        .result-grid {
             display: grid;
-            gap: 12px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
         }
 
         .result-box {
-            background: #eef4ff;
-            padding: 18px;
-            border-radius: 8px;
+            background: #eef5ff;
+            border: 1px solid #d8e7ff;
+            padding: 19px;
+            border-radius: 11px;
             text-align: center;
         }
 
+        .result-box.highlight {
+            background: #e7f7ee;
+            border-color: #c7ead6;
+        }
+
         .result-box h3 {
-            margin: 0 0 8px;
+            margin: 0 0 9px;
             color: #0d47a1;
+            font-size: 16px;
         }
 
         .result-box p {
             margin: 0;
             font-size: 22px;
-            font-weight: bold;
+            font-weight: 700;
+            color: #111827;
+            word-break: break-word;
+        }
+
+        .pdf-btn {
+            margin-top: 20px;
+            background: #198754;
+            color: white;
+        }
+
+        .pdf-btn:hover {
+            background: #146c43;
+        }
+
+        .note {
+            margin-top: 18px;
+            padding: 13px;
+            background: #fff8e1;
+            border-left: 4px solid #f59e0b;
+            border-radius: 6px;
+            color: #5f4b08;
+            font-size: 14px;
+            line-height: 1.6;
         }
 
         .back {
@@ -119,14 +215,99 @@
             margin-top: 25px;
             color: #0d47a1;
             text-decoration: none;
-            font-weight: bold;
+            font-weight: 700;
+        }
+
+        .back:hover {
+            text-decoration: underline;
+        }
+
+        .seo-content {
+            margin-top: 35px;
+            padding-top: 25px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .seo-content h2 {
+            color: #0d47a1;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            font-size: 21px;
+        }
+
+        .seo-content p {
+            line-height: 1.7;
+            color: #475569;
+            font-size: 15px;
+        }
+
+        .related {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 10px;
+        }
+
+        .related h2 {
+            margin-top: 0;
+            color: #0d47a1;
+            font-size: 20px;
+        }
+
+        .related a {
+            display: inline-block;
+            margin: 6px 8px 6px 0;
+            padding: 9px 12px;
+            background: white;
+            border: 1px solid #dbe4ef;
+            border-radius: 7px;
+            text-decoration: none;
+            color: #0d47a1;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .related a:hover {
+            background: #eef5ff;
         }
 
         footer {
             text-align: center;
-            padding: 20px;
-            color: #666;
+            padding: 25px 15px;
+            color: #64748b;
             font-size: 14px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 650px) {
+
+            header h1 {
+                font-size: 25px;
+            }
+
+            .container {
+                margin-top: 20px;
+            }
+
+            .calculator {
+                padding: 20px;
+            }
+
+            .calculator-title {
+                font-size: 23px;
+            }
+
+            .button-row {
+                grid-template-columns: 1fr;
+            }
+
+            .result-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .result-box p {
+                font-size: 20px;
+            }
         }
     </style>
 </head>
@@ -135,153 +316,642 @@
 
 <header>
     <h1>LoanMitraCalc</h1>
+    <p>Free Online Financial & Tax Calculators</p>
 </header>
 
 <div class="container">
 
     <div class="calculator">
 
-        <h2>GST Calculator</h2>
+        <h2 class="calculator-title">🧾 GST Calculator</h2>
 
-        <label>Amount (₹)</label>
-        <input type="number" id="amount" placeholder="Example: 10000">
+        <p class="subtitle">
+            Calculate GST, CGST, SGST and final amount quickly and accurately.
+        </p>
 
-        <label>GST Rate (%)</label>
-        <select id="gstRate">
-            <option value="5">5%</option>
-            <option value="12">12%</option>
-            <option value="18" selected>18%</option>
-            <option value="28">28%</option>
-        </select>
+        <div class="input-group">
+            <label for="amount">Amount (₹)</label>
+            <input
+                type="number"
+                id="amount"
+                placeholder="Example: 10000"
+                min="0"
+                step="0.01"
+            >
+        </div>
 
-        <label>Calculation Type</label>
-        <select id="calculationType">
-            <option value="add">Add GST to Amount</option>
-            <option value="remove">Remove GST from Amount</option>
-        </select>
+        <div class="input-group">
+            <label for="gstRate">GST Rate (%)</label>
 
-        <button onclick="calculateGST()">Calculate GST</button>
+            <select id="gstRate">
+                <option value="5">5%</option>
+                <option value="12">12%</option>
+                <option value="18" selected>18%</option>
+                <option value="28">28%</option>
+            </select>
+        </div>
 
-        <div class="results">
+        <div class="input-group">
+            <label for="calculationType">Calculation Type</label>
 
-            <div class="result-box">
-                <h3>Original Amount</h3>
-                <p id="originalAmount">₹0.00</p>
-            </div>
+            <select id="calculationType">
+                <option value="add">Add GST to Amount</option>
+                <option value="remove">Remove GST from Amount</option>
+            </select>
+        </div>
 
-            <div class="result-box">
-                <h3>GST Amount</h3>
-                <p id="gstAmount">₹0.00</p>
-            </div>
+        <div class="button-row">
 
-            <div class="result-box">
-                <h3>Final Amount</h3>
-                <p id="finalAmount">₹0.00</p>
-            </div>
+            <button
+                class="calculate-btn"
+                onclick="calculateGST()">
+                Calculate GST
+            </button>
+
+            <button
+                class="reset-btn"
+                onclick="resetCalculator()">
+                Reset
+            </button>
 
         </div>
 
-        <a class="back" href="index.html">← Back to Home</a>
-<section class="seo-content">
 
-<h2>GST Calculator</h2>
+        <!-- RESULTS -->
 
-<p>
-Our GST Calculator helps you quickly calculate GST amount, GST-inclusive
-price and GST-exclusive price. Enter the amount and GST rate to get an
-estimated result instantly.
-</p>
+        <div class="results" id="results">
 
-<h2>How Does a GST Calculator Work?</h2>
+            <h2 class="results-title">GST Calculation Result</h2>
 
-<p>
-A GST calculator calculates the Goods and Services Tax based on the
-amount and applicable GST rate. It can help you understand the GST
-amount and the final price of a product or service.
-</p>
+            <div class="result-grid">
 
-<h2>GST Calculation Formula</h2>
+                <div class="result-box">
+                    <h3>Original Amount</h3>
+                    <p id="originalAmount">₹0.00</p>
+                </div>
 
-<p>
-GST Amount = Original Amount × GST Rate ÷ 100
-</p>
+                <div class="result-box">
+                    <h3>GST Rate</h3>
+                    <p id="displayRate">0%</p>
+                </div>
 
-<p>
-For a GST-inclusive amount, the GST component can be calculated from the
-total price and applicable GST rate.
-</p>
+                <div class="result-box">
+                    <h3>GST Amount</h3>
+                    <p id="gstAmount">₹0.00</p>
+                </div>
 
-<h2>Example</h2>
+                <div class="result-box">
+                    <h3>CGST</h3>
+                    <p id="cgstAmount">₹0.00</p>
+                </div>
 
-<p>
-For example, if the original price is ₹10,000 and the GST rate is 18%,
-the GST amount would be ₹1,800 and the total price including GST would
-be ₹11,800.
-</p>
+                <div class="result-box">
+                    <h3>SGST</h3>
+                    <p id="sgstAmount">₹0.00</p>
+                </div>
 
-<h2>Important Note</h2>
+                <div class="result-box highlight">
+                    <h3>Final Amount</h3>
+                    <p id="finalAmount">₹0.00</p>
+                </div>
 
-<p>
-GST calculator results are provided for informational purposes only.
-The actual tax applicable may depend on the product, service, applicable
-GST rate and current tax rules.
-</p>
+            </div>
 
-</section>
+
+            <div class="note">
+                <strong>Note:</strong>
+                CGST and SGST are shown as equal halves of the total GST
+                for a standard intra-state calculation.
+            </div>
+
+
+            <!-- PDF BUTTON -->
+
+            <button
+                class="pdf-btn"
+                onclick="downloadPDF()">
+                📄 Download GST Report PDF
+            </button>
+
+        </div>
+
+
+        <a class="back" href="index.html">
+            ← Back to Home
+        </a>
+
+
+        <!-- SEO CONTENT -->
+
+        <section class="seo-content">
+
+            <h2>GST Calculator</h2>
+
+            <p>
+                LoanMitraCalc GST Calculator is a free online tool that
+                helps you calculate Goods and Services Tax quickly.
+                Enter the amount, choose the applicable GST rate and
+                select whether you want to add or remove GST.
+            </p>
+
+            <h2>How Does a GST Calculator Work?</h2>
+
+            <p>
+                A GST calculator calculates the tax amount based on the
+                original price and applicable GST rate. It can also
+                calculate the GST component from a tax-inclusive amount.
+            </p>
+
+            <h2>GST Calculation Formula</h2>
+
+            <p>
+                For adding GST:
+                <br><br>
+                GST Amount = Original Amount × GST Rate ÷ 100
+            </p>
+
+            <p>
+                Final Amount = Original Amount + GST Amount
+            </p>
+
+            <p>
+                For removing GST from an inclusive amount:
+                <br><br>
+                Original Amount = Inclusive Amount ÷
+                (1 + GST Rate ÷ 100)
+            </p>
+
+            <p>
+                GST Amount = Inclusive Amount − Original Amount
+            </p>
+
+            <h2>CGST and SGST Calculation</h2>
+
+            <p>
+                For a standard intra-state transaction, the total GST
+                can be divided equally between CGST and SGST.
+                For example, at an 18% GST rate, CGST is 9% and SGST is 9%.
+            </p>
+
+            <h2>GST Calculator Example</h2>
+
+            <p>
+                Suppose the original price is ₹10,000 and the GST rate is
+                18%. The GST amount is ₹1,800. Therefore, the final price
+                including GST is ₹11,800. CGST is ₹900 and SGST is ₹900.
+            </p>
+
+            <h2>Important Note</h2>
+
+            <p>
+                GST calculator results are provided for informational and
+                estimation purposes only. The actual tax applicable may
+                depend on the product or service, transaction type,
+                applicable GST rate and current tax rules.
+            </p>
+
+        </section>
+
+
+        <!-- RELATED CALCULATORS -->
+
+        <div class="related">
+
+            <h2>Related Calculators</h2>
+
+            <a href="personal-loan.html">💰 Personal Loan EMI</a>
+
+            <a href="home-loan.html">🏠 Home Loan EMI</a>
+
+            <a href="car-loan.html">🚘 Car Loan EMI</a>
+
+            <a href="sip-calculator.html">📈 SIP Calculator</a>
+
+            <a href="percentage-calculator.html">% Percentage Calculator</a>
+
+            <a href="age-calculator.html">🎂 Age Calculator</a>
+
+        </div>
+
     </div>
 
 </div>
+
 
 <footer>
     © 2026 LoanMitraCalc. All Rights Reserved.
 </footer>
 
+
+<!-- jsPDF -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+
 <script>
 
+let gstReportData = null;
+
+
+/* =========================
+   RUPEE FORMAT
+========================= */
+
 function formatRupee(number) {
-    return "₹" + number.toLocaleString("en-IN", {
+
+    return "₹" + Number(number).toLocaleString("en-IN", {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
     });
+
 }
+
+
+/* =========================
+   GST CALCULATOR
+========================= */
 
 function calculateGST() {
 
-    let amount = parseFloat(document.getElementById("amount").value);
-    let gstRate = parseFloat(document.getElementById("gstRate").value);
-    let type = document.getElementById("calculationType").value;
+    const amountInput =
+        document.getElementById("amount").value;
 
-    if (isNaN(amount) || amount <= 0) {
+    const amount =
+        parseFloat(amountInput);
+
+    const gstRate =
+        parseFloat(
+            document.getElementById("gstRate").value
+        );
+
+    const type =
+        document.getElementById("calculationType").value;
+
+
+    if (
+        isNaN(amount) ||
+        amount <= 0
+    ) {
+
         alert("Please enter a valid amount.");
+
         return;
     }
+
 
     let originalAmount;
     let gstAmount;
     let finalAmount;
 
+
+    /* ADD GST */
+
     if (type === "add") {
 
         originalAmount = amount;
-        gstAmount = amount * gstRate / 100;
-        finalAmount = amount + gstAmount;
 
-    } else {
+        gstAmount =
+            originalAmount * gstRate / 100;
 
-        finalAmount = amount;
-        originalAmount = amount / (1 + gstRate / 100);
-        gstAmount = amount - originalAmount;
+        finalAmount =
+            originalAmount + gstAmount;
 
     }
+
+
+    /* REMOVE GST */
+
+    else {
+
+        finalAmount = amount;
+
+        originalAmount =
+            finalAmount /
+            (1 + gstRate / 100);
+
+        gstAmount =
+            finalAmount - originalAmount;
+
+    }
+
+
+    /* CGST + SGST */
+
+    const cgstAmount =
+        gstAmount / 2;
+
+    const sgstAmount =
+        gstAmount / 2;
+
+
+    /* SHOW RESULTS */
 
     document.getElementById("originalAmount").innerText =
         formatRupee(originalAmount);
 
+    document.getElementById("displayRate").innerText =
+        gstRate + "%";
+
     document.getElementById("gstAmount").innerText =
         formatRupee(gstAmount);
 
+    document.getElementById("cgstAmount").innerText =
+        formatRupee(cgstAmount);
+
+    document.getElementById("sgstAmount").innerText =
+        formatRupee(sgstAmount);
+
     document.getElementById("finalAmount").innerText =
         formatRupee(finalAmount);
+
+
+    /* SAVE DATA FOR PDF */
+
+    gstReportData = {
+
+        originalAmount: originalAmount,
+
+        gstRate: gstRate,
+
+        gstAmount: gstAmount,
+
+        cgstAmount: cgstAmount,
+
+        sgstAmount: sgstAmount,
+
+        finalAmount: finalAmount,
+
+        calculationType:
+            type === "add"
+                ? "Add GST to Amount"
+                : "Remove GST from Amount"
+
+    };
+
+
+    /* SHOW RESULT SECTION */
+
+    document
+        .getElementById("results")
+        .classList.add("show");
+
+
+    /* SCROLL TO RESULT */
+
+    setTimeout(function() {
+
+        document
+            .getElementById("results")
+            .scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+
+    }, 100);
+
+}
+
+
+/* =========================
+   RESET
+========================= */
+
+function resetCalculator() {
+
+    document.getElementById("amount").value = "";
+
+    document.getElementById("gstRate").value = "18";
+
+    document.getElementById("calculationType").value = "add";
+
+
+    document
+        .getElementById("results")
+        .classList.remove("show");
+
+
+    gstReportData = null;
+
+}
+
+
+/* =========================
+   DOWNLOAD PDF
+========================= */
+
+function downloadPDF() {
+
+    if (!gstReportData) {
+
+        alert("Please calculate GST first.");
+
+        return;
+    }
+
+
+    const { jsPDF } = window.jspdf;
+
+    const doc = new jsPDF();
+
+
+    /* TITLE */
+
+    doc.setFontSize(20);
+
+    doc.setFont("helvetica", "bold");
+
+    doc.text(
+        "LoanMitraCalc",
+        105,
+        20,
+        { align: "center" }
+    );
+
+
+    doc.setFontSize(16);
+
+    doc.text(
+        "GST Calculator Report",
+        105,
+        31,
+        { align: "center" }
+    );
+
+
+    /* LINE */
+
+    doc.setLineWidth(0.5);
+
+    doc.line(
+        20,
+        38,
+        190,
+        38
+    );
+
+
+    /* DETAILS */
+
+    doc.setFontSize(12);
+
+    doc.setFont("helvetica", "normal");
+
+
+    doc.text(
+        "Calculation Type:",
+        20,
+        52
+    );
+
+    doc.text(
+        gstReportData.calculationType,
+        85,
+        52
+    );
+
+
+    doc.text(
+        "GST Rate:",
+        20,
+        63
+    );
+
+    doc.text(
+        gstReportData.gstRate + "%",
+        85,
+        63
+    );
+
+
+    doc.text(
+        "Original Amount:",
+        20,
+        76
+    );
+
+    doc.text(
+        "Rs. " +
+        gstReportData.originalAmount.toLocaleString(
+            "en-IN",
+            {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }
+        ),
+        85,
+        76
+    );
+
+
+    doc.text(
+        "GST Amount:",
+        20,
+        89
+    );
+
+    doc.text(
+        "Rs. " +
+        gstReportData.gstAmount.toLocaleString(
+            "en-IN",
+            {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }
+        ),
+        85,
+        89
+    );
+
+
+    doc.text(
+        "CGST:",
+        20,
+        102
+    );
+
+    doc.text(
+        "Rs. " +
+        gstReportData.cgstAmount.toLocaleString(
+            "en-IN",
+            {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }
+        ),
+        85,
+        102
+    );
+
+
+    doc.text(
+        "SGST:",
+        20,
+        115
+    );
+
+    doc.text(
+        "Rs. " +
+        gstReportData.sgstAmount.toLocaleString(
+            "en-IN",
+            {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }
+        ),
+        85,
+        115
+    );
+
+
+    /* FINAL AMOUNT */
+
+    doc.setFont("helvetica", "bold");
+
+    doc.text(
+        "Final Amount:",
+        20,
+        132
+    );
+
+    doc.text(
+        "Rs. " +
+        gstReportData.finalAmount.toLocaleString(
+            "en-IN",
+            {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }
+        ),
+        85,
+        132
+    );
+
+
+    /* NOTE */
+
+    doc.setFont("helvetica", "normal");
+
+    doc.setFontSize(10);
+
+    doc.text(
+        "Note: This GST report is for estimation and informational purposes.",
+        20,
+        153
+    );
+
+
+    doc.text(
+        "Generated by LoanMitraCalc",
+        105,
+        180,
+        { align: "center" }
+    );
+
+
+    /* SAVE */
+
+    doc.save("LoanMitraCalc-GST-Report.pdf");
+
 }
 
 </script>
