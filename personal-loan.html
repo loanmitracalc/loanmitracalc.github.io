@@ -8,58 +8,63 @@
 
 <meta name="description" content="Calculate Personal Loan EMI, total interest and total repayment amount easily with LoanMitraCalc's free Personal Loan EMI Calculator.">
 
-<meta name="keywords" content="personal loan calculator, personal loan EMI calculator, EMI calculator, personal loan interest calculator">
+<meta name="keywords" content="personal loan EMI calculator, EMI calculator, loan calculator, personal loan calculator, LoanMitraCalc">
 
 <meta name="robots" content="index, follow">
+<meta name="author" content="LoanMitraCalc">
 
 <link rel="canonical" href="https://loanmitracalc.github.io/loanmitracalc/personal-loan.html">
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
 <style>
-
 * {
     box-sizing: border-box;
 }
 
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     background: #f4f7fb;
-    color: #1f2937;
+    color: #222;
 }
 
 header {
-    background: #0f172a;
+    background: linear-gradient(135deg, #0d47a1, #1976d2);
     color: white;
-    padding: 18px 6%;
+    padding: 22px 15px;
+    text-align: center;
 }
 
-.logo {
-    font-size: 25px;
-    font-weight: bold;
+header h1 {
+    margin: 0;
+    font-size: 28px;
+}
+
+header p {
+    margin: 8px 0 0;
+    font-size: 15px;
 }
 
 .container {
-    max-width: 600px;
-    margin: 35px auto;
-    padding: 25px;
+    max-width: 1000px;
+    margin: 25px auto;
+    padding: 15px;
+}
+
+.calculator {
     background: white;
-    border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    border-radius: 14px;
+    padding: 25px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.10);
 }
 
-h1 {
+.calculator h2 {
     text-align: center;
+    color: #0d47a1;
+    margin-top: 0;
 }
 
-.subtitle {
-    text-align: center;
-    color: #64748b;
-}
-
-.input-box {
-    margin-top: 18px;
+.form-group {
+    margin-bottom: 18px;
 }
 
 label {
@@ -72,1269 +77,689 @@ input,
 select {
     width: 100%;
     padding: 13px;
-    border: 1px solid #cbd5e1;
+    border: 1px solid #ccc;
     border-radius: 8px;
     font-size: 16px;
-    background: white;
+    outline: none;
+}
+
+input:focus,
+select:focus {
+    border-color: #1976d2;
 }
 
 button {
     width: 100%;
     padding: 14px;
-    margin-top: 22px;
     border: none;
     border-radius: 8px;
-    background: #2563eb;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+.calculate-btn {
+    background: #0d47a1;
     color: white;
-    font-size: 18px;
-    cursor: pointer;
 }
 
-button:hover {
-    background: #1d4ed8;
+.calculate-btn:hover {
+    background: #083578;
 }
 
-/* PDF BUTTON */
-
-#pdfButton {
-    background: #16a34a;
-    cursor: pointer;
+.reset-btn {
+    background: #e53935;
+    color: white;
 }
 
-#pdfButton:hover:not(:disabled) {
-    background: #15803d;
+.reset-btn:hover {
+    background: #c62828;
 }
 
-#pdfButton:disabled {
-    background: #94a3b8;
-    cursor: not-allowed;
-    opacity: 0.8;
-}
-
-.results {
+#result {
+    display: none;
     margin-top: 25px;
 }
 
-.result {
-    background: #f1f5f9;
-    padding: 18px;
-    margin-top: 10px;
-    border-radius: 10px;
-    display: flex;
-    justify-content: space-between;
+.result-title {
+    text-align: center;
+    color: #0d47a1;
+    margin-bottom: 18px;
+}
+
+.result-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: 15px;
 }
 
-.result span:last-child {
-    font-weight: bold;
-    text-align: right;
-}
-
-.interest-details {
-    margin-top: 15px;
-    background: #eef2ff;
-    padding: 15px;
+.result-card {
+    background: #f5f9ff;
+    border: 1px solid #d5e5ff;
     border-radius: 10px;
-}
-
-.interest-details div {
-    display: flex;
-    justify-content: space-between;
-    padding: 7px 0;
-}
-
-.interest-details span:last-child {
-    font-weight: bold;
-}
-
-.back {
-    display: block;
-    margin-top: 25px;
+    padding: 18px;
     text-align: center;
-    text-decoration: none;
-    color: #2563eb;
 }
 
-.seo-content {
-    margin-top: 35px;
+.result-card h3 {
+    margin: 0 0 8px;
+    font-size: 15px;
+    color: #555;
+}
+
+.result-card p {
+    margin: 0;
+    font-size: 21px;
+    font-weight: bold;
+    color: #0d47a1;
+}
+
+.tenure-result {
+    margin-top: 20px;
+    background: #fff8e1;
+    border: 1px solid #ffe082;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
     line-height: 1.7;
 }
 
-.seo-content h2 {
+.download-btn {
+    background: #2e7d32;
+    color: white;
+    margin-top: 18px;
+}
+
+.download-btn:hover {
+    background: #1b5e20;
+}
+
+.info {
     margin-top: 25px;
-}
-
-.related {
-    margin-top: 35px;
-    padding: 20px;
-    background: #f8fafc;
+    background: white;
+    padding: 22px;
     border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.07);
 }
 
-.related a {
-    display: block;
-    margin: 10px 0;
-    color: #2563eb;
+.info h2 {
+    color: #0d47a1;
+}
+
+.info h3 {
+    color: #1976d2;
+}
+
+.info p,
+.info li {
+    line-height: 1.7;
+}
+
+footer {
+    background: #0d47a1;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 30px;
+}
+
+footer a {
+    color: white;
     text-decoration: none;
-    font-weight: bold;
+    margin: 0 7px;
 }
 
-.related a:hover {
-    text-decoration: underline;
-}
+@media (max-width: 700px) {
 
+    header h1 {
+        font-size: 23px;
+    }
+
+    .calculator {
+        padding: 18px;
+    }
+
+    .result-grid {
+        grid-template-columns: 1fr;
+    }
+}
 </style>
+
+<!-- PDF Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
 </head>
 
 <body>
 
 <header>
-    <div class="logo">LoanMitraCalc</div>
+    <h1>💰 Personal Loan EMI Calculator</h1>
+    <p>Calculate EMI, Interest & Total Payment Easily</p>
 </header>
 
 <div class="container">
 
-<h1>💰 Personal Loan EMI Calculator</h1>
+<div class="calculator">
 
-<p class="subtitle">
-Calculate your Personal Loan EMI easily
-</p>
+    <h2>Personal Loan Calculator</h2>
 
-
-<!-- LOAN AMOUNT -->
-
-<div class="input-box">
-
-<label>Loan Amount (₹)</label>
-
-<input
-    type="number"
-    id="loanAmount"
-    placeholder="Example: 500000"
-    min="1"
->
-
-</div>
-
-
-<!-- INTEREST RATE -->
-
-<div class="input-box">
-
-<label>Interest Rate</label>
-
-<select id="interestType">
-
-    <option value="year">% per Year</option>
-
-    <option value="month">% per Month</option>
-
-    <option value="day">% per Day</option>
-
-</select>
-
-<input
-    type="number"
-    id="interestRate"
-    placeholder="Example: 12"
-    step="0.01"
-    min="0"
->
-
-</div>
-
-
-<!-- TENURE -->
-
-<div class="input-box">
-
-<label>Loan Tenure</label>
-
-<select id="tenureType">
-
-    <option value="years">Years</option>
-
-    <option value="months">Months</option>
-
-    <option value="days">Days</option>
-
-</select>
-
-<input
-    type="number"
-    id="loanTenure"
-    placeholder="Example: 5"
-    min="1"
-    step="0.01"
->
-
-</div>
-
-
-<!-- CALCULATE -->
-
-<button
-    type="button"
-    onclick="calculateEMI()">
-    Calculate EMI
-</button>
-
-
-<!-- RESULTS -->
-
-<div class="results">
-
-    <div class="result">
-
-        <span id="emiLabel">
-            Monthly EMI
-        </span>
-
-        <span id="emi">
-            ₹0
-        </span>
-
+    <div class="form-group">
+        <label for="loanAmount">Loan Amount (₹)</label>
+        <input
+            type="number"
+            id="loanAmount"
+            placeholder="Example: 500000"
+            min="1"
+            step="1">
     </div>
 
-
-    <div class="result">
-
-        <span>
-            Total Interest
-        </span>
-
-        <span id="interest">
-            ₹0
-        </span>
-
+    <div class="form-group">
+        <label for="interestRate">Annual Interest Rate (%)</label>
+        <input
+            type="number"
+            id="interestRate"
+            placeholder="Example: 10"
+            min="0"
+            step="0.01">
     </div>
 
+    <div class="form-group">
+        <label for="tenure">Loan Tenure</label>
 
-    <div class="interest-details">
+        <input
+            type="number"
+            id="tenure"
+            placeholder="Example: 5"
+            min="1"
+            step="1">
 
-        <div>
+        <select id="tenureUnit" style="margin-top:10px;">
+            <option value="years">Years</option>
+            <option value="months">Months</option>
+            <option value="days">Days</option>
+        </select>
+    </div>
 
-            <span>
-                Interest per Year
-            </span>
+    <button class="calculate-btn" onclick="calculateEMI()">
+        Calculate EMI
+    </button>
 
-            <span id="interestYear">
-                ₹0
-            </span>
+    <button class="reset-btn" onclick="resetCalculator()">
+        Reset
+    </button>
+
+    <!-- RESULT -->
+    <div id="result">
+
+        <h2 class="result-title">📊 Loan Calculation Result</h2>
+
+        <div class="result-grid">
+
+            <div class="result-card">
+                <h3>Monthly EMI</h3>
+                <p id="emiResult">₹0.00</p>
+            </div>
+
+            <div class="result-card">
+                <h3>Total Interest</h3>
+                <p id="interestResult">₹0.00</p>
+            </div>
+
+            <div class="result-card">
+                <h3>Total Payment</h3>
+                <p id="paymentResult">₹0.00</p>
+            </div>
 
         </div>
 
+        <div class="tenure-result">
 
-        <div>
+            <strong>Loan Tenure Details</strong>
 
-            <span>
-                Interest per Month
-            </span>
+            <br>
 
-            <span id="interestMonth">
-                ₹0
-            </span>
+            <span id="tenureDisplay"></span>
 
-        </div>
+            <br>
 
+            <span id="monthsDisplay"></span>
 
-        <div>
+            <br>
 
-            <span>
-                Interest per Day
-            </span>
-
-            <span id="interestDay">
-                ₹0
-            </span>
+            <span id="daysDisplay"></span>
 
         </div>
 
-    </div>
+        <!-- ALWAYS VISIBLE AFTER CALCULATION -->
+        <button
+            id="downloadPDF"
+            class="download-btn"
+            onclick="downloadPDF()">
 
+            📄 Download PDF
 
-    <div class="result">
-
-        <span>
-            Total Payment
-        </span>
-
-        <span id="payment">
-            ₹0
-        </span>
+        </button>
 
     </div>
 
 </div>
 
 
-<!-- PDF BUTTON ALWAYS VISIBLE -->
+<div class="info">
 
-<button
-    type="button"
-    id="pdfButton"
-    onclick="downloadPDF()"
-    disabled>
-    📄 Download Calculation
-</button>
+    <h2>Personal Loan EMI Calculator</h2>
 
+    <p>
+        LoanMitraCalc Personal Loan EMI Calculator helps you calculate
+        your monthly EMI, total interest and total repayment amount
+        quickly and easily.
+    </p>
 
-<a
-    class="back"
-    href="index.html">
-    ← Back to Home
-</a>
+    <h3>How to use the calculator?</h3>
 
+    <ol>
+        <li>Enter the loan amount.</li>
+        <li>Enter the annual interest rate.</li>
+        <li>Enter your loan tenure.</li>
+        <li>Select Years, Months or Days.</li>
+        <li>Click on Calculate EMI.</li>
+        <li>After calculation, click Download PDF to save your result.</li>
+    </ol>
 
-<!-- SEO CONTENT -->
+    <h3>EMI Formula</h3>
 
-<section class="seo-content">
+    <p>
+        EMI = P × R × (1 + R)<sup>N</sup> /
+        [(1 + R)<sup>N</sup> − 1]
+    </p>
 
-<h2>Personal Loan EMI Calculator</h2>
-
-<p>
-Our Personal Loan EMI Calculator helps you estimate your loan repayment,
-interest and EMI based on the loan amount, interest rate and loan tenure.
-You can select interest rate per year, month or day and choose loan tenure
-in years, months or days.
-</p>
-
-
-<h2>Personal Loan Interest Calculation</h2>
-
-<p>
-The calculator provides an estimated interest amount for the selected
-loan period. It also displays the estimated interest per year, month and
-day for easier understanding.
-</p>
-
-
-<h2>Loan Tenure Options</h2>
-
-<p>
-You can select loan tenure in years, months or days. For years or months,
-the calculator displays an estimated Monthly EMI. When days are selected,
-it displays an estimated Daily EMI.
-</p>
-
-
-<h2>How to Use Personal Loan Calculator</h2>
-
-<p>
-Enter the loan amount, select the interest rate type, enter the interest
-rate and choose the loan tenure. Then click the Calculate EMI button to
-view the estimated repayment details.
-</p>
-
-
-<h2>Important Note</h2>
-
-<p>
-The results shown by this calculator are estimates for informational
-purposes only. Actual loan interest, EMI, processing fees, charges and
-repayment terms may vary depending on the lender and loan agreement.
-Year, month and day conversions use standard approximate periods.
-</p>
-
-</section>
-
-
-<!-- RELATED CALCULATORS -->
-
-<section class="related">
-
-<h2>Related Calculators</h2>
-
-<a href="home-loan.html">
-🏠 Home Loan EMI Calculator
-</a>
-
-<a href="car-loan.html">
-🚗 Car Loan EMI Calculator
-</a>
-
-<a href="sip-calculator.html">
-📈 SIP Calculator
-</a>
-
-<a href="gst-calculator.html">
-🧾 GST Calculator
-</a>
-
-<a href="percentage-calculator.html">
-% Percentage Calculator
-</a>
-
-<a href="age-calculator.html">
-🎂 Age Calculator
-</a>
-
-</section>
+    <p>
+        Where P is the principal loan amount, R is the monthly
+        interest rate and N is the number of monthly installments.
+    </p>
 
 </div>
+
+</div>
+
+
+<footer>
+
+    <p>© 2026 LoanMitraCalc. All Rights Reserved.</p>
+
+    <p>
+        <a href="index.html">Home</a> |
+        <a href="personal-loan.html">Personal Loan</a> |
+        <a href="home-loan.html">Home Loan</a> |
+        <a href="car-loan.html">Car Loan</a> |
+        <a href="sip-calculator.html">SIP</a>
+    </p>
+
+</footer>
 
 
 <script>
 
-let loanCalculation = null;
+function formatMoney(number) {
 
-
-/* MONEY FORMAT */
-
-function formatMoney(amount) {
-
-    return "Rs. " + amount.toLocaleString("en-IN", {
-
+    return "₹" + Number(number).toLocaleString("en-IN", {
         minimumFractionDigits: 2,
-
         maximumFractionDigits: 2
-
     });
 
 }
 
 
-/* CALCULATE EMI */
-
 function calculateEMI() {
 
-    const principal =
-        parseFloat(
-            document.getElementById("loanAmount").value
-        );
+    const loanAmount =
+        parseFloat(document.getElementById("loanAmount").value);
 
     const interestRate =
-        parseFloat(
-            document.getElementById("interestRate").value
-        );
+        parseFloat(document.getElementById("interestRate").value);
 
-    const tenureValue =
-        parseFloat(
-            document.getElementById("loanTenure").value
-        );
+    const tenure =
+        parseFloat(document.getElementById("tenure").value);
 
-    const interestType =
-        document.getElementById("interestType").value;
+    const tenureUnit =
+        document.getElementById("tenureUnit").value;
 
-    const tenureType =
-        document.getElementById("tenureType").value;
-
-
-    /* VALIDATION */
 
     if (
-
-        isNaN(principal) ||
-
+        isNaN(loanAmount) ||
         isNaN(interestRate) ||
-
-        isNaN(tenureValue) ||
-
-        principal <= 0 ||
-
+        isNaN(tenure) ||
+        loanAmount <= 0 ||
         interestRate < 0 ||
-
-        tenureValue <= 0
-
+        tenure <= 0
     ) {
 
-        alert("Please enter valid values.");
+        alert("Please enter valid loan amount, interest rate and tenure.");
 
         return;
+    }
+
+
+    let totalMonths;
+
+
+    if (tenureUnit === "years") {
+
+        totalMonths = tenure * 12;
+
+    } else if (tenureUnit === "months") {
+
+        totalMonths = tenure;
+
+    } else {
+
+        totalMonths = tenure / 30.4375;
 
     }
 
 
-    /* TENURE TO DAYS */
+    if (totalMonths <= 0) {
 
-    let totalDays;
+        alert("Please enter a valid loan tenure.");
 
-
-    if (tenureType === "years") {
-
-        totalDays =
-            tenureValue * 365;
-
-    }
-
-    else if (tenureType === "months") {
-
-        totalDays =
-            tenureValue * 30;
-
-    }
-
-    else {
-
-        totalDays =
-            tenureValue;
-
+        return;
     }
 
 
-    /* DAILY INTEREST RATE */
+    const monthlyRate =
+        interestRate / 12 / 100;
 
-    let dailyRate;
-
-
-    if (interestType === "year") {
-
-        dailyRate =
-            interestRate / 365 / 100;
-
-    }
-
-    else if (interestType === "month") {
-
-        dailyRate =
-            interestRate / 30 / 100;
-
-    }
-
-    else {
-
-        dailyRate =
-            interestRate / 100;
-
-    }
-
-
-    /* TOTAL INTEREST */
-
-    const totalInterest =
-        principal *
-        dailyRate *
-        totalDays;
-
-
-    /* TOTAL PAYMENT */
-
-    const totalPayment =
-        principal +
-        totalInterest;
-
-
-    /* EMI */
 
     let emi;
 
-    let emiLabel;
 
+    if (monthlyRate === 0) {
 
-    if (tenureType === "days") {
+        emi = loanAmount / totalMonths;
 
-        emi =
-            totalPayment /
-            totalDays;
-
-        emiLabel =
-            "Daily EMI";
-
-    }
-
-    else {
-
-        const totalMonths =
-            totalDays / 30;
+    } else {
 
         emi =
-            totalPayment /
-            totalMonths;
-
-        emiLabel =
-            "Monthly EMI";
+            loanAmount *
+            monthlyRate *
+            Math.pow(1 + monthlyRate, totalMonths) /
+            (Math.pow(1 + monthlyRate, totalMonths) - 1);
 
     }
 
 
-    /* INTEREST BREAKDOWN */
+    const totalPayment = emi * totalMonths;
 
-    const interestPerDay =
-        totalInterest /
-        totalDays;
-
-    const interestPerMonth =
-        interestPerDay *
-        30;
-
-    const interestPerYear =
-        interestPerDay *
-        365;
+    const totalInterest =
+        totalPayment - loanAmount;
 
 
-    /* SAVE CALCULATION */
+    document.getElementById("emiResult").innerText =
+        formatMoney(emi);
 
-    loanCalculation = {
+    document.getElementById("interestResult").innerText =
+        formatMoney(totalInterest);
 
-        principal,
+    document.getElementById("paymentResult").innerText =
+        formatMoney(totalPayment);
 
-        interestRate,
 
-        interestType,
+    let years;
+    let months;
+    let days;
 
-        tenureValue,
 
-        tenureType,
+    if (tenureUnit === "years") {
 
-        emi,
+        years = Math.floor(tenure);
 
-        emiLabel,
+        months = Math.round((tenure - years) * 12);
 
-        totalInterest,
+        days = 0;
 
-        interestPerYear,
+    } else {
 
-        interestPerMonth,
+        years = Math.floor(totalMonths / 12);
 
-        interestPerDay,
+        const remainingMonths =
+            totalMonths - years * 12;
 
-        totalPayment
+        months = Math.floor(remainingMonths);
+
+        days = Math.round(
+            (remainingMonths - months) * 30.4375
+        );
+
+    }
+
+
+    if (months === 12) {
+
+        years++;
+        months = 0;
+
+    }
+
+
+    document.getElementById("tenureDisplay").innerHTML =
+        "<strong>Entered Tenure:</strong> " +
+        tenure + " " +
+        tenureUnit;
+
+
+    document.getElementById("monthsDisplay").innerHTML =
+        "<strong>Approx. Tenure:</strong> " +
+        years + " Year(s), " +
+        months + " Month(s), " +
+        days + " Day(s)";
+
+
+    document.getElementById("daysDisplay").innerHTML =
+        "<strong>Total Months:</strong> " +
+        totalMonths.toFixed(2);
+
+
+    document.getElementById("result").style.display =
+        "block";
+
+
+    // Save values for PDF
+    window.loanData = {
+
+        loanAmount: loanAmount,
+        interestRate: interestRate,
+        tenure: tenure,
+        tenureUnit: tenureUnit,
+
+        emi: emi,
+        totalInterest: totalInterest,
+        totalPayment: totalPayment,
+
+        years: years,
+        months: months,
+        days: days,
+
+        totalMonths: totalMonths
 
     };
 
 
-    /* DISPLAY RESULTS */
-
-    document.getElementById("emiLabel").innerText =
-        emiLabel;
-
-    document.getElementById("emi").innerText =
-        formatMoney(emi);
-
-    document.getElementById("interest").innerText =
-        formatMoney(totalInterest);
-
-    document.getElementById("interestYear").innerText =
-        formatMoney(interestPerYear);
-
-    document.getElementById("interestMonth").innerText =
-        formatMoney(interestPerMonth);
-
-    document.getElementById("interestDay").innerText =
-        formatMoney(interestPerDay);
-
-    document.getElementById("payment").innerText =
-        formatMoney(totalPayment);
-
-
-    /* ENABLE PDF BUTTON */
-
-    const pdfButton =
-        document.getElementById("pdfButton");
-
-    pdfButton.disabled = false;
+    document.getElementById("result")
+        .scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
 
 }
 
-
-/* INTEREST TYPE TEXT */
-
-function getInterestTypeText(type) {
-
-    if (type === "year") {
-
-        return "% per Year";
-
-    }
-
-    if (type === "month") {
-
-        return "% per Month";
-
-    }
-
-    return "% per Day";
-
-}
-
-
-/* TENURE TYPE TEXT */
-
-function getTenureTypeText(type) {
-
-    if (type === "years") {
-
-        return "Years";
-
-    }
-
-    if (type === "months") {
-
-        return "Months";
-
-    }
-
-    return "Days";
-
-}
-
-
-/* DOWNLOAD PDF */
 
 function downloadPDF() {
 
-    if (!loanCalculation) {
+    if (!window.loanData) {
 
         alert("Please calculate the loan first.");
 
         return;
-
     }
 
 
-    const { jsPDF } =
-        window.jspdf;
+    const { jsPDF } = window.jspdf;
+
+    const doc = new jsPDF();
 
 
-    const doc =
-        new jsPDF();
+    const data = window.loanData;
 
 
-    const data =
-        loanCalculation;
-
-
-    const pageWidth =
-        doc.internal.pageSize.getWidth();
-
-
-    /* HEADER */
-
-    doc.setFillColor(
-        15,
-        23,
-        42
-    );
-
-    doc.rect(
-        0,
-        0,
-        pageWidth,
-        42,
-        "F"
-    );
-
-
-    doc.setTextColor(
-        255,
-        255,
-        255
-    );
-
-
-    doc.setFont(
-        "helvetica",
-        "bold"
-    );
-
-    doc.setFontSize(22);
+    doc.setFontSize(20);
 
     doc.text(
         "LoanMitraCalc",
         20,
-        18
+        20
     );
 
 
-    doc.setFontSize(13);
-
-    doc.setFont(
-        "helvetica",
-        "normal"
-    );
+    doc.setFontSize(16);
 
     doc.text(
-        "Personal Loan Calculation Report",
+        "Personal Loan EMI Calculation",
         20,
-        29
+        32
     );
 
 
-    /* DATE */
-
-    const today =
-        new Date();
-
-    const dateText =
-        today.toLocaleDateString(
-            "en-IN"
-        );
+    doc.setFontSize(12);
 
 
-    doc.setFontSize(9);
+    let y = 50;
+
 
     doc.text(
-        "Report Date: " + dateText,
+        "Loan Amount: " +
+        formatMoney(data.loanAmount),
         20,
-        37
-    );
-
-
-    /* RESET TEXT */
-
-    doc.setTextColor(
-        31,
-        41,
-        55
-    );
-
-
-    /* LOAN DETAILS */
-
-    doc.setFont(
-        "helvetica",
-        "bold"
-    );
-
-    doc.setFontSize(14);
-
-    doc.text(
-        "Loan Details",
-        20,
-        58
-    );
-
-
-    doc.setDrawColor(
-        203,
-        213,
-        225
-    );
-
-    doc.line(
-        20,
-        62,
-        190,
-        62
-    );
-
-
-    let y = 75;
-
-
-    doc.setFontSize(11);
-
-    doc.setFont(
-        "helvetica",
-        "normal"
-    );
-
-    doc.text(
-        "Loan Amount",
-        25,
         y
     );
 
+    y += 10;
 
-    doc.setFont(
-        "helvetica",
-        "bold"
-    );
 
     doc.text(
-        formatMoney(data.principal),
-        135,
-        y
-    );
-
-
-    y += 12;
-
-
-    doc.setFont(
-        "helvetica",
-        "normal"
-    );
-
-    doc.text(
-        "Interest Rate",
-        25,
-        y
-    );
-
-
-    doc.setFont(
-        "helvetica",
-        "bold"
-    );
-
-    doc.text(
+        "Annual Interest Rate: " +
         data.interestRate +
-        " " +
-        getInterestTypeText(data.interestType),
-        135,
-        y
-    );
-
-
-    y += 12;
-
-
-    doc.setFont(
-        "helvetica",
-        "normal"
-    );
-
-    doc.text(
-        "Loan Tenure",
-        25,
-        y
-    );
-
-
-    doc.setFont(
-        "helvetica",
-        "bold"
-    );
-
-    doc.text(
-        data.tenureValue +
-        " " +
-        getTenureTypeText(data.tenureType),
-        135,
-        y
-    );
-
-
-    /* REPAYMENT SUMMARY */
-
-    y += 28;
-
-
-    doc.setFillColor(
-        241,
-        245,
-        249
-    );
-
-
-    doc.roundedRect(
+        "%",
         20,
-        y - 8,
-        170,
-        65,
-        4,
-        4,
-        "F"
+        y
     );
 
+    y += 10;
 
-    doc.setTextColor(
-        15,
-        23,
-        42
-    );
-
-
-    doc.setFont(
-        "helvetica",
-        "bold"
-    );
-
-    doc.setFontSize(15);
 
     doc.text(
-        "Repayment Summary",
-        27,
-        y + 4
+        "Entered Tenure: " +
+        data.tenure +
+        " " +
+        data.tenureUnit,
+        20,
+        y
     );
 
+    y += 10;
+
+
+    doc.text(
+        "Approx. Tenure: " +
+        data.years +
+        " Year(s), " +
+        data.months +
+        " Month(s), " +
+        data.days +
+        " Day(s)",
+        20,
+        y
+    );
 
     y += 18;
 
 
-    doc.setFontSize(11);
-
-    doc.setFont(
-        "helvetica",
-        "normal"
-    );
-
-    doc.text(
-        data.emiLabel,
-        28,
-        y
-    );
-
-
-    doc.setFont(
-        "helvetica",
-        "bold"
-    );
-
-    doc.text(
-        formatMoney(data.emi),
-        135,
-        y
-    );
-
-
-    y += 12;
-
-
-    doc.setFont(
-        "helvetica",
-        "normal"
-    );
-
-    doc.text(
-        "Total Interest",
-        28,
-        y
-    );
-
-
-    doc.setFont(
-        "helvetica",
-        "bold"
-    );
-
-    doc.text(
-        formatMoney(data.totalInterest),
-        135,
-        y
-    );
-
-
-    y += 12;
-
-
-    doc.setFont(
-        "helvetica",
-        "normal"
-    );
-
-    doc.text(
-        "Total Payment",
-        28,
-        y
-    );
-
-
-    doc.setFont(
-        "helvetica",
-        "bold"
-    );
-
-    doc.text(
-        formatMoney(data.totalPayment),
-        135,
-        y
-    );
-
-
-    /* INTEREST BREAKDOWN */
-
-    y += 30;
-
-
-    doc.setFont(
-        "helvetica",
-        "bold"
-    );
-
     doc.setFontSize(14);
 
     doc.text(
-        "Interest Breakdown",
+        "Calculation Result",
         20,
         y
     );
 
-
     y += 12;
 
 
-    doc.setFont(
-        "helvetica",
-        "normal"
-    );
+    doc.setFontSize(12);
 
-    doc.setFontSize(11);
 
     doc.text(
-        "Interest per Year",
-        25,
-        y
-    );
-
-
-    doc.setFont(
-        "helvetica",
-        "bold"
-    );
-
-    doc.text(
-        formatMoney(data.interestPerYear),
-        135,
-        y
-    );
-
-
-    y += 11;
-
-
-    doc.setFont(
-        "helvetica",
-        "normal"
-    );
-
-    doc.text(
-        "Interest per Month",
-        25,
-        y
-    );
-
-
-    doc.setFont(
-        "helvetica",
-        "bold"
-    );
-
-    doc.text(
-        formatMoney(data.interestPerMonth),
-        135,
-        y
-    );
-
-
-    y += 11;
-
-
-    doc.setFont(
-        "helvetica",
-        "normal"
-    );
-
-    doc.text(
-        "Interest per Day",
-        25,
-        y
-    );
-
-
-    doc.setFont(
-        "helvetica",
-        "bold"
-    );
-
-    doc.text(
-        formatMoney(data.interestPerDay),
-        135,
-        y
-    );
-
-
-    /* IMPORTANT NOTE */
-
-    y += 25;
-
-
-    doc.setDrawColor(
-        203,
-        213,
-        225
-    );
-
-    doc.line(
+        "Monthly EMI: " +
+        formatMoney(data.emi),
         20,
-        y,
-        190,
         y
     );
 
+    y += 10;
 
-    y += 12;
 
-
-    doc.setFont(
-        "helvetica",
-        "bold"
+    doc.text(
+        "Total Interest: " +
+        formatMoney(data.totalInterest),
+        20,
+        y
     );
+
+    y += 10;
+
+
+    doc.text(
+        "Total Payment: " +
+        formatMoney(data.totalPayment),
+        20,
+        y
+    );
+
+    y += 20;
+
 
     doc.setFontSize(10);
 
     doc.text(
-        "Important Note",
+        "Generated by LoanMitraCalc",
         20,
         y
     );
 
-
-    y += 8;
-
-
-    doc.setFont(
-        "helvetica",
-        "normal"
-    );
-
-    doc.setFontSize(9);
-
-    doc.text(
-        "This report provides estimated calculations for informational purposes only.",
-        20,
-        y
-    );
-
-
-    y += 6;
-
-
-    doc.text(
-        "Actual loan terms, interest, fees and charges may vary by lender.",
-        20,
-        y
-    );
-
-
-    y += 6;
-
-
-    doc.text(
-        "Year, month and day conversions use standard approximate periods.",
-        20,
-        y
-    );
-
-
-    /* FOOTER */
-
-    doc.setFillColor(
-        15,
-        23,
-        42
-    );
-
-    doc.rect(
-        0,
-        280,
-        pageWidth,
-        17,
-        "F"
-    );
-
-
-    doc.setTextColor(
-        255,
-        255,
-        255
-    );
-
-    doc.setFontSize(9);
-
-    doc.text(
-        "LoanMitraCalc | Personal Loan Calculator",
-        20,
-        290
-    );
-
-
-    /* SAVE PDF */
 
     doc.save(
-        "LoanMitraCalc-Personal-Loan-Report.pdf"
+        "Personal-Loan-EMI-Calculation.pdf"
     );
+
+}
+
+
+function resetCalculator() {
+
+    document.getElementById("loanAmount").value = "";
+
+    document.getElementById("interestRate").value = "";
+
+    document.getElementById("tenure").value = "";
+
+    document.getElementById("tenureUnit").value = "years";
+
+
+    document.getElementById("result").style.display =
+        "none";
+
+
+    window.loanData = null;
 
 }
 
