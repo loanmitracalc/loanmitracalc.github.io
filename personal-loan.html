@@ -1,221 +1,1409 @@
 <!DOCTYPE html>
-
-<html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Personal Loan EMI Calculator - LoanMitraCalc</title>
 
-<meta name="description" content="Calculate Personal Loan EMI, total interest, total repayment and loan tenure in years, months and days with LoanMitraCalc.">
-
-<meta name="keywords" content="personal loan EMI calculator, EMI calculator, loan calculator, personal loan calculator, LoanMitraCalc">
-
-<meta name="robots" content="index, follow"> <meta name="author" content="LoanMitraCalc">
-
+<meta name="description" content="Calculate Personal Loan EMI, total interest, total payment and detailed instalment schedule with Year, Month and Day calculations using LoanMitraCalc.">
+<meta name="robots" content="index, follow">
+<meta name="author" content="LoanMitraCalc">
 <link rel="canonical" href="https://loanmitracalc.github.io/loanmitracalc/personal-loan.html">
 
-<style> *{ box-sizing:border-box; } body{ margin:0; font-family:Arial,Helvetica,sans-serif; background:#f4f7fb; color:#222; } header{ background:linear-gradient(135deg,#0d47a1,#1976d2); color:white; padding:22px 15px; text-align:center; } header h1{ margin:0; font-size:28px; } header p{ margin:8px 0 0; font-size:15px; } .container{ max-width:1000px; margin:25px auto; padding:15px; } .calculator{ background:white; border-radius:14px; padding:25px; box-shadow:0 5px 20px rgba(0,0,0,.10); } .calculator h2{ text-align:center; color:#0d47a1; margin-top:0; } .form-group{ margin-bottom:18px; } label{ display:block; font-weight:bold; margin-bottom:7px; } input, select{ width:100%; padding:13px; border:1px solid #ccc; border-radius:8px; font-size:16px; outline:none; } input:focus, select:focus{ border-color:#1976d2; } button{ width:100%; padding:14px; border:none; border-radius:8px; font-size:17px; font-weight:bold; cursor:pointer; margin-top:8px; } .calculate-btn{ background:#0d47a1; color:white; } .calculate-btn:hover{ background:#083578; } .reset-btn{ background:#e53935; color:white; } .reset-btn:hover{ background:#c62828; } /* RESULT */ #result{ display:none; margin-top:30px; } .result-title{ text-align:center; color:#0d47a1; margin-bottom:18px; } .result-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:15px; } .result-card{ background:#f5f9ff; border:1px solid #d5e5ff; border-radius:10px; padding:18px; text-align:center; } .result-card h3{ margin:0 0 8px; font-size:15px; color:#555; } .result-card p{ margin:0; font-size:21px; font-weight:bold; color:#0d47a1; } /* TENURE */ .tenure-result{ margin-top:22px; background:#fff8e1; border:1px solid #ffe082; border-radius:10px; padding:20px; line-height:1.9; text-align:left; } .tenure-heading{ font-size:19px; font-weight:bold; color:#8a5a00; margin-bottom:8px; } .tenure-line{ font-size:15px; color:#333; } /* PDF */ .download-btn{ display:block; width:100%; background:#2e7d32; color:white; margin-top:20px; font-size:17px; } .download-btn:hover{ background:#1b5e20; } /* INFO */ .info{ margin-top:25px; background:white; padding:22px; border-radius:12px; box-shadow:0 4px 15px rgba(0,0,0,.07); } .info h2{ color:#0d47a1; } .info h3{ color:#1976d2; } .info p, .info li{ line-height:1.7; } /* FOOTER */ footer{ background:#0d47a1; color:white; text-align:center; padding:20px; margin-top:30px; } footer a{ color:white; text-decoration:none; margin:0 7px; } @media(max-width:700px){ header h1{ font-size:23px; } .calculator{ padding:18px; } .result-grid{ grid-template-columns:1fr; } .tenure-result{ padding:16px; } } </style>
+<style>
+*{
+    box-sizing:border-box;
+}
 
-<!-- jsPDF -->
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f4f7fb;
+    color:#172033;
+}
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+header{
+    background:linear-gradient(135deg,#0b5ed7,#063b91);
+    color:white;
+    padding:28px 15px;
+    text-align:center;
+}
 
+header h1{
+    margin:0;
+    font-size:30px;
+}
+
+header p{
+    margin:8px 0 0;
+    font-size:15px;
+    opacity:.95;
+}
+
+.container{
+    width:min(1200px,94%);
+    margin:25px auto 50px;
+}
+
+.card{
+    background:white;
+    border-radius:16px;
+    padding:25px;
+    margin-bottom:22px;
+    box-shadow:0 5px 22px rgba(0,0,0,.08);
+    border:1px solid #e5eaf1;
+}
+
+.card h2{
+    margin:0 0 20px;
+    color:#063b91;
+    font-size:22px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+}
+
+.field{
+    display:flex;
+    flex-direction:column;
+}
+
+.field label{
+    font-weight:bold;
+    margin-bottom:7px;
+    color:#25334d;
+}
+
+.field input,
+.field select{
+    width:100%;
+    padding:13px 14px;
+    border:1px solid #cbd5e1;
+    border-radius:9px;
+    font-size:16px;
+    outline:none;
+    background:#fff;
+}
+
+.field input:focus,
+.field select:focus{
+    border-color:#0b5ed7;
+    box-shadow:0 0 0 3px rgba(11,94,215,.10);
+}
+
+.full{
+    grid-column:1/-1;
+}
+
+.calculate-btn{
+    width:100%;
+    border:0;
+    padding:15px;
+    margin-top:5px;
+    border-radius:10px;
+    background:linear-gradient(135deg,#0b5ed7,#063b91);
+    color:#fff;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.calculate-btn:hover{
+    opacity:.94;
+}
+
+.error{
+    display:none;
+    margin-top:15px;
+    padding:12px;
+    border-radius:8px;
+    background:#ffe8e8;
+    color:#b00020;
+    font-weight:bold;
+}
+
+.results{
+    display:none;
+}
+
+.result-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+.result-box{
+    padding:20px;
+    border-radius:12px;
+    background:#f6f9ff;
+    border:1px solid #dbe7fa;
+    text-align:center;
+}
+
+.result-box .label{
+    font-size:14px;
+    color:#596579;
+    margin-bottom:8px;
+}
+
+.result-box .value{
+    font-size:25px;
+    font-weight:bold;
+    color:#063b91;
+}
+
+.period-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+.period-box{
+    border:1px solid #dbe7fa;
+    background:#f8fbff;
+    border-radius:12px;
+    padding:17px;
+}
+
+.period-box h3{
+    margin:0 0 12px;
+    color:#063b91;
+    font-size:17px;
+}
+
+.period-box p{
+    margin:8px 0;
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.period-box strong{
+    color:#172033;
+}
+
+.summary-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+}
+
+.summary-item{
+    background:#f8fafc;
+    border:1px solid #e2e8f0;
+    padding:13px 15px;
+    border-radius:9px;
+}
+
+.summary-item span{
+    color:#64748b;
+}
+
+.summary-item strong{
+    float:right;
+    color:#172033;
+}
+
+.table-wrap{
+    overflow-x:auto;
+    border:1px solid #dce3ec;
+    border-radius:10px;
+}
+
+table{
+    width:100%;
+    min-width:1050px;
+    border-collapse:collapse;
+    background:#fff;
+}
+
+th{
+    background:#063b91;
+    color:#fff;
+    padding:12px 10px;
+    font-size:13px;
+    white-space:nowrap;
+}
+
+td{
+    padding:10px;
+    border-bottom:1px solid #e7ebf0;
+    text-align:right;
+    white-space:nowrap;
+    font-size:13px;
+}
+
+td:first-child,
+th:first-child{
+    text-align:center;
+}
+
+td:nth-child(2),
+th:nth-child(2){
+    text-align:center;
+}
+
+tbody tr:hover{
+    background:#f8fbff;
+}
+
+.total-row{
+    background:#eaf2ff !important;
+    font-weight:bold;
+}
+
+.total-row td{
+    border-top:2px solid #063b91;
+    color:#063b91;
+}
+
+.actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-top:20px;
+}
+
+.action-btn{
+    border:0;
+    border-radius:9px;
+    padding:13px 18px;
+    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.download{
+    background:#198754;
+    color:#fff;
+}
+
+.print{
+    background:#212529;
+    color:#fff;
+}
+
+.note{
+    margin-top:15px;
+    padding:13px 15px;
+    background:#fff8e6;
+    border:1px solid #ffe08a;
+    border-radius:9px;
+    color:#765600;
+    font-size:14px;
+    line-height:1.5;
+}
+
+footer{
+    text-align:center;
+    padding:25px 15px;
+    background:#0b1f3a;
+    color:#fff;
+    font-size:14px;
+}
+
+@media(max-width:800px){
+    .form-grid,
+    .result-grid,
+    .period-grid,
+    .summary-grid{
+        grid-template-columns:1fr;
+    }
+
+    header h1{
+        font-size:25px;
+    }
+
+    .card{
+        padding:18px;
+    }
+
+    .result-box .value{
+        font-size:22px;
+    }
+}
+
+@media print{
+    body{
+        background:#fff;
+    }
+
+    header{
+        background:#fff !important;
+        color:#000;
+        padding:10px;
+    }
+
+    .card{
+        box-shadow:none;
+        border:1px solid #ddd;
+    }
+
+    .actions,
+    .input-card,
+    footer{
+        display:none !important;
+    }
+
+    .results{
+        display:block !important;
+    }
+
+    .table-wrap{
+        overflow:visible;
+    }
+
+    table{
+        min-width:0;
+        font-size:9px;
+    }
+
+    th,td{
+        padding:5px;
+        font-size:9px;
+    }
+}
+</style>
 </head>
 
 <body>
 
 <header>
-
-<h1>💰 Personal Loan EMI Calculator</h1>
-
-<p> Calculate EMI, Interest, Total Payment & Loan Tenure </p>
-
+    <h1>💰 Personal Loan EMI Calculator</h1>
+    <p>Calculate EMI, Interest, Total Payment and Complete Instalment Schedule</p>
 </header>
 
 <div class="container">
 
-<div class="calculator">
+    <!-- INPUT CARD -->
+    <div class="card input-card">
+        <h2>Loan Details</h2>
 
-<h2>Personal Loan Calculator</h2>
+        <div class="form-grid">
 
-<!-- LOAN AMOUNT -->
+            <div class="field">
+                <label for="loanAmount">Loan Amount (₹)</label>
+                <input type="number" id="loanAmount" value="500000" min="1" step="0.01">
+            </div>
 
-<div class="form-group">
+            <div class="field">
+                <label for="interestRate">Annual Interest Rate (%)</label>
+                <input type="number" id="interestRate" value="10" min="0" step="0.0001">
+            </div>
 
-<label for="loanAmount"> Loan Amount (₹) </label>
+            <div class="field">
+                <label for="tenure">Loan Tenure</label>
+                <input type="number" id="tenure" value="5" min="1" step="1">
+            </div>
 
-<input type="number" id="loanAmount" placeholder="Example: 500000" min="1" step="1">
+            <div class="field">
+                <label for="tenureType">Tenure Type</label>
+                <select id="tenureType">
+                    <option value="years">Years</option>
+                    <option value="months">Months</option>
+                </select>
+            </div>
+
+            <div class="field full">
+                <label for="firstDate">First Instalment Date</label>
+                <input type="date" id="firstDate">
+            </div>
+
+            <div class="field full">
+                <button class="calculate-btn" onclick="calculateLoan()">
+                    Calculate Personal Loan
+                </button>
+            </div>
+
+        </div>
+
+        <div id="error" class="error"></div>
+    </div>
+
+
+    <!-- RESULTS -->
+    <div id="results" class="results">
+
+        <!-- MAIN RESULT -->
+        <div class="card">
+            <h2>Calculation Result</h2>
+
+            <div class="result-grid">
+
+                <div class="result-box">
+                    <div class="label">Monthly EMI</div>
+                    <div class="value" id="emiResult">₹0.00</div>
+                </div>
+
+                <div class="result-box">
+                    <div class="label">Total Interest</div>
+                    <div class="value" id="interestResult">₹0.00</div>
+                </div>
+
+                <div class="result-box">
+                    <div class="label">Total Payment</div>
+                    <div class="value" id="paymentResult">₹0.00</div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- YEAR MONTH DAY -->
+        <div class="card">
+            <h2>📅 Year / Month / Day Calculation</h2>
+
+            <div class="period-grid">
+
+                <div class="period-box">
+                    <h3>📆 Year Calculation</h3>
+
+                    <p>
+                        <span>Total Years</span>
+                        <strong id="totalYears">0.00 Years</strong>
+                    </p>
+
+                    <p>
+                        <span>Total Days</span>
+                        <strong id="yearDays">0 Days</strong>
+                    </p>
+
+                    <p>
+                        <span>Interest Per Year</span>
+                        <strong id="interestYear">₹0.00</strong>
+                    </p>
+
+                    <p>
+                        <span>Payment Per Year</span>
+                        <strong id="paymentYear">₹0.00</strong>
+                    </p>
+                </div>
+
+
+                <div class="period-box">
+                    <h3>📅 Month Calculation</h3>
+
+                    <p>
+                        <span>Total Months</span>
+                        <strong id="totalMonths">0 Months</strong>
+                    </p>
+
+                    <p>
+                        <span>Total Days</span>
+                        <strong id="monthDays">0 Days</strong>
+                    </p>
+
+                    <p>
+                        <span>Interest Per Month</span>
+                        <strong id="interestMonth">₹0.00</strong>
+                    </p>
+
+                    <p>
+                        <span>Payment Per Month</span>
+                        <strong id="paymentMonth">₹0.00</strong>
+                    </p>
+                </div>
+
+
+                <div class="period-box">
+                    <h3>☀️ Day Calculation</h3>
+
+                    <p>
+                        <span>Total Days</span>
+                        <strong id="totalDays">0 Days</strong>
+                    </p>
+
+                    <p>
+                        <span>Interest Per Day</span>
+                        <strong id="interestDay">₹0.00</strong>
+                    </p>
+
+                    <p>
+                        <span>Payment Per Day</span>
+                        <strong id="paymentDay">₹0.00</strong>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- SUMMARY -->
+        <div class="card">
+            <h2>Calculation Summary</h2>
+
+            <div class="summary-grid">
+
+                <div class="summary-item">
+                    <span>Loan Amount</span>
+                    <strong id="summaryLoan">₹0.00</strong>
+                </div>
+
+                <div class="summary-item">
+                    <span>Annual Interest Rate</span>
+                    <strong id="summaryRate">0.0000%</strong>
+                </div>
+
+                <div class="summary-item">
+                    <span>Loan Tenure</span>
+                    <strong id="summaryTenure">0</strong>
+                </div>
+
+                <div class="summary-item">
+                    <span>Monthly EMI</span>
+                    <strong id="summaryEMI">₹0.00</strong>
+                </div>
+
+                <div class="summary-item">
+                    <span>Total Interest</span>
+                    <strong id="summaryInterest">₹0.00</strong>
+                </div>
+
+                <div class="summary-item">
+                    <span>Total Payment</span>
+                    <strong id="summaryPayment">₹0.00</strong>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- SCHEDULE -->
+        <div class="card">
+            <h2>Calculation Summary Schedule</h2>
+
+            <div class="table-wrap">
+
+                <table id="scheduleTable">
+
+                    <thead>
+                        <tr>
+                            <th>Instalment Number</th>
+                            <th>Instalment Date</th>
+                            <th>Opening Balance</th>
+                            <th>Instalment EMI</th>
+                            <th>Principal</th>
+                            <th>Interest</th>
+                            <th>Closing Balance</th>
+                            <th>Annualised Interest Rate %</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="scheduleBody"></tbody>
+
+                </table>
+
+            </div>
+
+            <div class="note">
+                <strong>Rounding Note:</strong>
+                The displayed EMI is rounded to 2 decimal places and is used for
+                the payment total. The final month's interest is adjusted by the
+                rounding difference so that the total EMI, total principal,
+                total interest and closing balance reconcile exactly.
+            </div>
+
+            <div class="actions">
+                <button class="action-btn download" onclick="downloadCSV()">
+                    ⬇ Download Schedule
+                </button>
+
+                <button class="action-btn print" onclick="window.print()">
+                    🖨 Print / Save PDF
+                </button>
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 
-<!-- INTEREST -->
-
-<div class="form-group">
-
-<label for="interestRate"> Annual Interest Rate (%) </label>
-
-<input type="number" id="interestRate" placeholder="Example: 10" min="0" step="0.01">
-
-</div>
-
-<!-- TENURE -->
-
-<div class="form-group">
-
-<label for="tenure"> Loan Tenure </label>
-
-<input type="number" id="tenure" placeholder="Example: 5" min="0.01" step="0.01">
-
-<select id="tenureUnit" style="margin-top:10px;">
-
-<option value="years"> Years </option>
-
-<option value="months"> Months </option>
-
-<option value="days"> Days </option>
-
-</select>
-
-</div>
-
-<button type="button" class="calculate-btn" onclick="calculateEMI()">
-
-Calculate EMI
-
-</button>
-
-<button type="button" class="reset-btn" onclick="resetCalculator()">
-
-Reset
-
-</button>
-
-<!-- RESULT -->
-
-<div id="result">
-
-<h2 class="result-title"> 📊 Loan Calculation Result </h2>
-
-<div class="result-grid">
-
-<div class="result-card">
-
-<h3>Monthly EMI</h3>
-
-<p id="emiResult"> ₹0.00 </p>
-
-</div>
-
-<div class="result-card">
-
-<h3>Total Interest</h3>
-
-<p id="interestResult"> ₹0.00 </p>
-
-</div>
-
-<div class="result-card">
-
-<h3>Total Payment</h3>
-
-<p id="paymentResult"> ₹0.00 </p>
-
-</div>
-
-</div>
-
-<!-- TENURE DETAILS -->
-
-<div class="tenure-result">
-
-<div class="tenure-heading"> 📅 Loan Tenure Details </div>
-
-<div class="tenure-line"> <strong>Entered Tenure:</strong> <span id="tenureDisplay">-</span> </div>
-
-<div class="tenure-line"> <strong>Approx. Tenure:</strong> <span id="approxTenureDisplay">-</span> </div>
-
-<div class="tenure-line"> <strong>Total Months:</strong> <span id="monthsDisplay">-</span> </div>
-
-<div class="tenure-line"> <strong>Total Days:</strong> <span id="daysDisplay">-</span> </div>
-
-</div>
-
-<!-- PDF BUTTON -->
-
-<button type="button" id="downloadPDF" class="download-btn" onclick="downloadPDF()">
-
-📄 Download PDF
-
-</button>
-
-</div>
-
-</div>
-
-<!-- INFORMATION -->
-
-<div class="info">
-
-<h2> Personal Loan EMI Calculator </h2>
-
-<p> LoanMitraCalc Personal Loan EMI Calculator helps you calculate your monthly EMI, total interest, total repayment amount and loan tenure quickly and easily. </p>
-
-<h3> How to use the calculator? </h3>
-
-<ol>
-
-<li> Enter the loan amount. </li>
-
-<li> Enter the annual interest rate. </li>
-
-<li> Enter your loan tenure. </li>
-
-<li> Select Years, Months or Days. </li>
-
-<li> Click Calculate EMI. </li>
-
-<li> Loan Tenure Details will appear. </li>
-
-<li> Click Download PDF to save your calculation. </li>
-
-</ol>
-
-<h3> EMI Formula </h3>
-
-<p> EMI = P × R × (1 + R)<sup>N</sup> / [(1 + R)<sup>N</sup> − 1] </p>
-
-<p> Where P is the principal loan amount, R is the monthly interest rate and N is the number of monthly installments. </p>
-
-</div>
-
-</div>
 
 <footer>
-
-<p> © 2026 LoanMitraCalc. All Rights Reserved. </p>
-
-<p>
-
-<a href="index.html"> Home </a>
-
-|
-
-<a href="personal-loan.html"> Personal Loan </a>
-
-|
-
-<a href="home-loan.html"> Home Loan </a>
-
-|
-
-<a href="car-loan.html"> Car Loan </a>
-
-|
-
-<a href="sip-calculator.html"> SIP </a>
-
-</p>
-
+    © 2026 LoanMitraCalc - Personal Loan EMI Calculator
 </footer>
 
-<script> /* ================================ MONEY FORMAT ================================ */ function formatMoney(number){ return "₹" + Number(number).toLocaleString("en-IN",{ minimumFractionDigits:2, maximumFractionDigits:2 }); } /* ================================ CALCULATE EMI ================================ */ function calculateEMI(){ const loanAmount = parseFloat( document.getElementById("loanAmount").value ); const interestRate = parseFloat( document.getElementById("interestRate").value ); const tenure = parseFloat( document.getElementById("tenure").value ); const tenureUnit = document.getElementById("tenureUnit").value; /* VALIDATION */ if( !Number.isFinite(loanAmount) || loanAmount <= 0 ){ alert("Please enter a valid loan amount."); return; } if( !Number.isFinite(interestRate) || interestRate < 0 ){ alert("Please enter a valid interest rate."); return; } if( !Number.isFinite(tenure) || tenure <= 0 ){ alert("Please enter a valid loan tenure."); return; } /* CONVERT TENURE TO MONTHS */ let totalMonths = 0; if(tenureUnit === "years"){ totalMonths = tenure * 12; } else if(tenureUnit === "months"){ totalMonths = tenure; } else if(tenureUnit === "days"){ totalMonths = tenure / 30.4375; } if( !Number.isFinite(totalMonths) || totalMonths <= 0 ){ alert("Invalid loan tenure."); return; } /* MONTHLY RATE */ const monthlyRate = interestRate / 12 / 100; let emi; /* ZERO INTEREST */ if(monthlyRate === 0){ emi = loanAmount / totalMonths; } else{ const power = Math.pow( 1 + monthlyRate, totalMonths ); emi = loanAmount * monthlyRate * power / (power - 1); } /* TOTALS */ const totalPayment = emi * totalMonths; const totalInterest = Math.max( 0, totalPayment - loanAmount ); /* TENURE CONVERSION */ let totalDays = totalMonths * 30.4375; let years = Math.floor(totalDays / 365.25); let remainingDays = totalDays - years * 365.25; let months = Math.floor( remainingDays / 30.4375 ); let days = Math.round( remainingDays - months * 30.4375 ); /* DAY ROUNDING */ if(days >= 30){ days = 0; months++; } if(months >= 12){ months = 0; years++; } /* DISPLAY RESULTS */ document.getElementById("emiResult").textContent = formatMoney(emi); document.getElementById("interestResult").textContent = formatMoney(totalInterest); document.getElementById("paymentResult").textContent = formatMoney(totalPayment); document.getElementById("tenureDisplay").textContent = tenure + " " + (tenureUnit === "years" ? "Year(s)" : tenureUnit === "months" ? "Month(s)" : "Day(s)" ); document.getElementById("approxTenureDisplay").textContent = years + " Year(s), " + months + " Month(s), " + days + " Day(s)"; document.getElementById("monthsDisplay").textContent = totalMonths.toFixed(2); document.getElementById("daysDisplay").textContent = totalDays.toFixed(2); /* SAVE DATA FOR PDF */ window.loanData = { loanAmount:loanAmount, interestRate:interestRate, tenure:tenure, tenureUnit:tenureUnit, emi:emi, totalInterest:totalInterest, totalPayment:totalPayment, totalMonths:totalMonths, totalDays:totalDays, years:years, months:months, days:days }; /* SHOW RESULT */ document.getElementById("result").style.display = "block"; /* ENSURE PDF BUTTON IS VISIBLE */ document.getElementById("downloadPDF").style.display = "block"; /* SCROLL TO RESULT */ setTimeout(function(){ document.getElementById("result").scrollIntoView({ behavior:"smooth", block:"start" }); },100); } /* ================================ DOWNLOAD PDF ================================ */ function downloadPDF(){ if(!window.loanData){ alert( "Please calculate the loan first." ); return; } if( typeof window.jspdf === "undefined" || typeof window.jspdf.jsPDF === "undefined" ){ alert( "PDF library is still loading. Please try again." ); return; } const { jsPDF } = window.jspdf; const data = window.loanData; const doc = new jsPDF(); /* TITLE */ doc.setFontSize(20); doc.text( "LoanMitraCalc", 20, 20 ); doc.setFontSize(15); doc.text( "Personal Loan EMI Calculation", 20, 32 ); doc.setFontSize(11); let y = 48; doc.text( "Loan Amount: " + formatMoney(data.loanAmount), 20, y ); y += 9; doc.text( "Annual Interest Rate: " + data.interestRate + "%", 20, y ); y += 9; doc.text( "Entered Tenure: " + data.tenure + " " + data.tenureUnit, 20, y ); y += 9; doc.text( "Approx. Tenure: " + data.years + " Year(s), " + data.months + " Month(s), " + data.days + " Day(s)", 20, y ); y += 9; doc.text( "Total Months: " + data.totalMonths.toFixed(2), 20, y ); y += 9; doc.text( "Total Days: " + data.totalDays.toFixed(2), 20, y ); y += 18; doc.setFontSize(14); doc.text( "Calculation Result", 20, y ); y += 12; doc.setFontSize(11); doc.text( "Monthly EMI: " + formatMoney(data.emi), 20, y ); y += 9; doc.text( "Total Interest: " + formatMoney(data.totalInterest), 20, y ); y += 9; doc.text( "Total Payment: " + formatMoney(data.totalPayment), 20, y ); y += 20; doc.setFontSize(9); doc.text( "Generated by LoanMitraCalc", 20, y ); /* SAVE */ doc.save( "LoanMitraCalc-Personal-Loan-EMI.pdf" ); } /* ================================ RESET ================================ */ function resetCalculator(){ document.getElementById( "loanAmount" ).value = ""; document.getElementById( "interestRate" ).value = ""; document.getElementById( "tenure" ).value = ""; document.getElementById( "tenureUnit" ).value = "years"; document.getElementById( "result" ).style.display = "none"; document.getElementById( "downloadPDF" ).style.display = "none"; window.loanData = null; } </script>
 
-</body> </html>
+<script>
+
+let currentSchedule = [];
+let currentData = null;
+
+
+/* -----------------------------
+   MONEY FORMAT
+----------------------------- */
+
+function money(value){
+
+    return "₹" + Number(value).toLocaleString("en-IN",{
+        minimumFractionDigits:2,
+        maximumFractionDigits:2
+    });
+
+}
+
+
+/* -----------------------------
+   ROUND TO 2 DECIMAL
+----------------------------- */
+
+function round2(value){
+
+    return Math.round((value + Number.EPSILON) * 100) / 100;
+
+}
+
+
+/* -----------------------------
+   DATE FORMAT
+----------------------------- */
+
+function formatDate(date){
+
+    const day = String(date.getDate()).padStart(2,"0");
+    const month = String(date.getMonth()+1).padStart(2,"0");
+    const year = date.getFullYear();
+
+    return `${day}/${month}/${year}`;
+
+}
+
+
+/* -----------------------------
+   ADD MONTHS
+----------------------------- */
+
+function addMonths(date, months){
+
+    const result = new Date(date.getTime());
+
+    const originalDay = result.getDate();
+
+    result.setDate(1);
+    result.setMonth(result.getMonth() + months);
+
+    const lastDay = new Date(
+        result.getFullYear(),
+        result.getMonth() + 1,
+        0
+    ).getDate();
+
+    result.setDate(Math.min(originalDay,lastDay));
+
+    return result;
+
+}
+
+
+/* -----------------------------
+   DAYS BETWEEN
+----------------------------- */
+
+function daysBetween(start,end){
+
+    const s = new Date(
+        start.getFullYear(),
+        start.getMonth(),
+        start.getDate()
+    );
+
+    const e = new Date(
+        end.getFullYear(),
+        end.getMonth(),
+        end.getDate()
+    );
+
+    return Math.round((e-s)/(1000*60*60*24));
+
+}
+
+
+/* -----------------------------
+   SHOW ERROR
+----------------------------- */
+
+function showError(message){
+
+    const error = document.getElementById("error");
+
+    error.textContent = message;
+    error.style.display = "block";
+
+}
+
+
+/* -----------------------------
+   CALCULATE LOAN
+----------------------------- */
+
+function calculateLoan(){
+
+    document.getElementById("error").style.display = "none";
+
+    const loan = Number(document.getElementById("loanAmount").value);
+    const annualRate = Number(document.getElementById("interestRate").value);
+    const tenureInput = Number(document.getElementById("tenure").value);
+    const tenureType = document.getElementById("tenureType").value;
+    const firstDateValue = document.getElementById("firstDate").value;
+
+
+    if(!loan || loan <= 0){
+
+        showError("Please enter a valid loan amount.");
+        return;
+
+    }
+
+
+    if(annualRate < 0){
+
+        showError("Interest rate cannot be negative.");
+        return;
+
+    }
+
+
+    if(!tenureInput || tenureInput <= 0){
+
+        showError("Please enter a valid loan tenure.");
+        return;
+
+    }
+
+
+    if(!firstDateValue){
+
+        showError("Please select the first instalment date.");
+        return;
+
+    }
+
+
+    let totalMonths;
+
+    if(tenureType === "years"){
+
+        totalMonths = Math.round(tenureInput * 12);
+
+    }else{
+
+        totalMonths = Math.round(tenureInput);
+
+    }
+
+
+    if(totalMonths <= 0){
+
+        showError("Loan tenure must be at least 1 month.");
+        return;
+
+    }
+
+
+    const startDate = new Date(firstDateValue + "T00:00:00");
+
+
+    if(isNaN(startDate.getTime())){
+
+        showError("Please enter a valid instalment date.");
+        return;
+
+    }
+
+
+    /* -----------------------------
+       MONTHLY RATE
+    ----------------------------- */
+
+    const monthlyRate = annualRate / 100 / 12;
+
+
+    /* -----------------------------
+       FULL PRECISION EMI
+    ----------------------------- */
+
+    let fullPrecisionEMI;
+
+
+    if(monthlyRate === 0){
+
+        fullPrecisionEMI = loan / totalMonths;
+
+    }else{
+
+        const factor = Math.pow(
+            1 + monthlyRate,
+            totalMonths
+        );
+
+        fullPrecisionEMI =
+            loan *
+            monthlyRate *
+            factor /
+            (factor - 1);
+
+    }
+
+
+    /* -----------------------------------------
+       IMPORTANT:
+       DISPLAYED EMI IS THE ACTUAL EMI USED
+       FOR TOTAL PAYMENT
+    ----------------------------------------- */
+
+    const emi = round2(fullPrecisionEMI);
+
+    const totalPayment = round2(emi * totalMonths);
+
+    const totalInterest = round2(totalPayment - loan);
+
+
+    /* -----------------------------
+       END DATE
+       Full tenure duration
+    ----------------------------- */
+
+    const endDate = addMonths(
+        startDate,
+        totalMonths
+    );
+
+
+    const totalDays = daysBetween(
+        startDate,
+        endDate
+    );
+
+
+    let totalYears;
+
+    if(tenureType === "years"){
+
+        totalYears = tenureInput;
+
+    }else{
+
+        totalYears = totalMonths / 12;
+
+    }
+
+
+    /* -----------------------------
+       PERIOD VALUES
+    ----------------------------- */
+
+    const interestPerYear =
+        totalInterest / totalYears;
+
+    const paymentPerYear =
+        totalPayment / totalYears;
+
+    const interestPerMonth =
+        totalInterest / totalMonths;
+
+    const paymentPerMonth =
+        totalPayment / totalMonths;
+
+    const interestPerDay =
+        totalDays > 0
+        ? totalInterest / totalDays
+        : 0;
+
+    const paymentPerDay =
+        totalDays > 0
+        ? totalPayment / totalDays
+        : 0;
+
+
+    /* -----------------------------
+       SCHEDULE
+    ----------------------------- */
+
+    let openingBalance = round2(loan);
+
+    let schedule = [];
+
+    let totalPrincipal = 0;
+    let totalScheduleInterest = 0;
+    let totalScheduleEMI = 0;
+
+
+    for(let i=1;i<=totalMonths;i++){
+
+        const instalmentDate =
+            addMonths(startDate,i-1);
+
+        let interest;
+        let principal;
+        let instalmentEMI;
+        let closingBalance;
+
+
+        /*
+          Last instalment:
+          Principal is exactly the remaining balance.
+          EMI remains the displayed EMI.
+          Interest is adjusted so that:
+
+          EMI = Principal + Interest
+
+          This keeps:
+          EMI × months = Total Payment
+          Principal = Loan Amount
+          Closing Balance = ₹0
+        */
+
+        if(i === totalMonths){
+
+            principal = round2(openingBalance);
+
+            interest = round2(
+                emi - principal
+            );
+
+            /*
+              Safety for zero-interest or very small values
+            */
+            if(interest < 0 && Math.abs(interest) < 0.01){
+                interest = 0;
+            }
+
+            instalmentEMI = round2(
+                principal + interest
+            );
+
+            /*
+              Keep displayed EMI exactly equal
+              to the calculated EMI.
+            */
+            instalmentEMI = emi;
+
+            closingBalance = 0;
+
+        }else{
+
+            interest = round2(
+                openingBalance * monthlyRate
+            );
+
+            principal = round2(
+                emi - interest
+            );
+
+            if(principal < 0){
+                principal = 0;
+            }
+
+            instalmentEMI = emi;
+
+            closingBalance = round2(
+                openingBalance - principal
+            );
+
+            if(closingBalance < 0){
+                closingBalance = 0;
+            }
+
+        }
+
+
+        schedule.push({
+
+            number:i,
+
+            date:formatDate(instalmentDate),
+
+            opening:round2(openingBalance),
+
+            emi:round2(instalmentEMI),
+
+            principal:round2(principal),
+
+            interest:round2(interest),
+
+            closing:round2(closingBalance),
+
+            rate:annualRate
+
+        });
+
+
+        totalPrincipal += principal;
+        totalScheduleInterest += interest;
+        totalScheduleEMI += instalmentEMI;
+
+
+        openingBalance = closingBalance;
+
+    }
+
+
+    /* -----------------------------
+       FORCE DISPLAY TOTALS
+       TO THE SAME MASTER VALUES
+    ----------------------------- */
+
+    totalPrincipal = round2(loan);
+
+    totalScheduleEMI = round2(
+        emi * totalMonths
+    );
+
+    totalScheduleInterest = round2(
+        totalScheduleEMI - totalPrincipal
+    );
+
+
+    currentSchedule = schedule;
+
+
+    currentData = {
+
+        loan:loan,
+
+        annualRate:annualRate,
+
+        tenureInput:tenureInput,
+
+        tenureType:tenureType,
+
+        totalMonths:totalMonths,
+
+        totalYears:totalYears,
+
+        totalDays:totalDays,
+
+        emi:emi,
+
+        totalInterest:totalInterest,
+
+        totalPayment:totalPayment,
+
+        startDate:startDate,
+
+        endDate:endDate
+
+    };
+
+
+    /* -----------------------------
+       MAIN RESULT
+    ----------------------------- */
+
+    document.getElementById("emiResult").textContent =
+        money(emi);
+
+    document.getElementById("interestResult").textContent =
+        money(totalInterest);
+
+    document.getElementById("paymentResult").textContent =
+        money(totalPayment);
+
+
+    /* -----------------------------
+       YEAR CALCULATION
+    ----------------------------- */
+
+    document.getElementById("totalYears").textContent =
+        Number(totalYears).toFixed(2) + " Years";
+
+    document.getElementById("yearDays").textContent =
+        totalDays.toLocaleString("en-IN") + " Days";
+
+    document.getElementById("interestYear").textContent =
+        money(interestPerYear);
+
+    document.getElementById("paymentYear").textContent =
+        money(paymentPerYear);
+
+
+    /* -----------------------------
+       MONTH CALCULATION
+    ----------------------------- */
+
+    document.getElementById("totalMonths").textContent =
+        totalMonths.toLocaleString("en-IN") + " Months";
+
+    document.getElementById("monthDays").textContent =
+        totalDays.toLocaleString("en-IN") + " Days";
+
+    document.getElementById("interestMonth").textContent =
+        money(interestPerMonth);
+
+    document.getElementById("paymentMonth").textContent =
+        money(paymentPerMonth);
+
+
+    /* -----------------------------
+       DAY CALCULATION
+    ----------------------------- */
+
+    document.getElementById("totalDays").textContent =
+        totalDays.toLocaleString("en-IN") + " Days";
+
+    document.getElementById("interestDay").textContent =
+        money(interestPerDay);
+
+    document.getElementById("paymentDay").textContent =
+        money(paymentPerDay);
+
+
+    /* -----------------------------
+       SUMMARY
+    ----------------------------- */
+
+    document.getElementById("summaryLoan").textContent =
+        money(loan);
+
+    document.getElementById("summaryRate").textContent =
+        annualRate.toFixed(4) + "%";
+
+    document.getElementById("summaryTenure").textContent =
+        tenureInput + " " +
+        (tenureType === "years" ? "Years" : "Months");
+
+    document.getElementById("summaryEMI").textContent =
+        money(emi);
+
+    document.getElementById("summaryInterest").textContent =
+        money(totalInterest);
+
+    document.getElementById("summaryPayment").textContent =
+        money(totalPayment);
+
+
+    /* -----------------------------
+       BUILD TABLE
+    ----------------------------- */
+
+    const body =
+        document.getElementById("scheduleBody");
+
+    body.innerHTML = "";
+
+
+    schedule.forEach(row => {
+
+        const tr = document.createElement("tr");
+
+        tr.innerHTML = `
+
+            <td>${row.number}</td>
+
+            <td>${row.date}</td>
+
+            <td>${money(row.opening)}</td>
+
+            <td>${money(row.emi)}</td>
+
+            <td>${money(row.principal)}</td>
+
+            <td>${money(row.interest)}</td>
+
+            <td>${money(row.closing)}</td>
+
+            <td>${row.rate.toFixed(4)}%</td>
+
+        `;
+
+        body.appendChild(tr);
+
+    });
+
+
+    /* -----------------------------
+       TOTAL ROW
+    ----------------------------- */
+
+    const totalRow = document.createElement("tr");
+
+    totalRow.className = "total-row";
+
+    totalRow.innerHTML = `
+
+        <td>TOTAL</td>
+
+        <td>—</td>
+
+        <td>${money(loan)}</td>
+
+        <td>${money(totalScheduleEMI)}</td>
+
+        <td>${money(totalPrincipal)}</td>
+
+        <td>${money(totalScheduleInterest)}</td>
+
+        <td>${money(0)}</td>
+
+        <td>${annualRate.toFixed(4)}%</td>
+
+    `;
+
+    body.appendChild(totalRow);
+
+
+    /* -----------------------------
+       SHOW RESULTS
+    ----------------------------- */
+
+    document.getElementById("results").style.display =
+        "block";
+
+
+    /*
+      Scroll smoothly to results
+    */
+
+    document.getElementById("results")
+        .scrollIntoView({
+            behavior:"smooth",
+            block:"start"
+        });
+
+}
+
+
+/* -----------------------------
+   DOWNLOAD CSV
+----------------------------- */
+
+function downloadCSV(){
+
+    if(!currentData || currentSchedule.length === 0){
+
+        alert("Please calculate the loan first.");
+
+        return;
+
+    }
+
+
+    let csv = [];
+
+
+    csv.push([
+        "Instalment Number",
+        "Instalment Date",
+        "Opening Balance",
+        "Instalment EMI",
+        "Principal",
+        "Interest",
+        "Closing Balance",
+        "Annualised Interest Rate %"
+    ].join(","));
+
+
+    currentSchedule.forEach(row => {
+
+        csv.push([
+
+            row.number,
+
+            row.date,
+
+            row.opening.toFixed(2),
+
+            row.emi.toFixed(2),
+
+            row.principal.toFixed(2),
+
+            row.interest.toFixed(2),
+
+            row.closing.toFixed(2),
+
+            row.rate.toFixed(4) + "%"
+
+        ].join(","));
+
+    });
+
+
+    csv.push([
+
+        "TOTAL",
+
+        "",
+
+        currentData.loan.toFixed(2),
+
+        currentData.totalPayment.toFixed(2),
+
+        currentData.loan.toFixed(2),
+
+        currentData.totalInterest.toFixed(2),
+
+        "0.00",
+
+        currentData.annualRate.toFixed(4) + "%"
+
+    ].join(","));
+
+
+    const blob = new Blob(
+        [csv.join("\n")],
+        {
+            type:"text/csv;charset=utf-8;"
+        }
+    );
+
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const link =
+        document.createElement("a");
+
+    link.href = url;
+
+    link.download =
+        "personal-loan-calculation-schedule.csv";
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    document.body.removeChild(link);
+
+    URL.revokeObjectURL(url);
+
+}
+
+
+/* -----------------------------
+   DEFAULT DATE
+----------------------------- */
+
+(function(){
+
+    const dateInput =
+        document.getElementById("firstDate");
+
+    const today =
+        new Date();
+
+    const year =
+        today.getFullYear();
+
+    const month =
+        String(today.getMonth()+1)
+        .padStart(2,"0");
+
+    const day =
+        String(today.getDate())
+        .padStart(2,"0");
+
+    dateInput.value =
+        `${year}-${month}-${day}`;
+
+})();
+
+</script>
+
+</body>
+</html>
