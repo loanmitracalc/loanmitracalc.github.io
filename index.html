@@ -10,7 +10,13 @@
 
 <meta name="robots" content="index, follow"> <meta name="author" content="LoanMitraCalc">
 
-<link rel="canonical" href="https://loanmitracalc.github.io/loanmitracalc/">
+<!-- Google Search Console Verification -->
+
+<meta name="google-site-verification" content="PASTE_YOUR_GOOGLE_VERIFICATION_CODE_HERE">
+
+<!-- Main Website Canonical -->
+
+<link rel="canonical" href="https://loanmitracalc.github.io/">
 
 <style> *{ box-sizing:border-box; margin:0; padding:0; } html{ scroll-behavior:smooth; } body{ font-family:Arial,Helvetica,sans-serif; background:#f4f7fb; color:#172033; line-height:1.6; } /* HEADER */ header{ background:linear-gradient(135deg,#071a33,#0e477c,#1680bd); color:white; padding:18px 20px; position:sticky; top:0; z-index:1000; box-shadow:0 4px 18px rgba(0,0,0,.18); } .header-inner{ max-width:1180px; margin:auto; display:flex; align-items:center; justify-content:space-between; gap:20px; } .logo{ font-size:25px; font-weight:800; letter-spacing:.3px; } .logo span{ color:#5ee7ff; } nav{ display:flex; gap:18px; flex-wrap:wrap; } nav a{ color:white; text-decoration:none; font-size:14px; font-weight:600; } nav a:hover{ color:#5ee7ff; } /* HERO */ .hero{ background:linear-gradient(135deg,#0b2342,#1269a5,#1593d1); color:white; text-align:center; padding:65px 20px 80px; } .hero h1{ font-size:42px; margin-bottom:14px; } .hero p{ max-width:780px; margin:auto; font-size:17px; color:#e3f2ff; } .hero-buttons{ margin-top:28px; display:flex; justify-content:center; gap:12px; flex-wrap:wrap; } .btn{ display:inline-block; text-decoration:none; padding:13px 23px; border-radius:10px; font-weight:700; transition:.2s; } .btn-primary{ background:#19c37d; color:white; } .btn-primary:hover{ transform:translateY(-2px); background:#12ad6d; } .btn-light{ background:white; color:#123f73; } .btn-light:hover{ transform:translateY(-2px); } /* CONTAINER */ .container{ max-width:1180px; margin:auto; padding:45px 20px; } .section-title{ text-align:center; margin-bottom:30px; } .section-title h2{ font-size:30px; color:#102a43; } .section-title p{ color:#65758b; margin-top:6px; } /* CALCULATOR GRID */ .calculator-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:20px; } /* CARD */ .card{ background:white; border:1px solid #e2e8f0; border-radius:18px; padding:24px; box-shadow:0 7px 24px rgba(16,42,67,.08); transition:.25s; position:relative; overflow:hidden; } .card:hover{ transform:translateY(-6px); box-shadow:0 15px 35px rgba(16,42,67,.15); } .card-top{ display:flex; align-items:center; gap:15px; margin-bottom:15px; } .icon{ width:58px; height:58px; min-width:58px; border-radius:15px; display:flex; align-items:center; justify-content:center; font-size:29px; background:#eaf5ff; } .card h3{ font-size:19px; color:#102a43; } .card p{ color:#68788c; font-size:14px; min-height:68px; } /* BUTTONS */ .card-buttons{ display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-top:16px; } .card-btn{ display:block; text-align:center; color:white; text-decoration:none; padding:10px 6px; border-radius:9px; font-weight:700; font-size:13px; transition:.2s; } .open-btn{ background:#1167a8; } .open-btn:hover{ background:#0b4f84; } .install-btn{ background:#19a66a; } .install-btn:hover{ background:#118653; } .install-btn::before{ content:"📲 "; } /* AD BOX */ .ad-box{ max-width:1180px; min-height:90px; margin:10px auto 25px; padding:15px; border:1px dashed #c5d2df; border-radius:10px; background:#ffffff; text-align:center; color:#8795a5; font-size:13px; } /* FEATURES */ .feature-section{ background:white; } .features{ display:grid; grid-template-columns:repeat(4,1fr); gap:18px; } .feature{ padding:22px; border:1px solid #e2e8f0; border-radius:15px; background:#fbfdff; } .feature strong{ display:block; margin-bottom:6px; font-size:16px; } .feature span{ color:#69798d; font-size:14px; } /* INFO */ .info{ background:#eef7ff; border-left:5px solid #1476b8; padding:25px; border-radius:10px; margin-top:25px; } .info h2{ margin-bottom:10px; color:#103c60; } /* FOOTER */ footer{ background:#0b1f3a; color:#dce8f3; text-align:center; padding:35px 20px; margin-top:30px; } footer a{ color:#71ddff; text-decoration:none; } .footer-links{ margin:15px 0; display:flex; justify-content:center; gap:15px; flex-wrap:wrap; } /* INSTALL SECTION */ .install-section{ margin-top:35px; padding:25px; background:linear-gradient(135deg,#0d2948,#116da8); color:white; border-radius:18px; text-align:center; } .install-section h2{ margin-bottom:8px; } .install-section p{ color:#dceeff; margin-bottom:18px; } .install-button{ display:inline-block; background:#19c37d; color:white; text-decoration:none; padding:12px 22px; border-radius:10px; font-weight:bold; } /* RESPONSIVE */ @media(max-width:1000px){ .calculator-grid{ grid-template-columns:repeat(2,1fr); } .features{ grid-template-columns:repeat(2,1fr); } } @media(max-width:650px){ header{ position:relative; } .header-inner{ flex-direction:column; } nav{ justify-content:center; } .hero{ padding:45px 18px 55px; } .hero h1{ font-size:30px; } .hero p{ font-size:15px; } .calculator-grid, .features{ grid-template-columns:1fr; } .container{ padding:35px 15px; } .card-buttons{ grid-template-columns:1fr 1fr; } } @media(max-width:380px){ .card-buttons{ grid-template-columns:1fr; } } </style>
 
@@ -18,321 +24,87 @@
 
 <body>
 
-<!-- HEADER -->
+<header> <div class="header-inner">
 
-<header>
+<div class="logo"> Loan<span>MitraCalc</span> </div>
 
-<div class="header-inner">
+<nav> <a href="#calculators">Calculators</a> <a href="#features">Features</a> <a href="#about">About</a> </nav>
 
-<div class="logo"> LoanMitra<span>Calc</span> </div>
-
-<nav> <a href="index.html">Home</a> <a href="#calculators">Calculators</a> <a href="#features">Features</a> </nav>
-
-</div>
-
-</header>
-
-<!-- HERO -->
+</div> </header>
 
 <section class="hero">
 
-<h1>Smart Financial Calculators</h1>
+<h1>Professional Loan & Financial Calculators</h1>
 
-<p> Calculate EMI, SIP, GST, Percentage, Age and other financial calculations quickly and easily with LoanMitraCalc. </p>
+<p> Free online calculators for Personal Loan EMI, Home Loan EMI, Car Loan EMI, SIP, GST, Percentage, Age and Bevel Protractor calculations. </p>
 
-<div class="hero-buttons">
-
-<a href="#calculators" class="btn btn-primary"> Explore Calculators </a>
-
-<a href="personal-loan.html" class="btn btn-light"> Calculate EMI </a>
-
-</div>
+<div class="hero-buttons"> <a href="#calculators" class="btn btn-primary">Explore Calculators</a> <a href="#about" class="btn btn-light">Learn More</a> </div>
 
 </section>
-
-<main>
-
-<!-- TOP AD AREA -->
 
 <div class="ad-box"> Advertisement </div>
 
-<!-- CALCULATORS -->
-
 <section class="container" id="calculators">
 
-<div class="section-title">
-
-<h2>All Calculators</h2>
-
-<p> Professional, simple and easy-to-use calculators </p>
-
-</div>
+<div class="section-title"> <h2>Our Calculators</h2> <p>Professional and easy-to-use online calculators</p> </div>
 
 <div class="calculator-grid">
 
-<!-- PERSONAL LOAN -->
+<div class="card"> <div class="card-top"> <div class="icon">💰</div> <div> <h3>Personal Loan</h3> </div> </div> <p> Calculate Personal Loan EMI, total interest and total payment. </p> <div class="card-buttons"> <a href="personal-loan.html" class="card-btn open-btn">Open</a> <a href="personal-loan.html" class="card-btn install-btn">Use</a> </div> </div>
 
-<div class="card">
+<div class="card"> <div class="card-top"> <div class="icon">🏠</div> <div> <h3>Home Loan</h3> </div> </div> <p> Calculate Home Loan EMI, interest and total repayment. </p> <div class="card-buttons"> <a href="home-loan.html" class="card-btn open-btn">Open</a> <a href="home-loan.html" class="card-btn install-btn">Use</a> </div> </div>
 
-<div class="card-top">
+<div class="card"> <div class="card-top"> <div class="icon">🚘</div> <div> <h3>Car Loan</h3> </div> </div> <p> Calculate Car Loan EMI and complete repayment details. </p> <div class="card-buttons"> <a href="car-loan.html" class="card-btn open-btn">Open</a> <a href="car-loan.html" class="card-btn install-btn">Use</a> </div> </div>
 
-<div class="icon">💰</div>
+<div class="card"> <div class="card-top"> <div class="icon">📈</div> <div> <h3>SIP</h3> </div> </div> <p> Calculate SIP investment, estimated returns and maturity value. </p> <div class="card-buttons"> <a href="sip-calculator.html" class="card-btn open-btn">Open</a> <a href="sip-calculator.html" class="card-btn install-btn">Use</a> </div> </div>
 
-<h3>Personal Loan</h3>
+<div class="card"> <div class="card-top"> <div class="icon">🧾</div> <div> <h3>GST</h3> </div> </div> <p> Calculate GST amount, tax-inclusive and tax-exclusive prices. </p> <div class="card-buttons"> <a href="gst-calculator.html" class="card-btn open-btn">Open</a> <a href="gst-calculator.html" class="card-btn install-btn">Use</a> </div> </div>
 
-</div>
+<div class="card"> <div class="card-top"> <div class="icon">%</div> <div> <h3>Percentage</h3> </div> </div> <p> Calculate percentage, increase, decrease and basic calculations. </p> <div class="card-buttons"> <a href="percentage-calculator.html" class="card-btn open-btn">Open</a> <a href="percentage-calculator.html" class="card-btn install-btn">Use</a> </div> </div>
 
-<p> Calculate monthly EMI, total interest and total repayment for your personal loan. </p>
+<div class="card"> <div class="card-top"> <div class="icon">🎂</div> <div> <h3>Age</h3> </div> </div> <p> Calculate exact age in years, months and days. </p> <div class="card-buttons"> <a href="age-calculator.html" class="card-btn open-btn">Open</a> <a href="age-calculator.html" class="card-btn install-btn">Use</a> </div> </div>
 
-<div class="card-buttons">
-
-<a href="personal-loan.html" class="card-btn open-btn"> Open </a>
-
-<a href="personal-loan.html" class="card-btn install-btn"> Use App </a>
+<div class="card"> <div class="card-top"> <div class="icon">📐</div> <div> <h3>Bevel Protractor</h3> </div> </div> <p> Professional Bevel Protractor calculation with 5′ least count. </p> <div class="card-buttons"> <a href="bevel-protractor-calculator.html" class="card-btn open-btn">Open</a> <a href="bevel-protractor-calculator.html" class="card-btn install-btn">Use</a> </div> </div>
 
 </div>
 
-</div>
+<div class="ad-box"> Advertisement </div>
 
-<!-- HOME LOAN -->
+<div class="info" id="about">
 
-<div class="card">
+<h2>About LoanMitraCalc</h2>
 
-<div class="card-top">
-
-<div class="icon">🏠</div>
-
-<h3>Home Loan</h3>
+<p> LoanMitraCalc provides free online financial and mathematical calculators designed to make calculations simple, fast and easy to understand. Use our calculators for loans, investments, GST, percentage, age and bevel protractor calculations. </p>
 
 </div>
-
-<p> Calculate home loan EMI, interest and total payment with an easy-to-use calculator. </p>
-
-<div class="card-buttons">
-
-<a href="home-loan.html" class="card-btn open-btn"> Open </a>
-
-<a href="home-loan.html" class="card-btn install-btn"> Use App </a>
-
-</div>
-
-</div>
-
-<!-- CAR LOAN -->
-
-<div class="card">
-
-<div class="card-top">
-
-<div class="icon">🚘</div>
-
-<h3>Car Loan</h3>
-
-</div>
-
-<p> Calculate your car loan EMI and understand the total interest payable on your vehicle loan. </p>
-
-<div class="card-buttons">
-
-<a href="car-loan.html" class="card-btn open-btn"> Open </a>
-
-<a href="car-loan.html" class="card-btn install-btn"> Use App </a>
-
-</div>
-
-</div>
-
-<!-- SIP -->
-
-<div class="card">
-
-<div class="card-top">
-
-<div class="icon">📈</div>
-
-<h3>SIP Calculator</h3>
-
-</div>
-
-<p> Estimate your SIP investment value, invested amount and expected returns. </p>
-
-<div class="card-buttons">
-
-<a href="sip-calculator.html" class="card-btn open-btn"> Open </a>
-
-<a href="sip-calculator.html" class="card-btn install-btn"> Use App </a>
-
-</div>
-
-</div>
-
-<!-- GST -->
-
-<div class="card">
-
-<div class="card-top">
-
-<div class="icon">🧾</div>
-
-<h3>GST Calculator</h3>
-
-</div>
-
-<p> Calculate GST amount, tax-inclusive price and tax-exclusive price quickly. </p>
-
-<div class="card-buttons">
-
-<a href="gst-calculator.html" class="card-btn open-btn"> Open </a>
-
-<a href="gst-calculator.html" class="card-btn install-btn"> Use App </a>
-
-</div>
-
-</div>
-
-<!-- PERCENTAGE -->
-
-<div class="card">
-
-<div class="card-top">
-
-<div class="icon">％</div>
-
-<h3>Percentage</h3>
-
-</div>
-
-<p> Calculate percentage increase, decrease, addition, subtraction and other percentage calculations. </p>
-
-<div class="card-buttons">
-
-<a href="percentage-calculator.html" class="card-btn open-btn"> Open </a>
-
-<a href="percentage-calculator.html" class="card-btn install-btn"> Use App </a>
-
-</div>
-
-</div>
-
-<!-- AGE -->
-
-<div class="card">
-
-<div class="card-top">
-
-<div class="icon">🎂</div>
-
-<h3>Age Calculator</h3>
-
-</div>
-
-<p> Calculate exact age in years, months and days using date of birth. </p>
-
-<div class="card-buttons">
-
-<a href="age-calculator.html" class="card-btn open-btn"> Open </a>
-
-<a href="age-calculator.html" class="card-btn install-btn"> Use App </a>
-
-</div>
-
-</div>
-
-<!-- BEVEL PROTRACTOR -->
-
-<div class="card">
-
-<div class="card-top">
-
-<div class="icon">📐</div>
-
-<h3>Bevel Protractor</h3>
-
-</div>
-
-<p> Calculate bevel protractor angle readings with degree, minute and DMS results. </p>
-
-<div class="card-buttons">
-
-<a href="bevel-protractor-calculator.html" class="card-btn open-btn"> Open </a>
-
-<a href="bevel-protractor-calculator.html" class="card-btn install-btn"> Use App </a>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- INSTALL SECTION -->
 
 <div class="install-section">
 
-<h2>📲 Use LoanMitraCalc Like an App</h2>
+<h2>Use LoanMitraCalc Anytime</h2>
 
-<p> Open any calculator on your mobile and use it like an app. You can also add the website to your phone's home screen. </p>
+<p> Access our professional calculators quickly from your phone, tablet or computer. </p>
 
-<a href="#calculators" class="install-button"> View Calculators </a>
+<a href="#calculators" class="install-button"> Explore Calculators </a>
 
 </div>
 
 </section>
-
-<!-- FEATURES -->
 
 <section class="feature-section" id="features">
 
 <div class="container">
 
-<div class="section-title">
-
-<h2>Why Use LoanMitraCalc?</h2>
-
-<p> Built for quick and practical calculations </p>
-
-</div>
+<div class="section-title"> <h2>Why Use LoanMitraCalc?</h2> <p>Simple, accurate and convenient calculators</p> </div>
 
 <div class="features">
 
-<div class="feature">
+<div class="feature"> <strong>⚡ Fast Calculations</strong> <span>Get calculation results quickly and easily.</span> </div>
 
-<strong>⚡ Fast Calculations</strong>
+<div class="feature"> <strong>📱 Mobile Friendly</strong> <span>Designed to work smoothly on mobile devices.</span> </div>
 
-<span> Get results instantly without complicated steps. </span>
+<div class="feature"> <strong>🎯 Easy to Use</strong> <span>Simple interface with clear calculation results.</span> </div>
 
-</div>
-
-<div class="feature">
-
-<strong>📱 Mobile Friendly</strong>
-
-<span> Works smoothly on mobile phones, tablets and computers. </span>
-
-</div>
-
-<div class="feature">
-
-<strong>📊 Clear Results</strong>
-
-<span> Important values are displayed in an easy-to-understand format. </span>
-
-</div>
-
-<div class="feature">
-
-<strong>🔒 Simple & Free</strong>
-
-<span> Use the calculators without unnecessary complexity. </span>
-
-</div>
-
-</div>
-
-<div class="info">
-
-<h2>LoanMitraCalc</h2>
-
-<p> LoanMitraCalc is a free online calculator platform designed to make financial and mathematical calculations simple. Whether you want to calculate loan EMI, investment returns, GST, percentage or age, you can find the required calculator in one place. </p>
+<div class="feature"> <strong>🆓 Free to Use</strong> <span>Use LoanMitraCalc calculators without registration.</span> </div>
 
 </div>
 
@@ -340,37 +112,11 @@
 
 </section>
 
-</main>
-
-<!-- FOOTER -->
-
 <footer>
 
-<div class="logo"> LoanMitra<span>Calc</span> </div>
+<div> © 2026 LoanMitraCalc. All Rights Reserved. </div>
 
-<div class="footer-links">
-
-<a href="index.html">Home</a>
-
-<a href="personal-loan.html">Personal Loan</a>
-
-<a href="home-loan.html">Home Loan</a>
-
-<a href="car-loan.html">Car Loan</a>
-
-<a href="sip-calculator.html">SIP</a>
-
-<a href="gst-calculator.html">GST</a>
-
-<a href="percentage-calculator.html">Percentage</a>
-
-<a href="age-calculator.html">Age</a>
-
-<a href="bevel-protractor-calculator.html"> Bevel Protractor </a>
-
-</div>
-
-<p> © 2026 LoanMitraCalc. All Rights Reserved. </p>
+<div class="footer-links"> <a href="#calculators">Calculators</a> <a href="#features">Features</a> <a href="#about">About</a> </div>
 
 </footer>
 
