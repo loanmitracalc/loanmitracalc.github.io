@@ -6,15 +6,15 @@
 
 <title>Percentage Calculator - LoanMitraCalc</title>
 
-<meta name="description" content="Free Percentage Calculator to calculate percentage increase, decrease, addition, subtraction and other percentage calculations online.">
+<meta name="description" content="Free online Percentage Calculator to calculate percentage values, addition, subtraction, multiplication and division quickly and accurately.">
 
-<meta name="keywords" content="percentage calculator, percentage calculator online, percentage increase calculator, percentage decrease calculator, percentage change calculator">
+<meta name="keywords" content="percentage calculator, percentage calculator online, percentage calculation, percentage increase calculator, percentage decrease calculator">
 
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 
 <meta name="author" content="LoanMitraCalc">
 
-<!-- Correct Professional Website Canonical -->
+<!-- IMPORTANT: PROFESSIONAL WEBSITE CANONICAL -->
 <link rel="canonical" href="https://loanmitracalc.github.io/percentage-calculator.html">
 
 <!-- Google AdSense -->
@@ -285,27 +285,45 @@ button {
 
     <div class="title-section">
         <h2>％ Percentage Calculator</h2>
-        <p>Calculate percentage, increase, decrease and basic calculations easily</p>
+        <p>Calculate percentage and related values easily</p>
     </div>
 
     <div class="form-group">
         <label for="number">Enter Number</label>
-        <input type="number" id="number" placeholder="Enter number" step="any">
+        <input
+            type="number"
+            id="number"
+            placeholder="Enter number"
+            step="any"
+        >
     </div>
 
     <div class="form-group">
         <label for="percentage">Percentage (%)</label>
-        <input type="number" id="percentage" placeholder="Enter percentage" step="any">
+        <input
+            type="number"
+            id="percentage"
+            placeholder="Enter percentage"
+            step="any"
+        >
     </div>
 
     <div class="button-row">
-        <button class="calculate-btn" onclick="calculatePercentage()">
+
+        <button
+            class="calculate-btn"
+            onclick="calculatePercentage()"
+        >
             Calculate
         </button>
 
-        <button class="reset-btn" onclick="resetCalculator()">
+        <button
+            class="reset-btn"
+            onclick="resetCalculator()"
+        >
             Reset
         </button>
+
     </div>
 
     <div class="results" id="results">
@@ -361,27 +379,30 @@ button {
     <h2>Percentage Calculator</h2>
 
     <p>
-        LoanMitraCalc Percentage Calculator is a free online tool that makes
-        percentage calculations quick and easy. You can calculate a percentage
-        of a number and also see addition, subtraction, multiplication and
-        division results.
+        LoanMitraCalc Percentage Calculator is a free online tool for
+        calculating percentages quickly and easily. It also provides
+        addition, subtraction, multiplication and division results based
+        on the calculated percentage value.
     </p>
 
     <h3>How to Calculate Percentage?</h3>
 
     <p>
-        Enter the number and percentage value in the calculator and click
+        Enter the number and percentage in the calculator and click
         the Calculate button.
     </p>
 
     <p>
-        <strong>Percentage = Number × Percentage ÷ 100</strong>
+        <strong>
+            Percentage Value = Number × Percentage ÷ 100
+        </strong>
     </p>
 
     <h3>Example</h3>
 
     <p>
-        If the number is 500 and the percentage is 10%:
+        Suppose the number is <strong>500</strong> and the percentage is
+        <strong>10%</strong>.
     </p>
 
     <p>
@@ -407,18 +428,41 @@ button {
     <h3>Related Calculators</h3>
 
     <div class="related">
-        <a href="personal-loan.html">💰 Personal Loan EMI</a>
-        <a href="home-loan.html">🏠 Home Loan EMI</a>
-        <a href="car-loan.html">🚘 Car Loan EMI</a>
-        <a href="sip-calculator.html">📈 SIP Calculator</a>
-        <a href="gst-calculator.html">🧾 GST Calculator</a>
-        <a href="age-calculator.html">🎂 Age Calculator</a>
-        <a href="bevel-protractor-calculator.html">📐 Bevel Protractor</a>
+
+        <a href="personal-loan.html">
+            💰 Personal Loan EMI
+        </a>
+
+        <a href="home-loan.html">
+            🏠 Home Loan EMI
+        </a>
+
+        <a href="car-loan.html">
+            🚘 Car Loan EMI
+        </a>
+
+        <a href="sip-calculator.html">
+            📈 SIP Calculator
+        </a>
+
+        <a href="gst-calculator.html">
+            🧾 GST Calculator
+        </a>
+
+        <a href="age-calculator.html">
+            🎂 Age Calculator
+        </a>
+
+        <a href="bevel-protractor-calculator.html">
+            📐 Bevel Protractor
+        </a>
+
     </div>
 
 </div>
 
 </main>
+
 
 <footer class="footer">
 
@@ -427,9 +471,19 @@ button {
     </div>
 
     <div style="margin-top:10px;">
-        <a href="privacy-policy.html">Privacy Policy</a>
-        <a href="disclaimer.html">Disclaimer</a>
-        <a href="terms-conditions.html">Terms & Conditions</a>
+
+        <a href="privacy-policy.html">
+            Privacy Policy
+        </a>
+
+        <a href="disclaimer.html">
+            Disclaimer
+        </a>
+
+        <a href="terms-conditions.html">
+            Terms & Conditions
+        </a>
+
     </div>
 
 </footer>
@@ -459,53 +513,78 @@ function calculatePercentage() {
         document.getElementById("percentage").value
     );
 
-    if (!Number.isFinite(number) || !Number.isFinite(percentage)) {
+
+    if (!Number.isFinite(number) ||
+        !Number.isFinite(percentage)) {
 
         alert("Please enter both Number and Percentage.");
 
         return;
     }
 
+
     const percentageValue =
         number * percentage / 100;
+
 
     const addition =
         number + percentageValue;
 
+
     const subtraction =
         number - percentageValue;
+
 
     const multiplication =
         number * percentageValue;
 
+
     let division;
 
     if (percentageValue === 0) {
+
         division = NaN;
+
     } else {
-        division = number / percentageValue;
+
+        division =
+            number / percentageValue;
+
     }
 
-    document.getElementById("percentageValue").textContent =
+
+    document.getElementById("percentageValue")
+        .textContent =
         formatNumber(percentageValue);
 
-    document.getElementById("percentageResult").textContent =
+
+    document.getElementById("percentageResult")
+        .textContent =
         formatNumber(percentageValue);
 
-    document.getElementById("additionResult").textContent =
+
+    document.getElementById("additionResult")
+        .textContent =
         formatNumber(addition);
 
-    document.getElementById("subtractionResult").textContent =
+
+    document.getElementById("subtractionResult")
+        .textContent =
         formatNumber(subtraction);
 
-    document.getElementById("multiplicationResult").textContent =
+
+    document.getElementById("multiplicationResult")
+        .textContent =
         formatNumber(multiplication);
 
-    document.getElementById("divisionResult").textContent =
+
+    document.getElementById("divisionResult")
+        .textContent =
         formatNumber(division);
 
-    document.getElementById("results").style.display =
-        "block";
+
+    document.getElementById("results")
+        .style.display = "block";
 }
 
 
@@ -515,20 +594,33 @@ function resetCalculator() {
 
     document.getElementById("percentage").value = "";
 
-    document.getElementById("percentageValue").textContent = "0";
 
-    document.getElementById("percentageResult").textContent = "0";
+    document.getElementById("percentageValue")
+        .textContent = "0";
 
-    document.getElementById("additionResult").textContent = "0";
 
-    document.getElementById("subtractionResult").textContent = "0";
+    document.getElementById("percentageResult")
+        .textContent = "0";
 
-    document.getElementById("multiplicationResult").textContent = "0";
 
-    document.getElementById("divisionResult").textContent = "0";
+    document.getElementById("additionResult")
+        .textContent = "0";
 
-    document.getElementById("results").style.display =
-        "none";
+
+    document.getElementById("subtractionResult")
+        .textContent = "0";
+
+
+    document.getElementById("multiplicationResult")
+        .textContent = "0";
+
+
+    document.getElementById("divisionResult")
+        .textContent = "0";
+
+
+    document.getElementById("results")
+        .style.display = "none";
 }
 
 </script>
