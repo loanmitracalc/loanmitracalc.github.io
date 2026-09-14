@@ -1,0 +1,2953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Complete Percentage & Basic Calculator - LoanMitraCalc</title>
+
+<meta name="description" content="Free complete online calculator with percentage, plus, minus, multiply, divide, brackets, INR ₹ and USD $ calculations.">
+<meta name="keywords" content="complete calculator, percentage calculator, plus calculator, minus calculator, multiply calculator, divide calculator, INR calculator, dollar calculator, USD calculator">
+<meta name="robots" content="index, follow">
+<meta name="author" content="LoanMitraCalc">
+
+<link rel="canonical" href="https://loanmitracalc.github.io/percentage-calculator.html">
+
+<style>
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+*{
+    box-sizing:border-box;
+}
+
+:root{
+    --page-bg:#f3f7fc;
+    --text:#1f2937;
+    --muted:#64748b;
+    --card:#ffffff;
+    --border:#dbe4ef;
+    --header:#0d47a1;
+    --header2:#1565c0;
+}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:var(--page-bg);
+    color:var(--text);
+    transition:.25s;
+}
+
+header{
+    background:linear-gradient(135deg,var(--header),var(--header2));
+    color:white;
+    padding:22px 15px;
+    text-align:center;
+    box-shadow:0 3px 12px rgba(0,0,0,.12);
+}
+
+header h1{
+    margin:0;
+    font-size:30px;
+}
+
+header p{
+    margin:7px 0 0;
+    font-size:14px;
+}
+
+.container{
+    max-width:1050px;
+    margin:30px auto;
+    padding:0 15px;
+}
+
+.main-title{
+    text-align:center;
+    color:var(--header);
+    font-size:30px;
+    margin-bottom:8px;
+}
+
+.subtitle{
+    text-align:center;
+    color:var(--muted);
+    line-height:1.6;
+    margin-bottom:30px;
+}
+
+
+/* =========================================================
+   THEME SYSTEM
+========================================================= */
+
+.theme-panel{
+    margin-bottom:16px;
+    background:#1e293b;
+    border-radius:12px;
+    padding:12px;
+}
+
+.theme-title{
+    color:white;
+    font-size:13px;
+    font-weight:bold;
+    margin-bottom:9px;
+    text-align:center;
+}
+
+.theme-buttons{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:6px;
+}
+
+.theme-btn{
+    border:2px solid transparent;
+    padding:7px 3px;
+    border-radius:7px;
+    cursor:pointer;
+    color:white;
+    font-size:11px;
+    font-weight:bold;
+    width:100%;
+}
+
+.theme-btn:hover{
+    transform:translateY(-1px);
+}
+
+.theme-btn.active{
+    border-color:white;
+    box-shadow:0 0 0 2px rgba(255,255,255,.35);
+}
+
+.theme-blue{background:#1565c0;}
+.theme-green{background:#198754;}
+.theme-purple{background:#7c3aed;}
+.theme-red{background:#dc2626;}
+.theme-orange{background:#ea580c;}
+.theme-pink{background:#db2777;}
+.theme-dark{background:#020617;}
+
+
+/* =========================================================
+   COMPLETE CALCULATOR
+========================================================= */
+
+.complete-calculator{
+    --calc-primary:#1565c0;
+    --calc-secondary:#334155;
+    --calc-accent:#198754;
+    --calc-bg:#111827;
+
+    max-width:500px;
+    margin:0 auto 35px;
+    background:var(--calc-bg);
+    padding:18px;
+    border-radius:20px;
+    box-shadow:0 10px 35px rgba(0,0,0,.20);
+    transition:.25s;
+}
+
+.complete-title{
+    color:white;
+    text-align:center;
+    margin:0 0 15px;
+    font-size:23px;
+}
+
+.currency-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-bottom:12px;
+}
+
+.currency-btn{
+    padding:11px;
+    border:none;
+    border-radius:9px;
+    background:#334155;
+    color:white;
+    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.currency-btn.active{
+    background:var(--calc-primary);
+}
+
+.calc-display{
+    background:#020617;
+    border-radius:12px;
+    padding:15px;
+    margin-bottom:12px;
+    min-height:110px;
+    color:white;
+    text-align:right;
+    overflow:hidden;
+}
+
+.calc-expression{
+    color:#94a3b8;
+    font-size:17px;
+    min-height:25px;
+    word-break:break-all;
+}
+
+.calc-result{
+    color:white;
+    font-size:32px;
+    font-weight:bold;
+    min-height:42px;
+    word-break:break-all;
+}
+
+.calc-buttons{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:8px;
+}
+
+.calc-btn{
+    border:none;
+    min-height:58px;
+    border-radius:11px;
+    font-size:19px;
+    font-weight:bold;
+    cursor:pointer;
+    background:var(--calc-secondary);
+    color:white;
+    transition:.15s;
+}
+
+.calc-btn:hover{
+    transform:translateY(-1px);
+    filter:brightness(1.12);
+}
+
+.calc-btn:active{
+    transform:scale(.96);
+}
+
+.calc-btn.function{
+    background:#64748b;
+}
+
+.calc-btn.operator{
+    background:var(--calc-primary);
+}
+
+.calc-btn.equal{
+    background:var(--calc-accent);
+}
+
+.calc-btn.currency{
+    background:#7c3aed;
+}
+
+.history-box{
+    margin-top:15px;
+    background:#1e293b;
+    border-radius:10px;
+    padding:12px;
+    color:white;
+}
+
+.history-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:8px;
+}
+
+.history-head strong{
+    font-size:15px;
+}
+
+.clear-history{
+    border:none;
+    background:#475569;
+    color:white;
+    padding:6px 9px;
+    border-radius:6px;
+    cursor:pointer;
+    width:auto;
+}
+
+.history-list{
+    max-height:150px;
+    overflow-y:auto;
+}
+
+.history-item{
+    padding:8px 4px;
+    border-bottom:1px solid #334155;
+    color:#cbd5e1;
+    font-size:13px;
+}
+
+.currency-note{
+    color:#94a3b8;
+    font-size:12px;
+    text-align:center;
+    margin:10px 0 0;
+}
+
+
+/* =========================================================
+   NORMAL CALCULATOR
+========================================================= */
+
+.calculator{
+    --box-primary:#0d47a1;
+    --box-secondary:#1565c0;
+    --box-bg:#ffffff;
+    --box-result:#eef5ff;
+    --box-border:#cfe0fa;
+
+    background:var(--box-bg);
+    padding:28px;
+    border-radius:16px;
+    box-shadow:0 6px 25px rgba(15,23,42,.09);
+    margin-bottom:28px;
+    border-top:5px solid var(--box-primary);
+    transition:.25s;
+}
+
+.calculator h2{
+    margin-top:0;
+    color:var(--box-primary);
+    font-size:25px;
+    border-bottom:1px solid var(--border);
+    padding-bottom:12px;
+}
+
+.calculator-description{
+    color:var(--muted);
+    font-size:14px;
+    line-height:1.6;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin-top:16px;
+    margin-bottom:7px;
+    color:#334155;
+}
+
+input{
+    width:100%;
+    padding:14px;
+    border:1px solid #cbd5e1;
+    border-radius:9px;
+    font-size:17px;
+    outline:none;
+    background:white;
+    color:#111827;
+}
+
+input:focus{
+    border-color:var(--box-primary);
+    box-shadow:0 0 0 3px rgba(21,101,192,.10);
+}
+
+.button-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin-top:20px;
+}
+
+.action-btn{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:9px;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.calculate-btn{
+    background:var(--box-primary);
+}
+
+.calculate-btn:hover{
+    filter:brightness(.9);
+}
+
+.reset-btn{
+    background:#64748b;
+}
+
+.reset-btn:hover{
+    background:#475569;
+}
+
+.result{
+    display:none;
+    margin-top:22px;
+    padding:20px;
+    background:var(--box-result);
+    border:1px solid var(--box-border);
+    border-radius:10px;
+}
+
+.result.show{
+    display:block;
+}
+
+.result-title{
+    color:var(--box-primary);
+    font-size:18px;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.answer{
+    font-size:26px;
+    font-weight:bold;
+    color:#111827;
+    margin-bottom:8px;
+    word-break:break-word;
+}
+
+.formula{
+    color:#475569;
+    font-size:16px;
+    font-weight:bold;
+    word-break:break-word;
+}
+
+.pdf-btn{
+    margin-top:15px;
+    background:#198754;
+}
+
+.pdf-btn:hover{
+    background:#146c43;
+}
+
+
+/* =========================================================
+   SEO
+========================================================= */
+
+.seo-content,
+.related{
+    background:var(--card);
+    padding:25px;
+    border-radius:15px;
+    box-shadow:0 4px 18px rgba(15,23,42,.07);
+    margin-top:30px;
+}
+
+.seo-content h2,
+.related h2{
+    color:var(--header);
+}
+
+.seo-content p{
+    color:#475569;
+    line-height:1.7;
+    font-size:15px;
+}
+
+.seo-content h2{
+    font-size:21px;
+    margin-top:25px;
+}
+
+.seo-content h2:first-child{
+    margin-top:0;
+}
+
+.related a{
+    display:inline-block;
+    padding:9px 12px;
+    margin:5px;
+    border:1px solid var(--border);
+    border-radius:7px;
+    text-decoration:none;
+    color:var(--header);
+    font-weight:bold;
+    font-size:14px;
+}
+
+.related a:hover{
+    background:#eef5ff;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer{
+    margin-top:35px;
+    padding:25px 15px;
+    background:#111827;
+    color:white;
+    text-align:center;
+    font-size:14px;
+}
+
+footer a{
+    color:white;
+    text-decoration:none;
+    margin:5px;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:600px){
+
+    header h1{
+        font-size:25px;
+    }
+
+    .container{
+        margin-top:20px;
+    }
+
+    .main-title{
+        font-size:25px;
+    }
+
+    .complete-calculator{
+        padding:12px;
+        border-radius:16px;
+    }
+
+    .theme-buttons{
+        grid-template-columns:repeat(4,1fr);
+    }
+
+    .calc-buttons{
+        gap:6px;
+    }
+
+    .calc-btn{
+        min-height:53px;
+        font-size:17px;
+    }
+
+    .calc-result{
+        font-size:27px;
+    }
+
+    .calculator{
+        padding:19px;
+    }
+
+    .calculator h2{
+        font-size:22px;
+    }
+
+    .button-row{
+        grid-template-columns:1fr;
+    }
+
+    .answer{
+        font-size:23px;
+    }
+
+}
+
+
+/* =========================================================
+   DARK PAGE MODE FOR INDIVIDUAL DARK THEME
+========================================================= */
+
+body.dark-page{
+    --page-bg:#0f172a;
+    --text:#e5e7eb;
+    --muted:#94a3b8;
+    --card:#111827;
+    --border:#334155;
+}
+
+body.dark-page .calculator,
+body.dark-page .seo-content,
+body.dark-page .related{
+    background:#111827;
+    color:#e5e7eb;
+}
+
+body.dark-page label{
+    color:#cbd5e1;
+}
+
+body.dark-page input{
+    background:#020617;
+    color:white;
+    border-color:#475569;
+}
+
+body.dark-page .calculator-description,
+body.dark-page .seo-content p{
+    color:#94a3b8;
+}
+
+body.dark-page .result{
+    background:#1e293b;
+    border-color:#475569;
+}
+
+body.dark-page .answer{
+    color:white;
+}
+
+body.dark-page .formula{
+    color:#cbd5e1;
+}
+
+</style>
+</head>
+
+
+<body>
+
+<header>
+
+    <h1>LoanMitraCalc</h1>
+
+    <p>Free Online Financial & Mathematical Calculators</p>
+
+</header>
+
+
+<div class="container">
+
+<h1 class="main-title">
+    Complete Calculator
+</h1>
+
+<p class="subtitle">
+    Complete calculator with arithmetic, percentage, brackets, INR ₹ and USD $ calculation.
+</p>
+
+
+<!-- =========================================================
+     COMPLETE CALCULATOR
+========================================================= -->
+
+<div class="complete-calculator" id="completeCalculator">
+
+    <h2 class="complete-title">
+        🧮 Complete Calculator
+    </h2>
+
+
+    <div class="theme-panel">
+
+        <div class="theme-title">
+            🎨 Complete Calculator Theme
+        </div>
+
+        <div class="theme-buttons">
+
+            <button class="theme-btn theme-blue"
+                    onclick="setCompleteTheme('blue')">
+                Blue
+            </button>
+
+            <button class="theme-btn theme-green"
+                    onclick="setCompleteTheme('green')">
+                Green
+            </button>
+
+            <button class="theme-btn theme-purple"
+                    onclick="setCompleteTheme('purple')">
+                Purple
+            </button>
+
+            <button class="theme-btn theme-red"
+                    onclick="setCompleteTheme('red')">
+                Red
+            </button>
+
+            <button class="theme-btn theme-orange"
+                    onclick="setCompleteTheme('orange')">
+                Orange
+            </button>
+
+            <button class="theme-btn theme-pink"
+                    onclick="setCompleteTheme('pink')">
+                Pink
+            </button>
+
+            <button class="theme-btn theme-dark"
+                    onclick="setCompleteTheme('dark')">
+                Dark
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="currency-row">
+
+        <button
+            class="currency-btn active"
+            id="inrBtn"
+            onclick="setCurrency('₹')">
+            ₹ INR
+        </button>
+
+        <button
+            class="currency-btn"
+            id="usdBtn"
+            onclick="setCurrency('$')">
+            $ USD
+        </button>
+
+    </div>
+
+
+    <div class="calc-display">
+
+        <div class="calc-expression" id="calcExpression"></div>
+
+        <div class="calc-result" id="calcResult">
+            0
+        </div>
+
+    </div>
+
+
+    <div class="calc-buttons">
+
+        <button class="calc-btn function" onclick="allClear()">AC</button>
+
+        <button class="calc-btn function" onclick="deleteLast()">DEL</button>
+
+        <button class="calc-btn function" onclick="appendValue('(')">(</button>
+
+        <button class="calc-btn function" onclick="appendValue(')')">)</button>
+
+        <button class="calc-btn operator" onclick="appendValue('%')">%</button>
+
+
+        <button class="calc-btn" onclick="appendValue('7')">7</button>
+        <button class="calc-btn" onclick="appendValue('8')">8</button>
+        <button class="calc-btn" onclick="appendValue('9')">9</button>
+
+        <button class="calc-btn operator" onclick="appendValue('÷')">÷</button>
+
+        <button class="calc-btn function" onclick="toggleSign()">±</button>
+
+
+        <button class="calc-btn" onclick="appendValue('4')">4</button>
+        <button class="calc-btn" onclick="appendValue('5')">5</button>
+        <button class="calc-btn" onclick="appendValue('6')">6</button>
+
+        <button class="calc-btn operator" onclick="appendValue('×')">×</button>
+
+        <button class="calc-btn operator" onclick="appendValue('+')">+</button>
+
+
+        <button class="calc-btn" onclick="appendValue('1')">1</button>
+        <button class="calc-btn" onclick="appendValue('2')">2</button>
+        <button class="calc-btn" onclick="appendValue('3')">3</button>
+
+        <button class="calc-btn operator" onclick="appendValue('−')">−</button>
+
+        <button class="calc-btn equal" onclick="calculateAll()">=</button>
+
+
+        <button class="calc-btn" onclick="appendValue('00')">00</button>
+        <button class="calc-btn" onclick="appendValue('0')">0</button>
+        <button class="calc-btn" onclick="appendValue('.')">.</button>
+
+        <button class="calc-btn currency" onclick="appendCurrency()">₹/$</button>
+
+        <button class="calc-btn equal" onclick="calculateAll()">=</button>
+
+    </div>
+
+
+    <div class="history-box">
+
+        <div class="history-head">
+
+            <strong>Calculation History</strong>
+
+            <button class="clear-history" onclick="clearHistory()">
+                Clear
+            </button>
+
+        </div>
+
+        <div class="history-list" id="historyList">
+            No calculations yet.
+        </div>
+
+    </div>
+
+
+    <p class="currency-note">
+        ₹ and $ buttons are currency symbols only.
+        They do not perform live INR ↔ USD exchange conversion.
+    </p>
+
+</div>
+
+
+
+<!-- =========================================================
+     1. PERCENTAGE
+========================================================= -->
+
+<div class="calculator" id="percentageCalculator">
+
+    <h2>1️⃣ 📊 Percentage Calculator</h2>
+
+    <div class="theme-panel">
+
+        <div class="theme-title">
+            🎨 Percentage Calculator Theme
+        </div>
+
+        <div class="theme-buttons">
+
+            <button class="theme-btn theme-blue" onclick="setBoxTheme('percentage','blue')">Blue</button>
+            <button class="theme-btn theme-green" onclick="setBoxTheme('percentage','green')">Green</button>
+            <button class="theme-btn theme-purple" onclick="setBoxTheme('percentage','purple')">Purple</button>
+            <button class="theme-btn theme-red" onclick="setBoxTheme('percentage','red')">Red</button>
+            <button class="theme-btn theme-orange" onclick="setBoxTheme('percentage','orange')">Orange</button>
+            <button class="theme-btn theme-pink" onclick="setBoxTheme('percentage','pink')">Pink</button>
+            <button class="theme-btn theme-dark" onclick="setBoxTheme('percentage','dark')">Dark</button>
+
+        </div>
+
+    </div>
+
+    <p class="calculator-description">
+        Calculate a percentage of any number quickly and easily.
+    </p>
+
+    <label for="percentNumber">Number</label>
+
+    <input
+        type="number"
+        id="percentNumber"
+        value="100"
+        step="any"
+        placeholder="Example: 100"
+    >
+
+    <label for="percentValue">Percentage (%)</label>
+
+    <input
+        type="number"
+        id="percentValue"
+        value="10"
+        step="any"
+        placeholder="Example: 10"
+    >
+
+    <div class="button-row">
+
+        <button class="action-btn calculate-btn" onclick="calculatePercentage()">
+            Calculate %
+        </button>
+
+        <button class="action-btn reset-btn" onclick="resetPercentage()">
+            Reset
+        </button>
+
+    </div>
+
+    <div class="result" id="percentageResult">
+
+        <div class="result-title">
+            Percentage Result
+        </div>
+
+        <div class="answer" id="percentageAnswer"></div>
+
+        <div class="formula" id="percentageFormula"></div>
+
+        <button class="action-btn pdf-btn" onclick="downloadPercentagePDF()">
+            📄 Download PDF
+        </button>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     2. PLUS
+========================================================= -->
+
+<div class="calculator" id="plusCalculator">
+
+    <h2>2️⃣ ➕ Plus Calculator</h2>
+
+    <div class="theme-panel">
+
+        <div class="theme-title">
+            🎨 Plus Calculator Theme
+        </div>
+
+        <div class="theme-buttons">
+
+            <button class="theme-btn theme-blue" onclick="setBoxTheme('plus','blue')">Blue</button>
+            <button class="theme-btn theme-green" onclick="setBoxTheme('plus','green')">Green</button>
+            <button class="theme-btn theme-purple" onclick="setBoxTheme('plus','purple')">Purple</button>
+            <button class="theme-btn theme-red" onclick="setBoxTheme('plus','red')">Red</button>
+            <button class="theme-btn theme-orange" onclick="setBoxTheme('plus','orange')">Orange</button>
+            <button class="theme-btn theme-pink" onclick="setBoxTheme('plus','pink')">Pink</button>
+            <button class="theme-btn theme-dark" onclick="setBoxTheme('plus','dark')">Dark</button>
+
+        </div>
+
+    </div>
+
+    <p class="calculator-description">
+        Add two numbers quickly.
+    </p>
+
+    <label for="plusNumber1">First Number</label>
+
+    <input
+        type="number"
+        id="plusNumber1"
+        step="any"
+        placeholder="Example: 500"
+    >
+
+    <label for="plusNumber2">Second Number</label>
+
+    <input
+        type="number"
+        id="plusNumber2"
+        step="any"
+        placeholder="Example: 10"
+    >
+
+    <div class="button-row">
+
+        <button class="action-btn calculate-btn" onclick="calculatePlus()">
+            Calculate +
+        </button>
+
+        <button class="action-btn reset-btn" onclick="resetPlus()">
+            Reset
+        </button>
+
+    </div>
+
+    <div class="result" id="plusResultBox">
+
+        <div class="result-title">
+            Addition Result
+        </div>
+
+        <div class="answer" id="plusAnswer"></div>
+
+        <div class="formula" id="plusFormula"></div>
+
+        <button class="action-btn pdf-btn" onclick="downloadPlusPDF()">
+            📄 Download PDF
+        </button>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     3. MINUS
+========================================================= -->
+
+<div class="calculator" id="minusCalculator">
+
+    <h2>3️⃣ ➖ Minus Calculator</h2>
+
+    <div class="theme-panel">
+
+        <div class="theme-title">
+            🎨 Minus Calculator Theme
+        </div>
+
+        <div class="theme-buttons">
+
+            <button class="theme-btn theme-blue" onclick="setBoxTheme('minus','blue')">Blue</button>
+            <button class="theme-btn theme-green" onclick="setBoxTheme('minus','green')">Green</button>
+            <button class="theme-btn theme-purple" onclick="setBoxTheme('minus','purple')">Purple</button>
+            <button class="theme-btn theme-red" onclick="setBoxTheme('minus','red')">Red</button>
+            <button class="theme-btn theme-orange" onclick="setBoxTheme('minus','orange')">Orange</button>
+            <button class="theme-btn theme-pink" onclick="setBoxTheme('minus','pink')">Pink</button>
+            <button class="theme-btn theme-dark" onclick="setBoxTheme('minus','dark')">Dark</button>
+
+        </div>
+
+    </div>
+
+    <p class="calculator-description">
+        Subtract one number from another.
+    </p>
+
+    <label for="minusNumber1">First Number</label>
+
+    <input
+        type="number"
+        id="minusNumber1"
+        step="any"
+        placeholder="Example: 500"
+    >
+
+    <label for="minusNumber2">Second Number</label>
+
+    <input
+        type="number"
+        id="minusNumber2"
+        step="any"
+        placeholder="Example: 10"
+    >
+
+    <div class="button-row">
+
+        <button class="action-btn calculate-btn" onclick="calculateMinus()">
+            Calculate −
+        </button>
+
+        <button class="action-btn reset-btn" onclick="resetMinus()">
+            Reset
+        </button>
+
+    </div>
+
+    <div class="result" id="minusResultBox">
+
+        <div class="result-title">
+            Subtraction Result
+        </div>
+
+        <div class="answer" id="minusAnswer"></div>
+
+        <div class="formula" id="minusFormula"></div>
+
+        <button class="action-btn pdf-btn" onclick="downloadMinusPDF()">
+            📄 Download PDF
+        </button>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     4. MULTIPLY
+========================================================= -->
+
+<div class="calculator" id="multiplyCalculator">
+
+    <h2>4️⃣ ✖ Multiply Calculator</h2>
+
+    <div class="theme-panel">
+
+        <div class="theme-title">
+            🎨 Multiply Calculator Theme
+        </div>
+
+        <div class="theme-buttons">
+
+            <button class="theme-btn theme-blue" onclick="setBoxTheme('multiply','blue')">Blue</button>
+            <button class="theme-btn theme-green" onclick="setBoxTheme('multiply','green')">Green</button>
+            <button class="theme-btn theme-purple" onclick="setBoxTheme('multiply','purple')">Purple</button>
+            <button class="theme-btn theme-red" onclick="setBoxTheme('multiply','red')">Red</button>
+            <button class="theme-btn theme-orange" onclick="setBoxTheme('multiply','orange')">Orange</button>
+            <button class="theme-btn theme-pink" onclick="setBoxTheme('multiply','pink')">Pink</button>
+            <button class="theme-btn theme-dark" onclick="setBoxTheme('multiply','dark')">Dark</button>
+
+        </div>
+
+    </div>
+
+    <p class="calculator-description">
+        Multiply two numbers quickly.
+    </p>
+
+    <label for="multiplyNumber1">First Number</label>
+
+    <input
+        type="number"
+        id="multiplyNumber1"
+        step="any"
+        placeholder="Example: 100"
+    >
+
+    <label for="multiplyNumber2">Second Number</label>
+
+    <input
+        type="number"
+        id="multiplyNumber2"
+        step="any"
+        placeholder="Example: 5"
+    >
+
+    <div class="button-row">
+
+        <button class="action-btn calculate-btn" onclick="calculateMultiply()">
+            Calculate ×
+        </button>
+
+        <button class="action-btn reset-btn" onclick="resetMultiply()">
+            Reset
+        </button>
+
+    </div>
+
+    <div class="result" id="multiplyResultBox">
+
+        <div class="result-title">
+            Multiplication Result
+        </div>
+
+        <div class="answer" id="multiplyAnswer"></div>
+
+        <div class="formula" id="multiplyFormula"></div>
+
+        <button class="action-btn pdf-btn" onclick="downloadMultiplyPDF()">
+            📄 Download PDF
+        </button>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     5. DIVIDE
+========================================================= -->
+
+<div class="calculator" id="divideCalculator">
+
+    <h2>5️⃣ ➗ Divide Calculator</h2>
+
+    <div class="theme-panel">
+
+        <div class="theme-title">
+            🎨 Divide Calculator Theme
+        </div>
+
+        <div class="theme-buttons">
+
+            <button class="theme-btn theme-blue" onclick="setBoxTheme('divide','blue')">Blue</button>
+            <button class="theme-btn theme-green" onclick="setBoxTheme('divide','green')">Green</button>
+            <button class="theme-btn theme-purple" onclick="setBoxTheme('divide','purple')">Purple</button>
+            <button class="theme-btn theme-red" onclick="setBoxTheme('divide','red')">Red</button>
+            <button class="theme-btn theme-orange" onclick="setBoxTheme('divide','orange')">Orange</button>
+            <button class="theme-btn theme-pink" onclick="setBoxTheme('divide','pink')">Pink</button>
+            <button class="theme-btn theme-dark" onclick="setBoxTheme('divide','dark')">Dark</button>
+
+        </div>
+
+    </div>
+
+    <p class="calculator-description">
+        Divide one number by another.
+    </p>
+
+    <label for="divideNumber1">First Number</label>
+
+    <input
+        type="number"
+        id="divideNumber1"
+        step="any"
+        placeholder="Example: 100"
+    >
+
+    <label for="divideNumber2">Second Number</label>
+
+    <input
+        type="number"
+        id="divideNumber2"
+        step="any"
+        placeholder="Example: 5"
+    >
+
+    <div class="button-row">
+
+        <button class="action-btn calculate-btn" onclick="calculateDivide()">
+            Calculate ÷
+        </button>
+
+        <button class="action-btn reset-btn" onclick="resetDivide()">
+            Reset
+        </button>
+
+    </div>
+
+    <div class="result" id="divideResultBox">
+
+        <div class="result-title">
+            Division Result
+        </div>
+
+        <div class="answer" id="divideAnswer"></div>
+
+        <div class="formula" id="divideFormula"></div>
+
+        <button class="action-btn pdf-btn" onclick="downloadDividePDF()">
+            📄 Download PDF
+        </button>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     SEO CONTENT
+========================================================= -->
+
+<section class="seo-content">
+
+    <h2>Complete Calculator</h2>
+
+    <p>
+        LoanMitraCalc provides a free complete online calculator
+        for everyday mathematical calculations. You can perform
+        addition, subtraction, multiplication, division, percentage
+        and bracket calculations from one calculator.
+    </p>
+
+    <h2>Custom Calculator Themes</h2>
+
+    <p>
+        Every calculator on this page has its own independent color
+        theme selector. Users can select Blue, Green, Purple, Red,
+        Orange, Pink or Dark according to their preference.
+    </p>
+
+    <h2>INR and USD Calculator</h2>
+
+    <p>
+        The complete calculator supports ₹ INR and $ USD symbols
+        for mathematical calculations. The currency buttons are
+        symbols only and do not provide live exchange rates.
+    </p>
+
+    <h2>Percentage Calculator</h2>
+
+    <p>
+        Percentage of a number can be calculated using the formula:
+        Number × Percentage ÷ 100.
+    </p>
+
+    <h2>Plus Calculator</h2>
+
+    <p>
+        Add two numbers quickly. For example,
+        500 + 10 = 510.
+    </p>
+
+    <h2>Minus Calculator</h2>
+
+    <p>
+        Subtract one number from another. For example,
+        500 − 10 = 490.
+    </p>
+
+    <h2>Multiply Calculator</h2>
+
+    <p>
+        Multiply two numbers. For example,
+        100 × 5 = 500.
+    </p>
+
+    <h2>Divide Calculator</h2>
+
+    <p>
+        Divide one number by another. For example,
+        100 ÷ 5 = 20.
+    </p>
+
+</section>
+
+
+
+<!-- =========================================================
+     RELATED
+========================================================= -->
+
+<div class="related">
+
+    <h2>Related Calculators</h2>
+
+    <a href="personal-loan.html">💰 Personal Loan EMI</a>
+
+    <a href="home-loan.html">🏠 Home Loan EMI</a>
+
+    <a href="car-loan.html">🚘 Car Loan EMI</a>
+
+    <a href="sip-calculator.html">📈 SIP Calculator</a>
+
+    <a href="gst-calculator.html">🧾 GST Calculator</a>
+
+    <a href="age-calculator.html">🎂 Age Calculator</a>
+
+    <a href="bevel-protractor-calculator.html">📐 Bevel Protractor</a>
+
+</div>
+
+</div>
+
+
+<footer>
+
+    <p>
+        © 2026 LoanMitraCalc. All Rights Reserved.
+    </p>
+
+    <p>
+
+        <a href="privacy-policy.html">Privacy Policy</a>
+        |
+        <a href="disclaimer.html">Disclaimer</a>
+        |
+        <a href="terms-conditions.html">Terms & Conditions</a>
+
+    </p>
+
+</footer>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+
+<script>
+
+/* =========================================================
+   THEME COLORS
+========================================================= */
+
+const themeColors = {
+
+    blue:{
+        primary:"#1565c0",
+        secondary:"#334155",
+        accent:"#198754",
+        bg:"#111827",
+        result:"#eef5ff",
+        border:"#cfe0fa"
+    },
+
+    green:{
+        primary:"#198754",
+        secondary:"#334155",
+        accent:"#0d6efd",
+        bg:"#10251b",
+        result:"#eaf8ef",
+        border:"#bfe3cb"
+    },
+
+    purple:{
+        primary:"#7c3aed",
+        secondary:"#4c1d95",
+        accent:"#198754",
+        bg:"#211532",
+        result:"#f3eefe",
+        border:"#d8c5fa"
+    },
+
+    red:{
+        primary:"#dc2626",
+        secondary:"#4b1d1d",
+        accent:"#198754",
+        bg:"#241111",
+        result:"#fff0f0",
+        border:"#f4caca"
+    },
+
+    orange:{
+        primary:"#ea580c",
+        secondary:"#4a2414",
+        accent:"#198754",
+        bg:"#24160f",
+        result:"#fff3e9",
+        border:"#f5d1b8"
+    },
+
+    pink:{
+        primary:"#db2777",
+        secondary:"#4a1730",
+        accent:"#198754",
+        bg:"#24111c",
+        result:"#fff0f7",
+        border:"#f3c5da"
+    },
+
+    dark:{
+        primary:"#94a3b8",
+        secondary:"#334155",
+        accent:"#22c55e",
+        bg:"#020617",
+        result:"#1e293b",
+        border:"#475569"
+    }
+
+};
+
+
+/* =========================================================
+   SET COMPLETE CALCULATOR THEME
+========================================================= */
+
+function setCompleteTheme(theme){
+
+    const calc =
+        document.getElementById("completeCalculator");
+
+    const colors =
+        themeColors[theme];
+
+    if(!colors){
+        return;
+    }
+
+    calc.style.setProperty(
+        "--calc-primary",
+        colors.primary
+    );
+
+    calc.style.setProperty(
+        "--calc-secondary",
+        colors.secondary
+    );
+
+    calc.style.setProperty(
+        "--calc-accent",
+        colors.accent
+    );
+
+    calc.style.setProperty(
+        "--calc-bg",
+        colors.bg
+    );
+
+    localStorage.setItem(
+        "loanMitraCompleteTheme",
+        theme
+    );
+
+    updateThemeButtons(
+        calc,
+        theme
+    );
+
+}
+
+
+/* =========================================================
+   SET INDIVIDUAL CALCULATOR THEME
+========================================================= */
+
+function setBoxTheme(name,theme){
+
+    const idMap = {
+
+        percentage:"percentageCalculator",
+        plus:"plusCalculator",
+        minus:"minusCalculator",
+        multiply:"multiplyCalculator",
+        divide:"divideCalculator"
+
+    };
+
+    const calc =
+        document.getElementById(
+            idMap[name]
+        );
+
+    const colors =
+        themeColors[theme];
+
+    if(!calc || !colors){
+        return;
+    }
+
+    calc.style.setProperty(
+        "--box-primary",
+        colors.primary
+    );
+
+    calc.style.setProperty(
+        "--box-secondary",
+        colors.secondary
+    );
+
+    calc.style.setProperty(
+        "--box-result",
+        colors.result
+    );
+
+    calc.style.setProperty(
+        "--box-border",
+        colors.border
+    );
+
+    if(theme === "dark"){
+
+        calc.style.background = "#111827";
+        calc.style.color = "white";
+
+    }
+    else{
+
+        calc.style.background = colors === themeColors[theme]
+            ? "#ffffff"
+            : "#ffffff";
+
+    }
+
+    localStorage.setItem(
+        "loanMitraTheme_" + name,
+        theme
+    );
+
+    updateThemeButtons(
+        calc,
+        theme
+    );
+
+}
+
+
+/* =========================================================
+   THEME BUTTON ACTIVE
+========================================================= */
+
+function updateThemeButtons(container,theme){
+
+    const buttons =
+        container.querySelectorAll(
+            ".theme-btn"
+        );
+
+    buttons.forEach(button => {
+
+        button.classList.remove("active");
+
+    });
+
+    const index = {
+
+        blue:0,
+        green:1,
+        purple:2,
+        red:3,
+        orange:4,
+        pink:5,
+        dark:6
+
+    };
+
+    if(index[theme] !== undefined){
+
+        buttons[index[theme]]
+            .classList.add("active");
+
+    }
+
+}
+
+
+/* =========================================================
+   LOAD SAVED THEMES
+========================================================= */
+
+function loadAllThemes(){
+
+    const completeTheme =
+        localStorage.getItem(
+            "loanMitraCompleteTheme"
+        ) || "blue";
+
+    setCompleteTheme(
+        completeTheme
+    );
+
+
+    const names = [
+        "percentage",
+        "plus",
+        "minus",
+        "multiply",
+        "divide"
+    ];
+
+    names.forEach(name => {
+
+        const saved =
+            localStorage.getItem(
+                "loanMitraTheme_" + name
+            ) || "blue";
+
+        setBoxTheme(
+            name,
+            saved
+        );
+
+    });
+
+}
+
+
+/* =========================================================
+   COMPLETE CALCULATOR
+========================================================= */
+
+let calcExpression = "";
+let calcCurrency = "₹";
+let lastCalculatedResult = "";
+
+
+/* CURRENCY */
+
+function setCurrency(currency){
+
+    calcCurrency = currency;
+
+    document.getElementById("inrBtn")
+        .classList.toggle(
+            "active",
+            currency === "₹"
+        );
+
+    document.getElementById("usdBtn")
+        .classList.toggle(
+            "active",
+            currency === "$"
+        );
+
+    updateDisplay();
+
+}
+
+
+/* ADD CURRENCY */
+
+function appendCurrency(){
+
+    if(calcExpression === ""){
+
+        calcExpression =
+            calcCurrency;
+
+    }
+
+    else if(
+        !calcExpression.endsWith("₹") &&
+        !calcExpression.endsWith("$")
+    ){
+
+        calcExpression +=
+            calcCurrency;
+
+    }
+
+    updateDisplay();
+
+}
+
+
+/* APPEND */
+
+function appendValue(value){
+
+    if(calcExpression === "Error"){
+        calcExpression = "";
+    }
+
+    calcExpression += value;
+
+    updateDisplay();
+
+}
+
+
+/* DISPLAY */
+
+function updateDisplay(){
+
+    document.getElementById(
+        "calcExpression"
+    ).textContent =
+        calcExpression;
+
+    document.getElementById(
+        "calcResult"
+    ).textContent =
+        lastCalculatedResult || "0";
+
+}
+
+
+/* AC */
+
+function allClear(){
+
+    calcExpression = "";
+    lastCalculatedResult = "";
+
+    updateDisplay();
+
+}
+
+
+/* DELETE */
+
+function deleteLast(){
+
+    if(calcExpression.length > 0){
+
+        calcExpression =
+            calcExpression.slice(0,-1);
+
+        lastCalculatedResult = "";
+
+        updateDisplay();
+
+    }
+
+}
+
+
+/* SIGN */
+
+function toggleSign(){
+
+    if(!calcExpression){
+        return;
+    }
+
+    const match =
+        calcExpression.match(
+            /(-?\d*\.?\d+)(?:[₹$])?$/
+        );
+
+    if(!match){
+        return;
+    }
+
+    const number = match[1];
+
+    const start =
+        calcExpression.length -
+        number.length;
+
+    let newNumber;
+
+    if(number.startsWith("-")){
+
+        newNumber =
+            number.substring(1);
+
+    }
+    else{
+
+        newNumber =
+            "-" + number;
+
+    }
+
+    calcExpression =
+        calcExpression.substring(0,start) +
+        newNumber;
+
+    updateDisplay();
+
+}
+
+
+/* FORMAT */
+
+function formatCalcNumber(number){
+
+    if(!Number.isFinite(number)){
+        return "Error";
+    }
+
+    if(Math.abs(number) < 0.000000001){
+        number = 0;
+    }
+
+    return Number(
+        number.toFixed(12)
+    ).toLocaleString(
+        "en-IN",
+        {
+            maximumFractionDigits:10
+        }
+    );
+
+}
+
+
+/* CALCULATE */
+
+function calculateAll(){
+
+    if(!calcExpression){
+        return;
+    }
+
+    try{
+
+        let expression =
+            calcExpression
+            .replace(/[₹$]/g,"")
+            .replace(/×/g,"*")
+            .replace(/÷/g,"/")
+            .replace(/−/g,"-")
+            .replace(/\s+/g,"");
+
+        if(!expression){
+            return;
+        }
+
+        const result =
+            evaluateExpression(
+                expression
+            );
+
+        if(!Number.isFinite(result)){
+            throw new Error("Invalid");
+        }
+
+        const formatted =
+            formatCalcNumber(result);
+
+        lastCalculatedResult =
+            calcCurrency + formatted;
+
+        addHistory(
+            calcExpression,
+            lastCalculatedResult
+        );
+
+        updateDisplay();
+
+    }
+    catch(error){
+
+        lastCalculatedResult =
+            "Error";
+
+        updateDisplay();
+
+    }
+
+}
+
+
+/* SAFE EVALUATOR */
+
+function evaluateExpression(expression){
+
+    expression =
+        expression.replace(
+            /(\d+(?:\.\d+)?)%/g,
+            "($1/100)"
+        );
+
+    const tokens =
+        tokenize(expression);
+
+    const output = [];
+    const operators = [];
+
+    const precedence = {
+        "+":1,
+        "-":1,
+        "*":2,
+        "/":2
+    };
+
+    for(let i=0;i<tokens.length;i++){
+
+        const token =
+            tokens[i];
+
+        if(!isNaN(token)){
+
+            output.push(
+                Number(token)
+            );
+
+        }
+
+        else if(token === "("){
+
+            operators.push(token);
+
+        }
+
+        else if(token === ")"){
+
+            while(
+                operators.length &&
+                operators[operators.length-1] !== "("
+            ){
+
+                output.push(
+                    operators.pop()
+                );
+
+            }
+
+            if(!operators.length){
+                throw new Error("Bracket");
+            }
+
+            operators.pop();
+
+        }
+
+        else if(
+            ["+","-","*","/"]
+            .includes(token)
+        ){
+
+            while(
+                operators.length &&
+                operators[operators.length-1] !== "(" &&
+                precedence[
+                    operators[operators.length-1]
+                ] >= precedence[token]
+            ){
+
+                output.push(
+                    operators.pop()
+                );
+
+            }
+
+            operators.push(token);
+
+        }
+
+        else{
+
+            throw new Error("Invalid");
+
+        }
+
+    }
+
+
+    while(operators.length){
+
+        const op =
+            operators.pop();
+
+        if(op === "("){
+            throw new Error("Bracket");
+        }
+
+        output.push(op);
+
+    }
+
+
+    const stack = [];
+
+    for(const token of output){
+
+        if(typeof token === "number"){
+
+            stack.push(token);
+
+        }
+        else{
+
+            if(stack.length < 2){
+                throw new Error("Invalid");
+            }
+
+            const b =
+                stack.pop();
+
+            const a =
+                stack.pop();
+
+            let result;
+
+            if(token === "+"){
+                result = a + b;
+            }
+
+            if(token === "-"){
+                result = a - b;
+            }
+
+            if(token === "*"){
+                result = a * b;
+            }
+
+            if(token === "/"){
+
+                if(b === 0){
+                    throw new Error("Zero");
+                }
+
+                result = a / b;
+
+            }
+
+            stack.push(result);
+
+        }
+
+    }
+
+    if(stack.length !== 1){
+        throw new Error("Invalid");
+    }
+
+    return stack[0];
+
+}
+
+
+/* TOKENIZER */
+
+function tokenize(expression){
+
+    const tokens = [];
+    let number = "";
+
+    for(let i=0;i<expression.length;i++){
+
+        const char =
+            expression[i];
+
+        if(/[0-9.]/.test(char)){
+
+            number += char;
+
+        }
+
+        else{
+
+            if(number !== ""){
+
+                tokens.push(number);
+                number = "";
+
+            }
+
+            if(
+                ["+","-","*","/","(",")"]
+                .includes(char)
+            ){
+
+                if(
+                    char === "-" &&
+                    (
+                        tokens.length === 0 ||
+                        ["+","-","*","/","("]
+                        .includes(
+                            tokens[tokens.length-1]
+                        )
+                    )
+                ){
+
+                    number = "-";
+
+                }
+
+                else{
+
+                    tokens.push(char);
+
+                }
+
+            }
+
+            else{
+
+                throw new Error("Invalid");
+
+            }
+
+        }
+
+    }
+
+    if(number !== ""){
+        tokens.push(number);
+    }
+
+    return tokens;
+
+}
+
+
+/* =========================================================
+   HISTORY
+========================================================= */
+
+let calculationHistory = [];
+
+
+function addHistory(expression,result){
+
+    calculationHistory.unshift({
+        expression:expression,
+        result:result
+    });
+
+    if(calculationHistory.length > 10){
+        calculationHistory.pop();
+    }
+
+    renderHistory();
+
+}
+
+
+function renderHistory(){
+
+    const box =
+        document.getElementById(
+            "historyList"
+        );
+
+    if(calculationHistory.length === 0){
+
+        box.innerHTML =
+            "No calculations yet.";
+
+        return;
+
+    }
+
+    box.innerHTML =
+        calculationHistory.map(
+            item =>
+            `<div class="history-item">
+                ${escapeHTML(item.expression)}
+                = <strong>${escapeHTML(item.result)}</strong>
+            </div>`
+        ).join("");
+
+}
+
+
+function escapeHTML(text){
+
+    return String(text)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+function clearHistory(){
+
+    calculationHistory = [];
+
+    renderHistory();
+
+}
+
+
+/* =========================================================
+   KEYBOARD
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        const key =
+            event.key;
+
+        if(/[0-9.]/.test(key)){
+
+            appendValue(key);
+
+        }
+
+        else if(
+            ["+","-","*","/","(",")","%"]
+            .includes(key)
+        ){
+
+            let value = key;
+
+            if(key === "*"){
+                value = "×";
+            }
+
+            if(key === "/"){
+                value = "÷";
+            }
+
+            if(key === "-"){
+                value = "−";
+            }
+
+            appendValue(value);
+
+        }
+
+        else if(
+            key === "Enter" ||
+            key === "="
+        ){
+
+            calculateAll();
+
+        }
+
+        else if(key === "Backspace"){
+
+            deleteLast();
+
+        }
+
+        else if(key === "Escape"){
+
+            allClear();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   PDF
+========================================================= */
+
+function createPDF(
+    title,
+    formula,
+    result
+){
+
+    if(
+        !window.jspdf ||
+        !window.jspdf.jsPDF
+    ){
+
+        alert(
+            "PDF library is still loading. Please try again."
+        );
+
+        return;
+
+    }
+
+    const {jsPDF} =
+        window.jspdf;
+
+    const doc =
+        new jsPDF();
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.setFontSize(20);
+
+    doc.text(
+        "LoanMitraCalc",
+        105,
+        20,
+        {
+            align:"center"
+        }
+    );
+
+    doc.setFontSize(16);
+
+    doc.text(
+        title,
+        105,
+        32,
+        {
+            align:"center"
+        }
+    );
+
+    doc.line(
+        20,
+        39,
+        190,
+        39
+    );
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.setFontSize(13);
+
+    doc.text(
+        "Formula:",
+        20,
+        57
+    );
+
+    doc.text(
+        String(formula),
+        20,
+        68
+    );
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.text(
+        "Result:",
+        20,
+        88
+    );
+
+    doc.setFontSize(17);
+
+    doc.text(
+        String(result),
+        20,
+        101
+    );
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.setFontSize(10);
+
+    doc.text(
+        "Generated by LoanMitraCalc",
+        105,
+        135,
+        {
+            align:"center"
+        }
+    );
+
+    doc.save(
+        title.replace(
+            /\s+/g,
+            "-"
+        ) +
+        "-LoanMitraCalc.pdf"
+    );
+
+}
+
+
+/* =========================================================
+   NUMBER FORMAT
+========================================================= */
+
+function numberFormat(number){
+
+    return Number(number)
+        .toLocaleString(
+            "en-IN",
+            {
+                maximumFractionDigits:10
+            }
+        );
+
+}
+
+
+/* =========================================================
+   PERCENTAGE
+========================================================= */
+
+let percentageFormula = "";
+let percentageResultValue = "";
+
+function calculatePercentage(){
+
+    const number =
+        parseFloat(
+            document.getElementById(
+                "percentNumber"
+            ).value
+        );
+
+    const percent =
+        parseFloat(
+            document.getElementById(
+                "percentValue"
+            ).value
+        );
+
+    if(
+        isNaN(number) ||
+        isNaN(percent)
+    ){
+
+        alert(
+            "Please enter both values."
+        );
+
+        return;
+
+    }
+
+    const result =
+        (number * percent) / 100;
+
+    percentageFormula =
+        percent +
+        "% of " +
+        number +
+        " = " +
+        numberFormat(result);
+
+    percentageResultValue =
+        numberFormat(result);
+
+    document.getElementById(
+        "percentageAnswer"
+    ).textContent =
+        "Result = " +
+        numberFormat(result);
+
+    document.getElementById(
+        "percentageFormula"
+    ).textContent =
+        percentageFormula;
+
+    document.getElementById(
+        "percentageResult"
+    ).classList.add("show");
+
+}
+
+
+function resetPercentage(){
+
+    document.getElementById(
+        "percentNumber"
+    ).value = "";
+
+    document.getElementById(
+        "percentValue"
+    ).value = "";
+
+    document.getElementById(
+        "percentageResult"
+    ).classList.remove("show");
+
+    percentageFormula = "";
+    percentageResultValue = "";
+
+}
+
+
+function downloadPercentagePDF(){
+
+    if(!percentageFormula){
+
+        alert(
+            "Please calculate first."
+        );
+
+        return;
+
+    }
+
+    createPDF(
+        "Percentage Calculator",
+        percentageFormula,
+        percentageResultValue
+    );
+
+}
+
+
+/* =========================================================
+   PLUS
+========================================================= */
+
+let plusFormula = "";
+let plusResultValue = "";
+
+function calculatePlus(){
+
+    const a =
+        parseFloat(
+            document.getElementById(
+                "plusNumber1"
+            ).value
+        );
+
+    const b =
+        parseFloat(
+            document.getElementById(
+                "plusNumber2"
+            ).value
+        );
+
+    if(
+        isNaN(a) ||
+        isNaN(b)
+    ){
+
+        alert(
+            "Please enter both numbers."
+        );
+
+        return;
+
+    }
+
+    const result =
+        a + b;
+
+    plusFormula =
+        a +
+        " + " +
+        b +
+        " = " +
+        numberFormat(result);
+
+    plusResultValue =
+        numberFormat(result);
+
+    document.getElementById(
+        "plusAnswer"
+    ).textContent =
+        "Result = " +
+        numberFormat(result);
+
+    document.getElementById(
+        "plusFormula"
+    ).textContent =
+        plusFormula;
+
+    document.getElementById(
+        "plusResultBox"
+    ).classList.add("show");
+
+}
+
+
+function resetPlus(){
+
+    document.getElementById(
+        "plusNumber1"
+    ).value = "";
+
+    document.getElementById(
+        "plusNumber2"
+    ).value = "";
+
+    document.getElementById(
+        "plusResultBox"
+    ).classList.remove("show");
+
+    plusFormula = "";
+    plusResultValue = "";
+
+}
+
+
+function downloadPlusPDF(){
+
+    if(!plusFormula){
+
+        alert(
+            "Please calculate first."
+        );
+
+        return;
+
+    }
+
+    createPDF(
+        "Plus Calculator",
+        plusFormula,
+        plusResultValue
+    );
+
+}
+
+
+/* =========================================================
+   MINUS
+========================================================= */
+
+let minusFormula = "";
+let minusResultValue = "";
+
+function calculateMinus(){
+
+    const a =
+        parseFloat(
+            document.getElementById(
+                "minusNumber1"
+            ).value
+        );
+
+    const b =
+        parseFloat(
+            document.getElementById(
+                "minusNumber2"
+            ).value
+        );
+
+    if(
+        isNaN(a) ||
+        isNaN(b)
+    ){
+
+        alert(
+            "Please enter both numbers."
+        );
+
+        return;
+
+    }
+
+    const result =
+        a - b;
+
+    minusFormula =
+        a +
+        " − " +
+        b +
+        " = " +
+        numberFormat(result);
+
+    minusResultValue =
+        numberFormat(result);
+
+    document.getElementById(
+        "minusAnswer"
+    ).textContent =
+        "Result = " +
+        numberFormat(result);
+
+    document.getElementById(
+        "minusFormula"
+    ).textContent =
+        minusFormula;
+
+    document.getElementById(
+        "minusResultBox"
+    ).classList.add("show");
+
+}
+
+
+function resetMinus(){
+
+    document.getElementById(
+        "minusNumber1"
+    ).value = "";
+
+    document.getElementById(
+        "minusNumber2"
+    ).value = "";
+
+    document.getElementById(
+        "minusResultBox"
+    ).classList.remove("show");
+
+    minusFormula = "";
+    minusResultValue = "";
+
+}
+
+
+function downloadMinusPDF(){
+
+    if(!minusFormula){
+
+        alert(
+            "Please calculate first."
+        );
+
+        return;
+
+    }
+
+    createPDF(
+        "Minus Calculator",
+        minusFormula,
+        minusResultValue
+    );
+
+}
+
+
+/* =========================================================
+   MULTIPLY
+========================================================= */
+
+let multiplyFormula = "";
+let multiplyResultValue = "";
+
+function calculateMultiply(){
+
+    const a =
+        parseFloat(
+            document.getElementById(
+                "multiplyNumber1"
+            ).value
+        );
+
+    const b =
+        parseFloat(
+            document.getElementById(
+                "multiplyNumber2"
+            ).value
+        );
+
+    if(
+        isNaN(a) ||
+        isNaN(b)
+    ){
+
+        alert(
+            "Please enter both numbers."
+        );
+
+        return;
+
+    }
+
+    const result =
+        a * b;
+
+    multiplyFormula =
+        a +
+        " × " +
+        b +
+        " = " +
+        numberFormat(result);
+
+    multiplyResultValue =
+        numberFormat(result);
+
+    document.getElementById(
+        "multiplyAnswer"
+    ).textContent =
+        "Result = " +
+        numberFormat(result);
+
+    document.getElementById(
+        "multiplyFormula"
+    ).textContent =
+        multiplyFormula;
+
+    document.getElementById(
+        "multiplyResultBox"
+    ).classList.add("show");
+
+}
+
+
+function resetMultiply(){
+
+    document.getElementById(
+        "multiplyNumber1"
+    ).value = "";
+
+    document.getElementById(
+        "multiplyNumber2"
+    ).value = "";
+
+    document.getElementById(
+        "multiplyResultBox"
+    ).classList.remove("show");
+
+    multiplyFormula = "";
+    multiplyResultValue = "";
+
+}
+
+
+function downloadMultiplyPDF(){
+
+    if(!multiplyFormula){
+
+        alert(
+            "Please calculate first."
+        );
+
+        return;
+
+    }
+
+    createPDF(
+        "Multiply Calculator",
+        multiplyFormula,
+        multiplyResultValue
+    );
+
+}
+
+
+/* =========================================================
+   DIVIDE
+========================================================= */
+
+let divideFormula = "";
+let divideResultValue = "";
+
+function calculateDivide(){
+
+    const a =
+        parseFloat(
+            document.getElementById(
+                "divideNumber1"
+            ).value
+        );
+
+    const b =
+        parseFloat(
+            document.getElementById(
+                "divideNumber2"
+            ).value
+        );
+
+    if(
+        isNaN(a) ||
+        isNaN(b)
+    ){
+
+        alert(
+            "Please enter both numbers."
+        );
+
+        return;
+
+    }
+
+    if(b === 0){
+
+        alert(
+            "Division by zero is not allowed."
+        );
+
+        return;
+
+    }
+
+    const result =
+        a / b;
+
+    divideFormula =
+        a +
+        " ÷ " +
+        b +
+        " = " +
+        numberFormat(result);
+
+    divideResultValue =
+        numberFormat(result);
+
+    document.getElementById(
+        "divideAnswer"
+    ).textContent =
+        "Result = " +
+        numberFormat(result);
+
+    document.getElementById(
+        "divideFormula"
+    ).textContent =
+        divideFormula;
+
+    document.getElementById(
+        "divideResultBox"
+    ).classList.add("show");
+
+}
+
+
+function resetDivide(){
+
+    document.getElementById(
+        "divideNumber1"
+    ).value = "";
+
+    document.getElementById(
+        "divideNumber2"
+    ).value = "";
+
+    document.getElementById(
+        "divideResultBox"
+    ).classList.remove("show");
+
+    divideFormula = "";
+    divideResultValue = "";
+
+}
+
+
+function downloadDividePDF(){
+
+    if(!divideFormula){
+
+        alert(
+            "Please calculate first."
+        );
+
+        return;
+
+    }
+
+    createPDF(
+        "Divide Calculator",
+        divideFormula,
+        divideResultValue
+    );
+
+}
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+loadAllThemes();
+
+updateDisplay();
+
+</script>
+
+</body>
+</html>
